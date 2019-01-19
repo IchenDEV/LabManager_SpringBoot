@@ -1,0 +1,79 @@
+2019-01-19 19:10:03.927 INFO  --- [StartupInfoLogger.java:50][restartedMain] - Starting LabMgrApplication on XPS with PID 6656 (C:\Users\cl137\Documents\LabMgr\target\classes started by cl137 in c:\Users\cl137\Documents\LabMgr)
+2019-01-19 19:10:03.929 INFO  --- [SpringApplication.java:679][restartedMain] - The following profiles are active: dev
+2019-01-19 19:10:05.066 WARN  --- [AbstractApplicationContext.java:554][restartedMain] - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'methodValidationPostProcessor' defined in class path resource [org/springframework/boot/autoconfigure/validation/ValidationAutoConfiguration.class]: Unsatisfied dependency expressed through method 'methodValidationPostProcessor' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'shiroFilter' defined in class path resource [com/idevlab/LabMgr/Config/Shiro/ShiroConfiguration.class]: Unsatisfied dependency expressed through method 'shiroFilterFactoryBean' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'securityManager' defined in class path resource [com/idevlab/LabMgr/Config/Shiro/ShiroConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.shiro.mgt.SecurityManager]: Factory method 'securityManager' threw exception; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userRealm': Unsatisfied dependency expressed through field 'loginService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'loginServiceImpl': Unsatisfied dependency expressed through field 'loginDao'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'loginDao' defined in file [C:\Users\cl137\Documents\LabMgr\target\classes\com\idevlab\LabMgr\Dao\LoginDao.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception; nested exception is java.lang.NoSuchMethodError: org.apache.ibatis.session.Configuration.setVfsImpl(Ljava/lang/Class;)V
+2019-01-19 19:10:05.072 ERROR --- [LoggingFailureAnalysisReporter.java:42][restartedMain] - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+An attempt was made to call the method org.apache.ibatis.session.Configuration.setVfsImpl(Ljava/lang/Class;)V but it does not exist. Its class, org.apache.ibatis.session.Configuration, is available from the following locations:
+
+    jar:file:/C:/Users/cl137/.m2/repository/org/apache/ibatis/ibatis-core/3.0/ibatis-core-3.0.jar!/org/apache/ibatis/session/Configuration.class
+    jar:file:/C:/Users/cl137/.m2/repository/org/mybatis/mybatis/3.4.6/mybatis-3.4.6.jar!/org/apache/ibatis/session/Configuration.class
+
+It was loaded from the following location:
+
+    file:/C:/Users/cl137/.m2/repository/org/apache/ibatis/ibatis-core/3.0/ibatis-core-3.0.jar
+
+
+Action:
+
+Correct the classpath of your application so that it contains a single, compatible version of org.apache.ibatis.session.Configuration
+
+2019-01-19 19:11:04.628 INFO  --- [StartupInfoLogger.java:50][restartedMain] - Starting LabMgrApplication on XPS with PID 16924 (C:\Users\cl137\Documents\LabMgr\target\classes started by cl137 in c:\Users\cl137\Documents\LabMgr)
+2019-01-19 19:11:04.631 INFO  --- [SpringApplication.java:679][restartedMain] - The following profiles are active: dev
+2019-01-19 19:11:05.797 WARN  --- [AbstractApplicationContext.java:554][restartedMain] - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'methodValidationPostProcessor' defined in class path resource [org/springframework/boot/autoconfigure/validation/ValidationAutoConfiguration.class]: Unsatisfied dependency expressed through method 'methodValidationPostProcessor' parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'shiroFilter' defined in class path resource [com/idevlab/LabMgr/Config/Shiro/ShiroConfiguration.class]: Unsatisfied dependency expressed through method 'shiroFilterFactoryBean' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'securityManager' defined in class path resource [com/idevlab/LabMgr/Config/Shiro/ShiroConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.shiro.mgt.SecurityManager]: Factory method 'securityManager' threw exception; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userRealm': Unsatisfied dependency expressed through field 'loginService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'loginServiceImpl': Unsatisfied dependency expressed through field 'loginDao'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'loginDao' defined in file [C:\Users\cl137\Documents\LabMgr\target\classes\com\idevlab\LabMgr\Dao\LoginDao.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.ibatis.session.SqlSessionFactory]: Factory method 'sqlSessionFactory' threw exception; nested exception is java.lang.NoSuchMethodError: org.apache.ibatis.session.Configuration.setVfsImpl(Ljava/lang/Class;)V
+2019-01-19 19:11:05.806 ERROR --- [LoggingFailureAnalysisReporter.java:42][restartedMain] - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+An attempt was made to call the method org.apache.ibatis.session.Configuration.setVfsImpl(Ljava/lang/Class;)V but it does not exist. Its class, org.apache.ibatis.session.Configuration, is available from the following locations:
+
+    jar:file:/C:/Users/cl137/.m2/repository/org/apache/ibatis/ibatis-core/3.0/ibatis-core-3.0.jar!/org/apache/ibatis/session/Configuration.class
+    jar:file:/C:/Users/cl137/.m2/repository/org/mybatis/mybatis/3.4.6/mybatis-3.4.6.jar!/org/apache/ibatis/session/Configuration.class
+
+It was loaded from the following location:
+
+    file:/C:/Users/cl137/.m2/repository/org/apache/ibatis/ibatis-core/3.0/ibatis-core-3.0.jar
+
+
+Action:
+
+Correct the classpath of your application so that it contains a single, compatible version of org.apache.ibatis.session.Configuration
+
+2019-01-19 19:11:33.450 INFO  --- [StartupInfoLogger.java:50][restartedMain] - Starting LabMgrApplication on XPS with PID 23308 (C:\Users\cl137\Documents\LabMgr\target\classes started by cl137 in c:\Users\cl137\Documents\LabMgr)
+2019-01-19 19:11:33.453 INFO  --- [SpringApplication.java:679][restartedMain] - The following profiles are active: dev
+2019-01-19 19:11:35.804 INFO  --- [StartupInfoLogger.java:59][restartedMain] - Started LabMgrApplication in 2.617 seconds (JVM running for 3.152)
+2019-01-19 19:14:04.860 WARN  --- [AbstractHandlerExceptionResolver.java:194][http-nio-8080-exec-5] - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported]
+2019-01-19 19:14:47.633 WARN  --- [AbstractHandlerExceptionResolver.java:194][http-nio-8080-exec-6] - Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported]
+2019-01-19 19:19:18.977 INFO  --- [StartupInfoLogger.java:50][restartedMain] - Starting LabMgrApplication on XPS with PID 23308 (C:\Users\cl137\Documents\LabMgr\target\classes started by cl137 in c:\Users\cl137\Documents\LabMgr)
+2019-01-19 19:19:18.978 INFO  --- [SpringApplication.java:679][restartedMain] - The following profiles are active: dev
+2019-01-19 19:19:19.790 INFO  --- [StartupInfoLogger.java:59][restartedMain] - Started LabMgrApplication in 0.845 seconds (JVM running for 467.138)
+2019-01-19 19:19:39.562 INFO  --- [StartupInfoLogger.java:50][restartedMain] - Starting LabMgrApplication on XPS with PID 23308 (C:\Users\cl137\Documents\LabMgr\target\classes started by cl137 in c:\Users\cl137\Documents\LabMgr)
+2019-01-19 19:19:39.563 INFO  --- [SpringApplication.java:679][restartedMain] - The following profiles are active: dev
+2019-01-19 19:19:40.156 INFO  --- [StartupInfoLogger.java:59][restartedMain] - Started LabMgrApplication in 0.627 seconds (JVM running for 487.504)
+2019-01-19 19:21:08.739 INFO  --- [StartupInfoLogger.java:50][restartedMain] - Starting LabMgrApplication on XPS with PID 23308 (C:\Users\cl137\Documents\LabMgr\target\classes started by cl137 in c:\Users\cl137\Documents\LabMgr)
+2019-01-19 19:21:08.739 INFO  --- [SpringApplication.java:679][restartedMain] - The following profiles are active: dev
+2019-01-19 19:21:09.376 INFO  --- [StartupInfoLogger.java:59][restartedMain] - Started LabMgrApplication in 0.667 seconds (JVM running for 576.723)
+2019-01-19 19:21:12.979 INFO  --- [StartupInfoLogger.java:50][restartedMain] - Starting LabMgrApplication on XPS with PID 23308 (C:\Users\cl137\Documents\LabMgr\target\classes started by cl137 in c:\Users\cl137\Documents\LabMgr)
+2019-01-19 19:21:12.979 INFO  --- [SpringApplication.java:679][restartedMain] - The following profiles are active: dev
+2019-01-19 19:21:13.517 INFO  --- [StartupInfoLogger.java:59][restartedMain] - Started LabMgrApplication in 0.561 seconds (JVM running for 580.865)
+2019-01-19 19:21:19.184 INFO  --- [StartupInfoLogger.java:50][restartedMain] - Starting LabMgrApplication on XPS with PID 23308 (C:\Users\cl137\Documents\LabMgr\target\classes started by cl137 in c:\Users\cl137\Documents\LabMgr)
+2019-01-19 19:21:19.184 INFO  --- [SpringApplication.java:679][restartedMain] - The following profiles are active: dev
+2019-01-19 19:21:19.712 INFO  --- [StartupInfoLogger.java:59][restartedMain] - Started LabMgrApplication in 0.559 seconds (JVM running for 587.059)
+2019-01-19 19:21:30.440 INFO  --- [StartupInfoLogger.java:50][restartedMain] - Starting LabMgrApplication on XPS with PID 23308 (C:\Users\cl137\Documents\LabMgr\target\classes started by cl137 in c:\Users\cl137\Documents\LabMgr)
+2019-01-19 19:21:30.441 INFO  --- [SpringApplication.java:679][restartedMain] - The following profiles are active: dev
+2019-01-19 19:21:30.929 INFO  --- [StartupInfoLogger.java:59][restartedMain] - Started LabMgrApplication in 0.522 seconds (JVM running for 598.277)
+2019-01-19 19:21:41.630 INFO  --- [StartupInfoLogger.java:50][restartedMain] - Starting LabMgrApplication on XPS with PID 23308 (C:\Users\cl137\Documents\LabMgr\target\classes started by cl137 in c:\Users\cl137\Documents\LabMgr)
+2019-01-19 19:21:41.630 INFO  --- [SpringApplication.java:679][restartedMain] - The following profiles are active: dev
+2019-01-19 19:21:42.033 INFO  --- [StartupInfoLogger.java:59][restartedMain] - Started LabMgrApplication in 0.439 seconds (JVM running for 609.381)
+2019-01-19 19:21:45.676 INFO  --- [StartupInfoLogger.java:50][restartedMain] - Starting LabMgrApplication on XPS with PID 23308 (C:\Users\cl137\Documents\LabMgr\target\classes started by cl137 in c:\Users\cl137\Documents\LabMgr)
+2019-01-19 19:21:45.677 INFO  --- [SpringApplication.java:679][restartedMain] - The following profiles are active: dev
+2019-01-19 19:21:46.062 INFO  --- [StartupInfoLogger.java:59][restartedMain] - Started LabMgrApplication in 0.408 seconds (JVM running for 613.409)
