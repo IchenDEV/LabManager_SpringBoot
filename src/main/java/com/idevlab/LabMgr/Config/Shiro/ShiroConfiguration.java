@@ -87,9 +87,7 @@ public class ShiroConfiguration {
     /**
      * 
      * Shiro Realm 继承自AuthorizingRealm的自定义Realm,即指定Shiro验证用户登录的类为自定义的
-     * 
      */
-
     @Bean
     public UserRealm userRealm() {
         UserRealm userRealm = new UserRealm();

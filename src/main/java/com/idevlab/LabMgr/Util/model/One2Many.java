@@ -1,4 +1,4 @@
-package com.idevlab.LabMgr.Util.model;
+package com.idevlab.LabMgr.Util.Model;
 
 import com.alibaba.fastjson.JSONObject;
 
