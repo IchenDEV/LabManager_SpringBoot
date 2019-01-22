@@ -33,7 +33,7 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public JSONObject authLogin(JSONObject jsonObject) {
 		String username = jsonObject.getString("username");
-		String password = jsonObject.getString("password");
+		String password = com.idevlab.LabMgr.Util.CommonUtil.md5(jsonObject.getString("password"));
 		JSONObject info = new JSONObject();
 		Subject currentUser = SecurityUtils.getSubject();
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
@@ -81,5 +81,10 @@ public class LoginServiceImpl implements LoginService {
 		} catch (Exception e) {
 		}
 		return CommonUtil.successJson();
+	}
+
+	@Override
+	public String getCredentialsSalt(String username, String salt) {
+		return username+salt;
 	}
 }

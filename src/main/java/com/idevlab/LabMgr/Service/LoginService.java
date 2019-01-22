@@ -18,6 +18,14 @@ public interface LoginService {
 	 * @param password 密码
 	 */
 	JSONObject getUser(String username, String password);
+
+
+	 /**
+     * 密码盐.
+     * @return
+     */
+    public String getCredentialsSalt(String username, String salt);
+
 	/**
 	 * 查询当前登录用户的权限等信息
 	 */

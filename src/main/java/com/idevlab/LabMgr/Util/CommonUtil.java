@@ -3,8 +3,11 @@ package com.idevlab.LabMgr.Util;
 import com.alibaba.fastjson.JSONObject;
 import com.idevlab.LabMgr.Exception.CommonJsonException;
 import com.idevlab.LabMgr.Util.Constants.*;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
+
+import java.security.MessageDigest;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -14,6 +17,25 @@ import java.util.List;
  * @date: 2017/10/24 10:12
  */
 public class CommonUtil {
+
+    /**
+     * Md5
+     */
+    public static String md5(String source) {
+        StringBuffer sb = new StringBuffer(32);
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] array = md.digest(source.getBytes("utf-8"));
+            for (int i = 0; i < array.length; i++) {
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).toUpperCase().substring(1, 3));
+            }
+        } catch (Exception e) {
+            //logger.error("Can not encode the string '" + source + "' to MD5!", e);
+            return null;
+        }
+        return sb.toString();
+    }
+
     /**
      * 返回一个info为空对象的成功消息的json
      */
@@ -62,9 +84,11 @@ public class CommonUtil {
         result.put("info", info);
         return result;
     }
+
     /**
      * 
      * 查询分页结果后的封装工具方法
+     * 
      * @param list 查询分页对象list
      */
     public static JSONObject successPage(List<JSONObject> list) {
@@ -78,6 +102,7 @@ public class CommonUtil {
     /**
      * 
      * 获取总页数
+     * 
      * @param pageRow   每页行数
      * 
      * @param itemCount 结果的总条数
@@ -88,9 +113,7 @@ public class CommonUtil {
         if (itemCount == 0) {
             return 1;
         }
-        return itemCount % pageRow > 0 ?
-                itemCount / pageRow + 1 :
-                itemCount / pageRow;
+        return itemCount % pageRow > 0 ? itemCount / pageRow + 1 : itemCount / pageRow;
     }
 
     /**
@@ -149,7 +172,7 @@ public class CommonUtil {
                     missCol += column + "  ";
                 }
             }
-        
+
             if (!StringTools.isNullOrEmpty(missCol)) {
                 jsonObject.clear();
                 jsonObject.put("code", ErrorEnum.E_90003.getErrorCode());
@@ -181,7 +204,7 @@ public class CommonUtil {
         paramObject.remove("pageSize");
     }
 
-    /** 
+    /**
      * 分页查询之前的处理参数
      * 
      * 没有传pageRow参数时,默认每页10条.

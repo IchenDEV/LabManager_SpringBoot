@@ -3,8 +3,8 @@ spring:
   profiles:
        active: dev
   datasource:
-      url: jdbc:mysql://192.168.174.128:3306/shiro?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://cdb-iidyk803.gz.tencentcdb.com:10023/shiro?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true
       username: root
-      password: cbbgyrcl@G.c.Li137
+      password: LabMgr@137
 mybatis:
   mapperLocations: classpath:/mapper/*.xml
