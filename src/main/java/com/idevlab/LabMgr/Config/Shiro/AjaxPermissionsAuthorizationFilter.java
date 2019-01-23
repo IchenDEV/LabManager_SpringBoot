@@ -15,14 +15,17 @@ import java.io.PrintWriter;
 /**
  * @author: idevlab
  * @description: 对没有登录的请求进行拦截, 全部返回json信息. 覆盖掉shiro原本的跳转login.jsp的拦截方式
- * @date: 2017/10/24 10:11
+ * @date: 2019/1/22 10:11
  */
 public class AjaxPermissionsAuthorizationFilter extends FormAuthenticationFilter {
 
+	/**
+	 * @description 重写在shrio被拦截后的返回
+	 */
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) {
-		if (((HttpServletRequest) request).getMethod().equals("OPTIONS")) {
-
+		if (((HttpServletRequest) request).getMethod().equals("OPTIONS"))//如果被拦截的是OPTIONS请求返回cors允许
+		 {
 			HttpServletResponse res = (HttpServletResponse) response;
 			PrintWriter out = null;
 			try {
@@ -40,8 +43,9 @@ public class AjaxPermissionsAuthorizationFilter extends FormAuthenticationFilter
 					out.close();
 				}
 			}
-
-		} else {
+		} 
+		else //否则返回错误
+		{
 			JSONObject jsonObject = new JSONObject();
 			jsonObject.put("code", ErrorEnum.E_20011.getErrorCode());
 			jsonObject.put("msg", ErrorEnum.E_20011.getErrorMsg());

@@ -3,8 +3,6 @@ package com.idevlab.LabMgr.Util;
 import com.alibaba.fastjson.JSONObject;
 import com.idevlab.LabMgr.Exception.CommonJsonException;
 import com.idevlab.LabMgr.Util.Constants.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 
 import java.security.MessageDigest;

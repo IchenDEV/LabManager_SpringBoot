@@ -20,6 +20,7 @@ public class PermissionServiceImpl implements PermissionService {
 
 	/**
 	 * 查询某用户的 角色  菜单列表   权限列表
+	 * @param username 用户名
 	 */
 	@Override
 	public JSONObject getUserPermission(String username) {
@@ -29,6 +30,7 @@ public class PermissionServiceImpl implements PermissionService {
 
 	/**
 	 * 从数据库查询用户权限信息
+	 * @param username 用户名
 	 */
 	private JSONObject getUserPermissionFromDB(String username) {
 		JSONObject userPermission = permissionDao.getUserPermission(username);

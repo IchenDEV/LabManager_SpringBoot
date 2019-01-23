@@ -15,13 +15,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * 
- * @author: idevlab oriauthor Heeexy
- * 
+ * @author: idevlab 
  * @description: shiro配置类
- * 
- * @date: 2017/10/24 10:10
- * 
+ * @date: 2019/1/22 10:10
  */
 
 @Configuration

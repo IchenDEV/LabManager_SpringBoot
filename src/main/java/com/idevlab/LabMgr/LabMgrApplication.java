@@ -10,7 +10,9 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @SpringBootApplication
 @MapperScan("com.idevlab.LabMgr.Dao")
 public class LabMgrApplication extends SpringBootServletInitializer {
-
+	/**
+	 * 程序入口点
+	 */
 	public static void main(String[] args) {
 		SpringApplication application = new SpringApplication(LabMgrApplication.class);
 		application.setBannerMode(Banner.Mode.OFF);

@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author: idevlab
  * @description: 登录相关Controller
- * @date: 2017/10/24 10:33
+ * @date: 2019/1/22 10:33
  */
 @RestController
-
 @RequestMapping("/login")
 public class LoginController {
 

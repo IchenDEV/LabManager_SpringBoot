@@ -15,9 +15,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author: hxy
- * @description: 用户/角色/权限
- * @date: 2017/11/2 10:18
+ * @author: idevlab
+ * @Description: 用户/角色/权限
+ * @date: 2019/1/22 10:18
  */
 @Service
 public class UserServiceImpl implements UserService {

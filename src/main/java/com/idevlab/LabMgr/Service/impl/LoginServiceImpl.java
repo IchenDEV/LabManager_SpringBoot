@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * @author: hxy
+ * @author: idevlab
  * @description: 登录service实现类
- * @date: 2017/10/24 11:53
+ * @date: 2019/1/22 11:53
  */
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -28,22 +28,25 @@ public class LoginServiceImpl implements LoginService {
 	private PermissionService permissionService;
 
 	/**
-	 * 登录表单提交
+	 * 登录提交
 	 */
 	@Override
 	public JSONObject authLogin(JSONObject jsonObject) {
-		String username = jsonObject.getString("username");
-		String password = com.idevlab.LabMgr.Util.CommonUtil.md5(jsonObject.getString("password"));
-		JSONObject info = new JSONObject();
+		JSONObject info = new JSONObject();//用于返回JSON包
+
+		String username = jsonObject.getString("username");//截取用户名
+		String password = com.idevlab.LabMgr.Util.CommonUtil.md5(jsonObject.getString("password"));//截取密码并加密
 		Subject currentUser = SecurityUtils.getSubject();
-		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+		UsernamePasswordToken token = new UsernamePasswordToken(username, password);//获得token
 		try {
-			currentUser.login(token);
+			currentUser.login(token);//登录
+			info.put("loginCode", 0);//登录成功返回loginCode 0
 			info.put("result", "success");
 		} catch (AuthenticationException e) {
+			info.put("loginCode", -1);//登录失败返回loginCode -1
 			info.put("result", "fail");
 		}
-		return CommonUtil.successJson(info);
+		return CommonUtil.successJson(info);//打包返回
 	}
 
 	/**
@@ -60,7 +63,7 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public JSONObject getInfo() {
 		//从session获取用户信息
-		Session session = SecurityUtils.getSubject().getSession();
+		Session session = SecurityUtils.getSubject().getSession();//获得session
 		JSONObject userInfo = (JSONObject) session.getAttribute(Constants.SESSION_USER_INFO);
 		String username = userInfo.getString("username");
 		JSONObject info = new JSONObject();
@@ -77,14 +80,10 @@ public class LoginServiceImpl implements LoginService {
 	public JSONObject logout() {
 		try {
 			Subject currentUser = SecurityUtils.getSubject();
-			currentUser.logout();
+			currentUser.logout();//登出
 		} catch (Exception e) {
 		}
 		return CommonUtil.successJson();
 	}
 
-	@Override
-	public String getCredentialsSalt(String username, String salt) {
-		return username+salt;
-	}
 }

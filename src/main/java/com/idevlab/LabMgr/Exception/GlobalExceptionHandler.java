@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author: hxy
+ * @author: idevlab
  * @description: 统一异常拦截
- * @date: 2017/10/24 10:31
+ * @date: 2019/1/22 10:31
  */
 @ControllerAdvice
 @ResponseBody
@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
 		jsonObject.put("code", ErrorEnum.E_400.getErrorCode());
 		jsonObject.put("msg", ErrorEnum.E_400.getErrorMsg());
 		JSONObject errorObject = new JSONObject();
-		errorObject.put("errorLocation", e.toString() + "    错误位置:" + errorPosition);
+		errorObject.put("errorLocation", e.toString() + "    Where:" + errorPosition);
 		jsonObject.put("info", errorObject);
 		logger.error("异常", e);
 		return jsonObject;

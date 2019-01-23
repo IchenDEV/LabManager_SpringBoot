@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author: hxy
+ * @author: idevlab
  * @description: MyBatis的一对多JSON返回对象
  * <p>
  * 处理嵌套查询结果时，MyBatis会根据bean定义的属性类型来初始化嵌套的成员变量，
@@ -16,7 +16,7 @@ import java.util.Set;
  * 参见MyBatis  DefaultResultSetHandler.instantiateCollectionPropertyIfAppropriate()
  * @date: 2017/10/24 10:17
  */
-public class One2Many extends JSONObject {
+public class One2Many extends JSONObject{
 	private Set<String> roleList;
 	private Set<String> menuList;
 	private Set<String> permissionList;
