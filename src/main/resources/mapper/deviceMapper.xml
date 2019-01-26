@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.idevlab.LabMgr.Dao.DeviceDao">
+
+    <select id="countDevice" resultType="Integer">
+        SELECT count(0)
+        FROM device d
+        WHERE d.status = '1'
+    </select>
+
+    <resultMap id="deviceMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
+        <id column="id" property="id"/>
+        <result column="No" property="No"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="model" property="model"/>
+        <result column="band" property="band"/>
+        <result column="location" property="location"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    <select id="listDevice" resultMap="deviceMap">
+        SELECT
+            d.*
+        FROM (
+                 SELECT
+                     id                                      id,
+                     No                                      No,
+                     name                                    name,
+                     description                             description,
+                     model                                   model,
+                     status                                  status,
+                     DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
+                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
+                 FROM device
+                 WHERE status != -1
+                 ORDER BY id
+                 LIMIT #{offSet}, #{pageRow}
+             ) d
+        ORDER BY d.id
+    </select>
+
+    <insert id="addDevice" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO device
+        (No, name, description, model,band,location) VALUES
+            (#{No}, #{name}, #{description}, #{model},#{band},#{location})
+    </insert>
+
+    <update id="updateDevice">
+        UPDATE device
+        SET
+        name = #{name}
+        , No = #{No}
+        , description = #{description}
+        , model =#{model}
+        , band=#{band}
+        , location=#{location}
+        , status=#{status}
+        WHERE id = #{id}
+    </update>
+
+     <update id="deleteDevice">
+        UPDATE device
+        SET
+        status=-1
+        WHERE id = #{id}
+    </update>
+</mapper>

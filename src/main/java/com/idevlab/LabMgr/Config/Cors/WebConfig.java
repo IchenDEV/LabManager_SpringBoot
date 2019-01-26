@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/login/**")
+        registry.addMapping("/**")
             .allowedOrigins("http://localhost:8000")//允许本地8000端口跨域请求
             .allowedMethods("POST", "GET","OPTIONS")//允许POST GET OPTIONS 跨域
             .allowedHeaders("content-type")//允许content-type 跨域

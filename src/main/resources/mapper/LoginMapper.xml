@@ -8,12 +8,16 @@
             u.id       userId,
             u.username username,
             u.password password,
-            u.nickname nickName
+            u.nickname nickname,
+            u.phone phone,
+            u.sex sex,
+            u.address address,
+            u.email email
         FROM
             sys_user u
         WHERE u.username = #{username}
           AND u.password = #{password}
-          AND u.delete_status = '1'
+          AND u.status = '1'
     </select>
 
 </mapper>

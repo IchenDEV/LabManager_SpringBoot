@@ -1,10 +1,14 @@
 package com.idevlab.LabMgr.Controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.alibaba.fastjson.JSONObject;
 import com.idevlab.LabMgr.Service.LoginService;
+import com.idevlab.LabMgr.Service.UserService;
 import com.idevlab.LabMgr.Util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +25,8 @@ public class LoginController {
 
 	@Autowired
 	private LoginService loginService;
-
+	@Autowired
+	private UserService userService;
 	/**
 	 * 登录
 	 */
@@ -29,7 +34,9 @@ public class LoginController {
 	@PostMapping("/auth")
 	public JSONObject authLogin(@RequestBody JSONObject requestJson) {
 		CommonUtil.hasAllRequired(requestJson, "username,password");
-		return loginService.authLogin(requestJson);
+		JSONObject x= loginService.authLogin(requestJson);
+		loginService.getInfo();
+		return x;
 	}
 
 	/**
@@ -40,6 +47,7 @@ public class LoginController {
 	public JSONObject getInfo() {
 		return loginService.getInfo();
 	}
+
 
 	/**
 	 * 登出

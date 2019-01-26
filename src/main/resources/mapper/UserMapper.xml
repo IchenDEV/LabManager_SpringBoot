@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.idevlab.LabMgr.UserDao">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.idevlab.LabMgr.Dao.UserDao">
 
     <select id="countUser" resultType="Integer">
         SELECT count(0)
         FROM sys_user u
-        WHERE u.delete_status = '1'
+        WHERE u.status = '1'
     </select>
 
     <resultMap id="userMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
@@ -14,11 +14,15 @@
         <result column="username" property="username"/>
         <result column="nickname" property="nickname"/>
         <result column="roleId" property="roleId"/>
+        <result column="phone" property="phone"/>
+        <result column="address" property="address"/>
+        <result column="email" property="email"/>
+        <result column="sex" property="sex"/>
         <result column="roleName" property="roleName"/>
         <result column="createTime" property="createTime"/>
         <result column="updateTime" property="updateTime"/>
         <result column="lastLoginTime" property="lastLoginTime"/>
-        <result column="deleteStatus" property="deleteStatus"/>
+        <result column="status" property="status"/>
         <collection property="permissionList" ofType="String">
             <id column="permissionName" property="permissionName"/>
         </collection>
@@ -34,11 +38,15 @@
                      username                                username,
                      nickname                                nickname,
                      role_id                                 roleId,
-                     delete_status                           deleteStatus,
+                     sex                                     sex,
+                     phone                                   phone,
+                     address                                 address,
+                     email                                   email,
+                     status                                  status,
                      DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
                      DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
                  FROM sys_user
-                 WHERE delete_status = '1'
+                 WHERE status = '1'
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
              ) u
@@ -54,7 +62,7 @@
             id        roleId,
             role_name roleName
         FROM sys_role
-        WHERE delete_status='1'
+        WHERE status='1'
     </select>
 
     <insert id="addUser" useGeneratedKeys="true" keyProperty="userId">
@@ -72,7 +80,7 @@
         </if>
 
         , role_id = #{roleId}
-        , delete_status = #{deleteStatus}
+        , status = #{status}
         WHERE id = #{userId} and id != 10001
     </update>
     <resultMap id="roleMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
@@ -82,14 +90,6 @@
             <id column="userId" property="userId"/>
             <result column="nickname" property="nickname"/>
         </collection>
-        <collection property="menus" ofType="com.idevlab.LabMgr.Util.Model.One2Many">
-            <id column="menuCode" property="menuCode"/>
-            <result column="menuName" property="menuName"/>
-            <collection property="permissions" ofType="com.alibaba.fastjson.JSONObject">
-                <id column="permissionId" property="permissionId"/>
-                <result column="permissionName" property="permissionName"/>
-            </collection>
-        </collection>
     </resultMap>
     <select id="listRole" resultMap="roleMap">
         SELECT
@@ -98,14 +98,12 @@
             u.id              userId,
             u.nickname        nickname,
             p.id              permissionId,
-            p.menu_code       menuCode,
-            p.menu_name       menuName,
             p.permission_name permissionName
         FROM sys_role r
-            LEFT JOIN sys_user u ON r.id = u.role_id AND u.delete_status = '1'
-            LEFT JOIN sys_role_permission rp ON r.id = rp.role_id AND rp.delete_status = '1'
+            LEFT JOIN sys_user u ON r.id = u.role_id AND u.status = '1'
+            LEFT JOIN sys_role_permission rp ON r.id = rp.role_id AND rp.status = '1'
             LEFT JOIN sys_permission p ON rp.permission_id = p.id
-        WHERE r.delete_status = '1'
+        WHERE r.status = '1'
         ORDER BY r.id, p.id
     </select>
     <resultMap id="permissionMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
@@ -156,8 +154,8 @@
             u.id        userId,
             p.id        permissionId
         FROM sys_role r
-            LEFT JOIN sys_user u ON r.id = u.role_id AND u.delete_status = '1'
-            LEFT JOIN sys_role_permission rp ON r.id = rp.role_id AND rp.delete_status = '1'
+            LEFT JOIN sys_user u ON r.id = u.role_id AND u.status = '1'
+            LEFT JOIN sys_role_permission rp ON r.id = rp.role_id AND rp.status = '1'
             LEFT JOIN sys_permission p ON rp.permission_id = p.id
         WHERE r.id = #{roleId}
     </select>
@@ -165,20 +163,20 @@
     <update id="removeRole">
         UPDATE sys_role
         SET
-            delete_status = '2'
+            status = '2'
         WHERE id = #{roleId} and id !=1
     </update>
     <update id="removeRoleAllPermission">
         UPDATE sys_role_permission
         SET
-            delete_status = '2'
+            status = '2'
         WHERE role_id = #{roleId}
     </update>
 
     <update id="removeOldPermission">
         UPDATE sys_role_permission
         SET
-        delete_status = '2'
+        status = '2'
         WHERE role_id = #{roleId}
         AND permission_id in (
         <foreach collection="permissions" item="item" index="index" separator=",">
@@ -196,6 +194,6 @@
         select count(0)
          from sys_user
          WHERE username=#{username}
-         AND delete_status='1';
+         AND status='1';
     </select>
 </mapper>
