@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.idevlab.LabMgr.Dao.ProjectDao">
+
+    <select id="countProject" resultType="Integer">
+        SELECT count(0)
+        FROM project b
+        WHERE b.status = '1'
+    </select>
+
+    <resultMap id="projectMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    <select id="listProject" resultMap="projectMap">
+        SELECT
+            d.*
+        FROM (
+                 SELECT
+                     id                                      id,
+                     name                                    name,
+                     description                             description,                  
+                     status                                  status,
+                     DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
+                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
+                 FROM project
+                 WHERE status != -1
+                 ORDER BY id
+                 LIMIT #{offSet}, #{pageRow}
+             ) d
+        ORDER BY d.id
+    </select>
+
+    <insert id="addProject" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO project
+        (name, description,status) VALUES
+            (#{name}, #{description},#{status})
+    </insert>
+
+    <update id="updateProject">
+        UPDATE project
+        SET
+        name = #{name}
+        , description = #{description}
+        , status=#{status}
+        WHERE id = #{id}
+    </update>
+
+     <update id="deleteProject">
+        UPDATE project
+        SET
+        status=-1
+        WHERE id = #{id}
+    </update>
+</mapper>

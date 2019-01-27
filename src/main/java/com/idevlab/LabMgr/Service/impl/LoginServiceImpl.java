@@ -73,6 +73,24 @@ public class LoginServiceImpl implements LoginService {
 		return CommonUtil.successJson(info);
 	}
 
+	@Override
+	public JSONObject updateCurrentUser(JSONObject jsonObject) {
+		//从session获取用户信息
+		Session session = SecurityUtils.getSubject().getSession();//获得session
+		JSONObject userInfo = (JSONObject) session.getAttribute(Constants.SESSION_USER_INFO);
+		String username = userInfo.getString("username");
+		jsonObject.remove("username");
+		jsonObject.remove("password");
+		jsonObject.put("username",username);
+		loginDao.updateCurrentUser(jsonObject);
+		return CommonUtil.successJson();
+	}
+
+	@Override
+	public JSONObject updateCurrentPassword(String username, String password) {
+		return loginDao.updateCurrentPassword(username, com.idevlab.LabMgr.Util.CommonUtil.md5(password));
+	}
+
 	/**
 	 * 退出登录
 	 */

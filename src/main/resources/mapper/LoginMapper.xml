@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.idevlab.LabMgr.Dao.LoginDao">
 
     <select id="getUser" resultType="com.alibaba.fastjson.JSONObject">
@@ -19,5 +19,40 @@
           AND u.password = #{password}
           AND u.status = '1'
     </select>
+
+    <select id="getCurrentUser" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+            u.id       userId,
+            u.username username,
+            u.nickname nickname,
+            u.phone phone,
+            u.sex sex,
+            u.address address,
+            u.email email
+        FROM
+            sys_user u
+        WHERE u.username = #{username}
+          AND u.status = '1'
+    </select>
+
+    <update id="updateCurrentUser" >
+        UPDATE sys_user
+          SET
+            nickname=#{nickname},
+            phone=#{phone},
+            sex=#{sex},
+            address=#{address},
+            email=#{email}
+          WHERE username = #{username}
+            AND status = '1'
+    </update>
+
+    <update id="updateCurrentPassword" >
+        UPDATE sys_user
+          SET
+                password = #{password}
+          WHERE username = #{username}
+            AND status = '1'
+    </update>
 
 </mapper>

@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * @author: idevlab
- * @Description: 用户/角色/权限
+ * @Description: 设备/角色/权限
  * @date: 2019/1/22 10:18
  */
 @Service
@@ -22,7 +22,7 @@ public class DeviceServiceImpl implements  DeviceService {
 	private  DeviceDao  deviceDao;
 
 	/**
-	 * 用户列表
+	 * 设备列表
 	 */
 	@Override
 	public JSONObject listDevice(JSONObject jsonObject) {
@@ -32,8 +32,15 @@ public class DeviceServiceImpl implements  DeviceService {
 		return CommonUtil.successPage(jsonObject, list, count);
 	}
 
+	@Override
+	public JSONObject getDeviceById(JSONObject jsonObject) {
+		CommonUtil.fillPageParam(jsonObject);
+		int count =  deviceDao.countDevice(jsonObject);
+		List<JSONObject> list =  deviceDao.getDeviceById(jsonObject);
+		return CommonUtil.successPage(jsonObject, list, count);
+	}
 	/**
-	 * 添加用户
+	 * 添加设备
 	 */
 	@Override
 	public JSONObject addDevice(JSONObject jsonObject) {	
@@ -43,7 +50,7 @@ public class DeviceServiceImpl implements  DeviceService {
 
 	
 	/**
-	 * 修改用户
+	 * 修改设备
 	 */
 	@Override
 	public JSONObject updateDevice(JSONObject jsonObject) {

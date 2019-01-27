@@ -44,6 +44,8 @@ public class UserServiceImpl implements UserService {
 		if (exist > 0) {
 			return CommonUtil.errorJson(ErrorEnum.E_10009);
 		}
+		String password = com.idevlab.LabMgr.Util.CommonUtil.md5(jsonObject.getString("password"));
+		jsonObject.replace("password",password);
 		userDao.addUser(jsonObject);
 		return CommonUtil.successJson();
 	}

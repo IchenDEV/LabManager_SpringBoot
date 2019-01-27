@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.idevlab.LabMgr.Dao.PermissionDao">
 
     <resultMap id="permissionMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
         <id column="userId" property="userId"/>
         <result column="nickname" property="nickname"/>
+        <result column="phone" property="phone"/>
+        <result column="sex" property="sex"/>
+        <result column="address" property="address"/>
+        <result column="email" property="email"/>
         <result column="roleId" property="roleId"/>
         <result column="roleName" property="roleName"/>
         <collection property="menuList" ofType="String">
@@ -19,6 +23,10 @@
         SELECT
             u.id              userId,
             u.nickname        nickname,
+            u.phone           phone,
+            u.sex             sex,
+            u.address         address,
+            u.email           email,
             u.role_id         roleId,
             r.role_name       roleName,
             p.menu_code       menuCode,

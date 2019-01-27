@@ -32,20 +32,26 @@ public class DeviceController {
      * offSet 
      * pageRow
      */
-    @RequiresPermissions("user:list")
+    @RequiresPermissions("device:list")
     @GetMapping("/list")
     public JSONObject listDevice(HttpServletRequest request) {
         return deviceService.listDevice(CommonUtil.request2Json(request));
     }
 
-    @RequiresPermissions("user:add")
+    @RequiresPermissions("device:list")
+    @GetMapping("/listById")
+    public JSONObject listDeviceById(HttpServletRequest request) {
+        return deviceService.listDevice(CommonUtil.request2Json(request));
+    }
+
+    @RequiresPermissions("device:add")
     @PostMapping("/addDevice")
     public JSONObject addDevice(@RequestBody JSONObject requestJson) {
-        CommonUtil.hasAllRequired(requestJson, "No,name,description,model");
+        CommonUtil.hasAllRequired(requestJson, "No,name,description,model,status,band,location");
         return deviceService.addDevice(requestJson);
     }
 
-    @RequiresPermissions("user:update")
+    @RequiresPermissions("device:update")
     @PostMapping("/updateDevice")
     public JSONObject updateDevice(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "No,name,description,model,id,band,location,status");

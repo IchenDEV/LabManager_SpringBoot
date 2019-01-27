@@ -23,6 +23,10 @@ public interface LoginService {
 	 * 查询当前登录用户的权限等信息
 	 */
 	JSONObject getInfo();
+
+	JSONObject updateCurrentUser(JSONObject jsonObject);
+
+	JSONObject updateCurrentPassword(String username, String password);
 	/**
 	 * 退出登录
 	 */

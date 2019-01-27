@@ -3,7 +3,7 @@ package com.idevlab.LabMgr.Service;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- * @author: hxy
+ * @author: idevlab
  * @description: 设备 权限
  * @date: 2019/1/26 23:18
  */
@@ -12,6 +12,11 @@ public interface DeviceService {
 	 * 设备列表
 	 */
 	JSONObject listDevice(JSONObject jsonObject);
+
+	/**
+	 * 通过id获得设备列表
+	 */
+	JSONObject getDeviceById(JSONObject jsonObject);
 
 	/**
 	 * 添加设备

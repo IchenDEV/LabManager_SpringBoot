@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.idevlab.LabMgr.Dao.LabDao">
+
+    <select id="countLab" resultType="Integer">
+        SELECT count(0)
+        FROM lab d
+        WHERE d.status = '1'
+    </select>
+
+    <resultMap id="labMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="location" property="location"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    <select id="listLab" resultMap="labMap">
+        SELECT
+            d.*
+        FROM (
+                 SELECT
+                     id                                      id,
+                     name                                    name,
+                     description                             description,
+                     location                                location,
+                     status                                  status,
+                     DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
+                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
+                 FROM lab
+                 WHERE status != -1
+                 ORDER BY id
+                 LIMIT #{offSet}, #{pageRow}
+             ) d
+        ORDER BY d.id
+    </select>
+
+    <insert id="addLab" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO lab
+        ( name, description, location,status) VALUES
+            ( #{name}, #{description}, #{location},#{status})
+    </insert>
+
+    <update id="updateLab">
+        UPDATE lab
+        SET
+        name = #{name}
+        , description = #{description}
+        , location=#{location}
+        , status=#{status}
+        WHERE id = #{id}
+    </update>
+
+     <update id="deleteLab">
+        UPDATE lab
+        SET
+        status=-1
+        WHERE id = #{id}
+    </update>
+</mapper>

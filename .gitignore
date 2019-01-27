@@ -19,7 +19,7 @@
 ### NetBeans ###
 /nbproject/private/
 /build/
-/logs/
+logs/
 /nbbuild/
 /.mvn/
 /dist/

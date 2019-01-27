@@ -22,9 +22,6 @@
         <result column="status" property="status"/>
     </resultMap>
     <select id="listDevice" resultMap="deviceMap">
-        SELECT
-            d.*
-        FROM (
                  SELECT
                      id                                      id,
                      No                                      No,
@@ -38,14 +35,29 @@
                  WHERE status != -1
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
-             ) d
-        ORDER BY d.id
+    </select>
+
+    <select id="getDeviceById" resultMap="deviceMap">
+                 SELECT
+                     id                                      id,
+                     No                                      No,
+                     name                                    name,
+                     description                             description,
+                     model                                   model,
+                     status                                  status,
+                     DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
+                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
+                 FROM device
+                 WHERE status != -1 And
+                       id = #{id}
+                 ORDER BY id
+                 LIMIT #{offSet}, #{pageRow}
     </select>
 
     <insert id="addDevice" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO device
-        (No, name, description, model,band,location) VALUES
-            (#{No}, #{name}, #{description}, #{model},#{band},#{location})
+        (No, name, description, model,band,location,status) VALUES
+            (#{No}, #{name}, #{description}, #{model},#{band},#{location},#{status})
     </insert>
 
     <update id="updateDevice">
@@ -61,10 +73,9 @@
         WHERE id = #{id}
     </update>
 
-     <update id="deleteDevice">
+    <update id="deleteDevice">
         UPDATE device
-        SET
-        status=-1
+        SET status=-1
         WHERE id = #{id}
     </update>
 </mapper>

@@ -27,6 +27,7 @@ public class LoginController {
 	private LoginService loginService;
 	@Autowired
 	private UserService userService;
+
 	/**
 	 * 登录
 	 */
@@ -45,6 +46,15 @@ public class LoginController {
 	@CrossOrigin
 	@PostMapping("/getInfo")
 	public JSONObject getInfo() {
+		return loginService.getInfo();
+	}
+
+	/**
+	 * 查询当前登录用户的信息
+	 */
+	@CrossOrigin
+	@PostMapping("/updateInfo")
+	public JSONObject updateInfo() {
 		return loginService.getInfo();
 	}
 

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.idevlab.LabMgr.Dao.BookDao">
+
+    <select id="countBook" resultType="Integer">
+        SELECT count(0)
+        FROM book_recode b
+        WHERE b.status = '1'
+    </select>
+
+    <resultMap id="bookMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
+        <id column="id" property="id"/>
+        <result column="project" property="project"/>
+        <result column="device" property="device"/>
+        <result column="applicant" property="applicant"/>
+        <result column="beginTime" property="beginTime"/>
+        <result column="endTime" property="endTime"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    <select id="listBook" resultMap="bookMap">
+                 SELECT
+                     id                                      id,
+                     project                                 project,
+                     device                                  device,
+                     applicant                               applicant,
+                     status                                  status,
+                     DATE_FORMAT(begin_time, '%Y.%m.%d %T')  beginTime,
+                     DATE_FORMAT(end_time, '%Y.%m.%d %T')    endTime
+                     DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
+                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
+                 FROM book_recode
+                 WHERE status != -1
+                 ORDER BY id
+                 LIMIT #{offSet}, #{pageRow}
+    </select>
+
+    <insert id="addBook" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO book_recode
+        (project, device, begin_time, end_time,applicant,status) VALUES
+            (#{project}, #{device}, #{beginTime}, #{endTime},#{applicant},#{status})
+    </insert>
+
+    <update id="updateBook">
+        UPDATE book_recode
+        SET
+        project = #{project}
+        , device = #{device}
+        , begin_tme = #{beginTime}
+        , end_time =#{endTime}
+        , applicant=#{applicant}
+        , status=#{status}
+        WHERE id = #{id}
+    </update>
+
+     <update id="deleteBook">
+        UPDATE book_recode
+        SET
+        status=-1
+        WHERE id = #{id}
+    </update>
+</mapper>
