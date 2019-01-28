@@ -19,9 +19,6 @@
         <result column="status" property="status"/>
     </resultMap>
     <select id="listLab" resultMap="labMap">
-        SELECT
-            d.*
-        FROM (
                  SELECT
                      id                                      id,
                      name                                    name,
@@ -32,10 +29,11 @@
                      DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
                  FROM lab
                  WHERE status != -1
+                        <if test="id != null">And id= #{id}</if>
+                        <if test="name != null">And name like #{name}</if>
+                        <if test="location != null">And location like #{location}</if>
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
-             ) d
-        ORDER BY d.id
     </select>
 
     <insert id="addLab" useGeneratedKeys="true" keyProperty="id">
@@ -46,11 +44,12 @@
 
     <update id="updateLab">
         UPDATE lab
-        SET
-        name = #{name}
-        , description = #{description}
-        , location=#{location}
-        , status=#{status}
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="description != null">description=#{description},</if>
+            <if test="location != null">location=#{location},</if>
+            <if test="status != null">status=#{status}</if>
+        </set>
         WHERE id = #{id}
     </update>
 

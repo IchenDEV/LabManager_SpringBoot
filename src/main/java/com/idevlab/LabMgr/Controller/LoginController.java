@@ -1,14 +1,15 @@
 package com.idevlab.LabMgr.Controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.alibaba.fastjson.JSONObject;
+import com.idevlab.LabMgr.Service.LogService;
 import com.idevlab.LabMgr.Service.LoginService;
-import com.idevlab.LabMgr.Service.UserService;
 import com.idevlab.LabMgr.Util.CommonUtil;
+import com.idevlab.LabMgr.Util.Constants.Constants;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,9 +26,8 @@ public class LoginController {
 
 	@Autowired
 	private LoginService loginService;
-	@Autowired
-	private UserService userService;
-
+    @Autowired
+    private LogService logService;
 	/**
 	 * 登录
 	 */
@@ -36,7 +36,11 @@ public class LoginController {
 	public JSONObject authLogin(@RequestBody JSONObject requestJson) {
 		CommonUtil.hasAllRequired(requestJson, "username,password");
 		JSONObject x= loginService.authLogin(requestJson);
-		loginService.getInfo();
+		JSONObject y= loginService.getInfo();
+		Session session = SecurityUtils.getSubject().getSession();//获得session
+		JSONObject userInfo = (JSONObject) session.getAttribute(Constants.SESSION_USER_INFO);
+		String username = userInfo.getString("username");
+		logService.addLog("login",username);
 		return x;
 	}
 
@@ -54,8 +58,12 @@ public class LoginController {
 	 */
 	@CrossOrigin
 	@PostMapping("/updateInfo")
-	public JSONObject updateInfo() {
-		return loginService.getInfo();
+	public JSONObject updateInfo(@RequestBody JSONObject requestJson) {
+		Session session = SecurityUtils.getSubject().getSession();//获得session
+		JSONObject userInfo = (JSONObject) session.getAttribute(Constants.SESSION_USER_INFO);
+		String username = userInfo.getString("username");
+		logService.addLog("updateInfo", username);
+		return loginService.updateCurrentUser(requestJson);
 	}
 
 

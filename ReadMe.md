@@ -1,0 +1,1 @@
+[![Build Status](https://dev.azure.com/TeamDEVLab/LabManager/_apis/build/status/LabManager?branchName=master)](https://dev.azure.com/TeamDEVLab/LabManager/_build/latest?definitionId=2?branchName=master)

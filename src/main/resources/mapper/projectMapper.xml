@@ -18,9 +18,6 @@
         <result column="status" property="status"/>
     </resultMap>
     <select id="listProject" resultMap="projectMap">
-        SELECT
-            d.*
-        FROM (
                  SELECT
                      id                                      id,
                      name                                    name,
@@ -30,10 +27,10 @@
                      DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
                  FROM project
                  WHERE status != -1
+                       <if test="id != null">And id= #{id}</if>
+                       <if test="name != null">And name like #{name}</if>
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
-             ) d
-        ORDER BY d.id
     </select>
 
     <insert id="addProject" useGeneratedKeys="true" keyProperty="id">
@@ -44,10 +41,11 @@
 
     <update id="updateProject">
         UPDATE project
-        SET
-        name = #{name}
-        , description = #{description}
-        , status=#{status}
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="description != null">description=#{description},</if>
+            <if test="status != null">status=#{status}</if>
+        </set>
         WHERE id = #{id}
     </update>
 

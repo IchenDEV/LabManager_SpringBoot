@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.idevlab.LabMgr.Dao.LogDao">
+
+    <select id="countlog" resultType="Integer">
+        SELECT count(0)
+        FROM log d
+        WHERE d.status !=-1
+    </select>
+
+    <resultMap id="logMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="operation" property="operation"/>
+        <result column="targer" property="targer"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    <select id="listLog" resultMap="logMap">
+                 SELECT
+                     id                                      id,
+                     user                                    user,
+                     operation                               operation,
+                     targer                                  targer,
+                     status                                  status,
+                     DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
+                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
+                 FROM log
+                 WHERE status != -1
+                        <if test="id != null">And id= #{id}</if>
+                        <if test="user != null">And user = #{user}</if>
+                        <if test="operation != null">And operation = #{operation}</if>
+                        <if test="targer != null">And targer = #{targer}</if>
+                 ORDER BY id
+                 LIMIT #{offSet}, #{pageRow}
+    </select>
+
+    <insert id="addLog" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO log
+        ( user, operation, targer) VALUES
+            ( #{user}, #{operation}, #{targer})
+    </insert>
+
+    <update id="updateLog">
+        UPDATE log
+        <set>
+            <if test="name != null">user=#{user},</if>
+            <if test="description != null">operation=#{operation},</if>
+            <if test="location != null">targer=#{targer},</if>
+            <if test="status != null">status=#{status}</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+     <update id="deleteLog">
+        UPDATE log
+        SET
+        status=-1
+        WHERE id = #{id}
+    </update>
+</mapper>

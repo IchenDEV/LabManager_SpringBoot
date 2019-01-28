@@ -27,12 +27,30 @@
                      No                                      No,
                      name                                    name,
                      description                             description,
+                     location                                location,
+                     band                                    band,
                      model                                   model,
                      status                                  status,
                      DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
                      DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
                  FROM device
                  WHERE status != -1
+        <if test="id != null">And id= #{id}</if>
+        <if test="No != null">
+                       AND No like #{No}
+        </if>
+        <if test="name != null">
+                       AND nane like #{name}
+        </if>
+        <if test="location != null">
+                       AND location like #{location}
+        </if>
+        <if test="model != null">
+                       AND model like #{model}
+        </if>
+        <if test="band != null">
+                       AND band like #{band}
+        </if>
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
     </select>
@@ -43,6 +61,8 @@
                      No                                      No,
                      name                                    name,
                      description                             description,
+                     location                                location,
+                     band                                    band,
                      model                                   model,
                      status                                  status,
                      DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
@@ -50,8 +70,6 @@
                  FROM device
                  WHERE status != -1 And
                        id = #{id}
-                 ORDER BY id
-                 LIMIT #{offSet}, #{pageRow}
     </select>
 
     <insert id="addDevice" useGeneratedKeys="true" keyProperty="id">
@@ -62,14 +80,15 @@
 
     <update id="updateDevice">
         UPDATE device
-        SET
-        name = #{name}
-        , No = #{No}
-        , description = #{description}
-        , model =#{model}
-        , band=#{band}
-        , location=#{location}
-        , status=#{status}
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="No != null">No=#{No},</if>
+            <if test="description != null">description=#{description},</if>
+            <if test="model != null">model=#{model}</if>
+            <if test="band!= null">band=#{band},</if>
+            <if test="location != null">location=#{location},</if>
+            <if test="status != null">status=#{status}</if>
+        </set>
         WHERE id = #{id}
     </update>
 

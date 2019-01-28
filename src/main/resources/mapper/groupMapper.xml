@@ -20,24 +20,21 @@
         <result column="status" property="status"/>
     </resultMap>
     <select id="listGroup" resultMap="groupMap">
-        SELECT
-            d.*
-        FROM (
                  SELECT
                      id                                      id,
                      name                                    name,
                      description                             description,                  
                      status                                  status,
                      DATE_FORMAT(begin_time, '%Y.%m.%d %T')  beginTime,
-                     DATE_FORMAT(end_time, '%Y.%m.%d %T')    endTime
+                     DATE_FORMAT(end_time, '%Y.%m.%d %T')    endTime,
                      DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
                      DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
                  FROM group
                  WHERE status != -1
+                       <if test="id != null">And id= #{id}</if>
+                       <if test="name != null">And name like #{name}</if>
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
-             ) d
-        ORDER BY d.id
     </select>
 
     <insert id="addGroup" useGeneratedKeys="true" keyProperty="id">
@@ -48,19 +45,19 @@
 
     <update id="updateGroup">
         UPDATE group
-        SET
-        name = #{name}
-        , description = #{description}
-        ,begin_time=#{beginTime}
-        ,end_time=#{endTime}
-        , status=#{status}
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="description != null">description=#{description},</if>
+            <if test="beginTime != null">begin_time=#{beginTime},</if>
+            <if test="endTime != null">end_time=#{endTime},</if>
+            <if test="status != null">status=#{status}</if>
+        </set>
         WHERE id = #{id}
     </update>
 
-     <update id="deleteGroup">
+    <update id="deleteGroup">
         UPDATE group
-        SET
-        status=-1
+        SET status=-1
         WHERE id = #{id}
     </update>
 </mapper>

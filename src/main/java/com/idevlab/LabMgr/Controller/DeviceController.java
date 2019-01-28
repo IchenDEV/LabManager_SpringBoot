@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.idevlab.LabMgr.Service.DeviceService;
+import com.idevlab.LabMgr.Service.LogService;
 import com.idevlab.LabMgr.Util.CommonUtil;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -26,7 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class DeviceController {
     @Autowired
     private DeviceService deviceService;
-
+    @Autowired
+    private LogService logService;
     /**
      * 查询用户列表
      * offSet 
@@ -48,13 +50,15 @@ public class DeviceController {
     @PostMapping("/addDevice")
     public JSONObject addDevice(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "No,name,description,model,status,band,location");
+        logService.addLog("AddDevice", "New");
         return deviceService.addDevice(requestJson);
     }
 
     @RequiresPermissions("device:update")
     @PostMapping("/updateDevice")
     public JSONObject updateDevice(@RequestBody JSONObject requestJson) {
-        CommonUtil.hasAllRequired(requestJson, "No,name,description,model,id,band,location,status");
+        CommonUtil.hasAllRequired(requestJson, "id");
+        logService.addLog("UpdateDevice",requestJson.getString("id"));
         return deviceService.updateDevice(requestJson);
     }
 }

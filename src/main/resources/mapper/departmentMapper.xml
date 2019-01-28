@@ -18,21 +18,52 @@
         <result column="status" property="status"/>
     </resultMap>
     <select id="listDepartment" resultMap="departmentMap">
-        SELECT
-            d.*
-        FROM (
                  SELECT
                      id                                      id,
                      name                                    name,
                      description                             description,
                      DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
-                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
+                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime,
+                     status                                  status
                  FROM department
                  WHERE status != -1
+        <if test="name != null">And name like #{name}</if>
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
-             ) d
-        ORDER BY d.id
+    </select>
+
+
+    <resultMap id="departmentUserMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
+        <id column="id" property="id"/>
+        <result column="user" property="user"/>
+        <result column="nickname" property="nickname"/>
+        <result column="username" property="username"/>
+        <result column="department" property="department"/>
+        <result column="departmentName" property="departmentName"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <select id="listDepartmentUser" resultMap="departmentUserMap">
+                 SELECT
+                     ud.id                                      id,
+                     ud.user                                    user,
+                     ud.department                              department,
+                     DATE_FORMAT(ud.create_time, '%Y.%m.%d %T') createTime,
+                     DATE_FORMAT(ud.update_time, '%Y.%m.%d %T') updateTime,
+                     u.nickname                                 nickname,
+                     dp.name                                    departmentName,
+                     u.username                                 username,
+                     ud.status                                  status
+                 FROM user_department ud
+                      LEFT JOIN sys_user u ON ud.user = u.id
+                      LEFT JOIN department dp ON ud.department = dp.id
+                 WHERE ud.status != -1 And u.status != -1 And dp.status != -1
+        <if test="user != null">And user = #{user}</if>
+        <if test="department != null">And department = #{department}</if>
+                 ORDER BY id
+                 LIMIT #{offSet}, #{pageRow}
     </select>
 
     <insert id="addDepartment" useGeneratedKeys="true" keyProperty="id">
@@ -41,19 +72,26 @@
             ( #{name}, #{description},#{status})
     </insert>
 
+    <insert id="addUserToDepartment" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_department
+        (user, department,status) VALUES
+            ( #{user}, #{department},#{status})
+    </insert>
+
     <update id="updateDepartment">
         UPDATE department
-        SET
-        name = #{name}
-        , description = #{description}
-        , status=#{status}
+        <set>
+            <if test="id != null">And id= #{id}</if>
+            <if test="name != null">name=#{name},</if>
+            <if test="description != null">description=#{description},</if>
+            <if test="status != null">status=#{status}</if>
+        </set>
         WHERE id = #{id}
     </update>
 
-     <update id="deleteDepartment">
+    <update id="deleteDepartment">
         UPDATE department
-        SET
-        status=-1
+        SET status=-1
         WHERE id = #{id}
     </update>
 </mapper>

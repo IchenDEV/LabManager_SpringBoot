@@ -19,10 +19,15 @@ public interface DepartmentDao {
      */
     List<JSONObject> listDepartment(JSONObject jsonObject);
 
+
+    List<JSONObject> listDepartmentUser(JSONObject jsonObject);
+
     /**
      * 新增设备
      */
     int addDepartment(JSONObject jsonObject);
+
+    
 
     /**
      * 修改设备

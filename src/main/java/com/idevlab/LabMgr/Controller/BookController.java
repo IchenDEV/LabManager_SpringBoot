@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.idevlab.LabMgr.Service.BookService;
+import com.idevlab.LabMgr.Service.LogService;
 import com.idevlab.LabMgr.Util.CommonUtil;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
     @Autowired
     private BookService bookService;
+    @Autowired
+    private LogService logService;
 
     /**
      * 查询用户列表
@@ -32,9 +35,9 @@ public class BookController {
      * pageRow
      */
     @RequiresPermissions("book:list")
-    @GetMapping("/list")
-    public JSONObject listBook(HttpServletRequest request) {
-        return bookService.listBook(CommonUtil.request2Json(request));
+    @PostMapping("/list")
+    public JSONObject listBook(@RequestBody JSONObject requestJson) {
+        return bookService.listBook(requestJson);
     }
 
     @RequiresPermissions("book:list")
@@ -47,13 +50,15 @@ public class BookController {
     @PostMapping("/addBook")
     public JSONObject addBook(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "project,device,beginTime,endTime,applicant,status");
+        logService.addLog("AddBook", "New");
         return bookService.addBook(requestJson);
     }
 
     @RequiresPermissions("book:update")
     @PostMapping("/updateBook")
     public JSONObject updateBook(@RequestBody JSONObject requestJson) {
-        CommonUtil.hasAllRequired(requestJson, "project,device,beginTime,endTime,applicant,status");
+        CommonUtil.hasAllRequired(requestJson, "id");
+        logService.addLog("UpdateBook", requestJson.getString("id"));
         return bookService.updateBook(requestJson);
     }
 }
