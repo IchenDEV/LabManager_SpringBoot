@@ -33,7 +33,7 @@
                  WHERE status != -1
         <if test="id != null">And id= #{id}</if>
         <if test="name != null">And name like #{name}</if>
-        <if test="time != null">And #{time}>= begin_time And #{time}<= end_time</if>
+        <if test="time != null"><![CDATA[ And #{time} >= begin_time And #{time} <= end_time]]></if>
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
     </select>
