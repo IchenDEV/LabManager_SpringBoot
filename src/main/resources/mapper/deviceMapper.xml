@@ -63,7 +63,7 @@
                        AND d.No like #{No}
         </if>
         <if test="name != null">
-                       AND d.nane like #{name}
+                       AND d.name like #{name}
         </if>
         <if test="location != null">
                        AND d.location = #{location}

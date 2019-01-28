@@ -46,7 +46,7 @@
                      DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
                      DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
                  FROM sys_user
-                 WHERE status = '1'
+                 WHERE status = 1
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
              ) u

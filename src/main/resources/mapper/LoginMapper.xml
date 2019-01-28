@@ -35,19 +35,20 @@
           AND u.status = '1'
     </select>
 
-    <update id="updateCurrentUser" >
+    <update id="updateCurrentUser">
         UPDATE sys_user
-          SET
-            nickname=#{nickname},
-            phone=#{phone},
-            sex=#{sex},
-            address=#{address},
-            email=#{email}
+        <set>
+            <if test="nickname != null">nickname=#{nickname},</if>
+            <if test="phone != null">phone=#{phone},</if>
+            <if test="sex != null">sex=#{sex},</if>
+            <if test="address != null">address=#{address},</if>
+            <if test="email != null">email=#{email},</if>
+        </set>
           WHERE username = #{username}
-            AND status = '1'
+            AND status = 1
     </update>
 
-    <update id="updateCurrentPassword" >
+    <update id="updateCurrentPassword">
         UPDATE sys_user
           SET
                 password = #{password}

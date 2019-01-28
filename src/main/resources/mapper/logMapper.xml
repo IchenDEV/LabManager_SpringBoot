@@ -46,10 +46,9 @@
     <update id="updateLog">
         UPDATE log
         <set>
-            <if test="name != null">user=#{user},</if>
-            <if test="description != null">operation=#{operation},</if>
-            <if test="location != null">targer=#{targer},</if>
-            <if test="status != null">status=#{status}</if>
+            <if test="user != null">user=#{user},</if>
+            <if test="operation != null">operation=#{operation},</if>
+            <if test="targer != null">targer=#{targer},</if>
         </set>
         WHERE id = #{id}
     </update>

@@ -36,7 +36,8 @@
                      status                                  status
                  FROM department
                  WHERE status != -1
-        <if test="name != null">And name like #{name}</if>
+                 <if test="id != null">And id = #{id}</if>
+                 <if test="name != null">And name like #{name}</if>
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
     </select>
@@ -99,7 +100,6 @@
     <update id="updateDepartment">
         UPDATE department
         <set>
-            <if test="id != null">And id= #{id}</if>
             <if test="name != null">name=#{name},</if>
             <if test="description != null">description=#{description},</if>
             <if test="status != null">status=#{status}</if>

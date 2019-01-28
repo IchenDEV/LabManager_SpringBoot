@@ -13,6 +13,8 @@
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="description" property="description"/>
+        <result column="beginTime" property="beginTime"/>
+        <result column="endTime" property="endTime"/>
         <result column="createTime" property="createTime"/>
         <result column="updateTime" property="updateTime"/>
         <result column="status" property="status"/>
@@ -21,7 +23,9 @@
                  SELECT
                      id                                      id,
                      name                                    name,
-                     description                             description,                  
+                     description                             description,
+                     DATE_FORMAT(begin_time, '%Y.%m.%d %T')  beginTime,
+                     DATE_FORMAT(end_time, '%Y.%m.%d %T')    endTime,                  
                      status                                  status,
                      DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
                      DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
@@ -29,6 +33,7 @@
                  WHERE status != -1
                        <if test="id != null">And id= #{id}</if>
                        <if test="name != null">And name like #{name}</if>
+                       <if test="time != null">And #{time}>= begin_time And #{time}<= end_time</if>
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
     </select>
@@ -58,8 +63,8 @@
 
     <insert id="addProject" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO project
-        (name, description,status) VALUES
-            (#{name}, #{description},#{status})
+        (name, description,begin_time,end_time,status) VALUES
+            (#{name}, #{description}, #{beginTime}, #{endTime},#{status})
     </insert>
 
     <update id="updateProject">
@@ -67,6 +72,8 @@
         <set>
             <if test="name != null">name=#{name},</if>
             <if test="description != null">description=#{description},</if>
+            <if test="beginTime != null">begin_time=#{beginTime},</if>
+            <if test="endTime != null">end_time=#{endTime},</if>
             <if test="status != null">status=#{status}</if>
         </set>
         WHERE id = #{id}

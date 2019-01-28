@@ -11,7 +11,7 @@
                        <if test="project != null">And project = #{project}</if>
                        <if test="device != null">And device = #{device}</if>
                        <if test="applicant != null">And applicant = #{applicant}</if>
-                       <if test="Time != null"> <![CDATA[ And begin_time<= #{Time} And end_time>= #{Time} ]]></if>
+                       <if test="time != null"> <![CDATA[ And begin_time<= #{time} And end_time>= #{time} ]]></if>
     </select>
 
     <resultMap id="bookMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
@@ -42,7 +42,7 @@
                        <if test="project != null">And project = #{project}</if>
                        <if test="device != null">And device = #{device}</if>
                        <if test="applicant != null">And applicant = #{applicant}</if>
-                       <if test="Time != null"> <![CDATA[ And begin_time<= #{Time} And end_time>= #{Time} ]]></if>
+                       <if test="time != null"> <![CDATA[ And begin_time<= #{time} And end_time>= #{time} ]]></if>
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
     </select>
@@ -55,13 +55,6 @@
 
     <update id="updateBook">
         UPDATE book_recode
-        SET
-        project = #{project}
-        , device = #{device}
-        , begin_time = #{beginTime}
-        , end_time =#{endTime}
-        , applicant=#{applicant}
-        , status=#{status}
          <set>
             <if test="project != null">project=#{project},</if>
             <if test="device != null">device=#{device},</if>

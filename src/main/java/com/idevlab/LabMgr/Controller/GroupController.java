@@ -36,6 +36,16 @@ public class GroupController {
     public JSONObject listGroup(@RequestBody JSONObject requestJson) {
         return groupService.listGroup(requestJson);
     }
+    @RequiresPermissions("device:list")
+    @PostMapping("/listUser")
+    public JSONObject listGroupUser(@RequestBody JSONObject requestJson) {
+        return groupService.listGroupUser(requestJson);
+    }
+    @RequiresPermissions("device:list")
+    @PostMapping("/listProject")
+    public JSONObject listGroupProject(@RequestBody JSONObject requestJson) {
+        return groupService.listGroupProject(requestJson);
+    }
 
     @RequiresPermissions("device:add")
     @PostMapping("/addGroup")

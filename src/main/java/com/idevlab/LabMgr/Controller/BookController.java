@@ -1,7 +1,5 @@
 package com.idevlab.LabMgr.Controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.alibaba.fastjson.JSONObject;
 import com.idevlab.LabMgr.Service.BookService;
 import com.idevlab.LabMgr.Service.LogService;
@@ -10,7 +8,6 @@ import com.idevlab.LabMgr.Util.CommonUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,12 +35,6 @@ public class BookController {
     @PostMapping("/list")
     public JSONObject listBook(@RequestBody JSONObject requestJson) {
         return bookService.listBook(requestJson);
-    }
-
-    @RequiresPermissions("book:list")
-    @GetMapping("/listById")
-    public JSONObject listBookById(HttpServletRequest request) {
-        return bookService.listBook(CommonUtil.request2Json(request));
     }
 
     @RequiresPermissions("book:add")
