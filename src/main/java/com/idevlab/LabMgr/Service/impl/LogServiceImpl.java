@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * @author: idevlab
- * @Description: 实验室/角色/权限
+ * @Description: log/角色/权限
  * @date: 2019/1/22 10:18
  */
 @Service
@@ -26,7 +26,7 @@ public class LogServiceImpl implements  LogService {
 	private  LogDao  logDao;
 
 	/**
-	 * 实验室列表
+	 * log列表
 	 */
 	@Override
 	public JSONObject listLog(JSONObject jsonObject) {
@@ -37,7 +37,7 @@ public class LogServiceImpl implements  LogService {
 	}
 
 	/**
-	 * 添加实验室
+	 * 添加log
 	 */
 	@Override
 	public JSONObject addLog(JSONObject jsonObject) {	
@@ -61,14 +61,16 @@ public class LogServiceImpl implements  LogService {
 
 	
 	/**
-	 * 修改实验室
+	 * 修改log
 	 */
 	@Override
 	public JSONObject updateLog(JSONObject jsonObject) {
 		logDao.updateLog(jsonObject);
 		return CommonUtil.successJson();
     }
-    
+    /**
+	 * 删除log
+	 */
     @Override
     public JSONObject deleteLog(JSONObject jsonObject){
         logDao.deleteLog(jsonObject);

@@ -6,35 +6,7 @@
     <select id="countDevice" resultType="Integer">
         SELECT count(0)
         FROM device d
-        WHERE d.status = '1'
-    </select>
-
-    <resultMap id="deviceMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
-        <id column="id" property="id"/>
-        <result column="No" property="No"/>
-        <result column="name" property="name"/>
-        <result column="description" property="description"/>
-        <result column="model" property="model"/>
-        <result column="band" property="band"/>
-        <result column="location" property="location"/>
-        <result column="createTime" property="createTime"/>
-        <result column="updateTime" property="updateTime"/>
-        <result column="status" property="status"/>
-    </resultMap>
-    <select id="listDevice" resultMap="deviceMap">
-                 SELECT
-                     id                                      id,
-                     No                                      No,
-                     name                                    name,
-                     description                             description,
-                     location                                location,
-                     band                                    band,
-                     model                                   model,
-                     status                                  status,
-                     DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
-                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
-                 FROM device
-                 WHERE status != -1
+        WHERE d.status != -1
         <if test="id != null">And id= #{id}</if>
         <if test="No != null">
                        AND No like #{No}
@@ -43,7 +15,7 @@
                        AND nane like #{name}
         </if>
         <if test="location != null">
-                       AND location like #{location}
+                       AND location = #{location}
         </if>
         <if test="model != null">
                        AND model like #{model}
@@ -51,25 +23,59 @@
         <if test="band != null">
                        AND band like #{band}
         </if>
-                 ORDER BY id
-                 LIMIT #{offSet}, #{pageRow}
     </select>
 
-    <select id="getDeviceById" resultMap="deviceMap">
+    <resultMap id="deviceMap" type="com.alibaba.fastjson.JSONObject">
+        <id column="id" property="id"/>
+        <result column="No" property="No"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="model" property="model"/>
+        <result column="band" property="band"/>
+        <result column="location" property="location"/>
+        <result column="locationName" property="locationName"/>
+        <result column="locationDescription" property="locationDescription"/>
+        <result column="locationAddress" property="locationAddress"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    <select id="listDevice" resultMap="deviceMap">
                  SELECT
-                     id                                      id,
-                     No                                      No,
-                     name                                    name,
-                     description                             description,
-                     location                                location,
-                     band                                    band,
-                     model                                   model,
-                     status                                  status,
-                     DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
-                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
-                 FROM device
-                 WHERE status != -1 And
-                       id = #{id}
+                     d.id                                      id,
+                     d.No                                      No,
+                     d.name                                    name,
+                     d.description                             description,
+                     d.location                                location,
+                     l.name                                    locationName,
+                     l.description                             locationDescription,
+                     l.location                                locationAddress,
+                     d.band                                    band,
+                     d.model                                   model,
+                     d.status                                  status,
+                     DATE_FORMAT(d.create_time, '%Y.%m.%d %T') createTime,
+                     DATE_FORMAT(d.update_time, '%Y.%m.%d %T') updateTime
+                 FROM device d
+                      LEFT JOIN lab l ON d.location = l.id
+                 WHERE d.status != -1 And l.status != -1
+        <if test="id != null">And id= #{id}</if>
+        <if test="No != null">
+                       AND d.No like #{No}
+        </if>
+        <if test="name != null">
+                       AND d.nane like #{name}
+        </if>
+        <if test="location != null">
+                       AND d.location = #{location}
+        </if>
+        <if test="model != null">
+                       AND d.model like #{model}
+        </if>
+        <if test="band != null">
+                       AND d.band like #{band}
+        </if>
+                 ORDER BY id
+                 LIMIT #{offSet}, #{pageRow}
     </select>
 
     <insert id="addDevice" useGeneratedKeys="true" keyProperty="id">

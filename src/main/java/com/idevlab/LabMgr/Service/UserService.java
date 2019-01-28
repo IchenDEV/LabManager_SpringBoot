@@ -12,6 +12,8 @@ public interface UserService {
 	 * 用户列表
 	 */
 	JSONObject listUser(JSONObject jsonObject);
+	JSONObject listUserGroup(JSONObject jsonObject);
+	JSONObject listUserDepartment(JSONObject jsonObject);
 
 	/**
 	 * 查询所有的角色

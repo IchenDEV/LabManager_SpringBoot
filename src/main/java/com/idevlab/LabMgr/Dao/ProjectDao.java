@@ -10,27 +10,37 @@ import java.util.List;
  */
 public interface ProjectDao {
     /**
-     * 查询预定数量
+     * 查询项目数量
      */
     int countProject(JSONObject jsonObject);
 
     /**
-     * 查询预定列表
+     * 查询项目的组的数量
+     */
+    int countProjectGroup(JSONObject jsonObject);
+
+    /**
+     * 查询项目列表
      */
     List<JSONObject> listProject(JSONObject jsonObject);
 
     /**
-     * 新增预定
+     * 查询项目的组
+     */
+    List<JSONObject> listProjectGroup(JSONObject jsonObject);
+
+    /**
+     * 新增项目
      */
     int addProject(JSONObject jsonObject);
 
     /**
-     * 修改预定
+     * 修改项目
      */
     int updateProject(JSONObject jsonObject);
 
     /**
-     * 删除预定
+     * 删除项目
      */
     int deleteProject(JSONObject jsonObject);
 

@@ -14,11 +14,6 @@ public interface DeviceService {
 	JSONObject listDevice(JSONObject jsonObject);
 
 	/**
-	 * 通过id获得设备列表
-	 */
-	JSONObject getDeviceById(JSONObject jsonObject);
-
-	/**
 	 * 添加设备
 	 */
 	JSONObject addDevice(JSONObject jsonObject);
@@ -28,7 +23,7 @@ public interface DeviceService {
 	 */
     JSONObject updateDevice(JSONObject jsonObject);
     
-    	/**
+    /**
 	 * 删除设备
 	 */
 	JSONObject deleteDevice(JSONObject jsonObject);

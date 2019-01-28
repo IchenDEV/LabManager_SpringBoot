@@ -13,11 +13,15 @@ public interface DepartmentService {
 	 */
 	JSONObject listDepartment(JSONObject jsonObject);
 
+	JSONObject listDepartmentUser(JSONObject jsonObject);
+
 	/**
 	 * 添加部门
 	 */
 	JSONObject addDepartment(JSONObject jsonObject);
 
+	JSONObject addUserToDepartment(JSONObject jsonObject);
+	
 	/**
 	 * 修改部门
 	 */
@@ -27,4 +31,6 @@ public interface DepartmentService {
 	 * 删除部门
 	 */
 	JSONObject deleteDepartment(JSONObject jsonObject);
+
+	JSONObject deleteDepartmentUser(JSONObject jsonObject);
 }

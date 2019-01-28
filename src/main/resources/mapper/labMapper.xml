@@ -9,7 +9,7 @@
         WHERE d.status = '1'
     </select>
 
-    <resultMap id="labMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
+    <resultMap id="labMap" type="com.alibaba.fastjson.JSONObject">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="description" property="description"/>

@@ -1,6 +1,7 @@
 package com.idevlab.LabMgr.Service;
 
 import com.alibaba.fastjson.JSONObject;
+
 /**
  * @author: idevlab
  * @description: 登录Service
@@ -11,6 +12,7 @@ public interface LoginService {
 	 * 登录表单提交
 	 */
 	JSONObject authLogin(JSONObject jsonObject);
+
 	/**
 	 * 根据用户名和密码查询对应的用户
 	 *
@@ -24,9 +26,16 @@ public interface LoginService {
 	 */
 	JSONObject getInfo();
 
+	/**
+	 * 更新当前登录用户信息
+	 */
 	JSONObject updateCurrentUser(JSONObject jsonObject);
 
+	/**
+	 * 更新当前登录用户密码
+	 */
 	JSONObject updateCurrentPassword(String username, String password);
+
 	/**
 	 * 退出登录
 	 */

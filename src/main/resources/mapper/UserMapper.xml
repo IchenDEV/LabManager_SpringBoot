@@ -57,6 +57,52 @@
         ORDER BY u.userId
     </select>
 
+
+    <select id="countUserGroup" resultType="Integer">
+        SELECT count(0)
+         FROM sys_user u
+                      LEFT JOIN user_group ug ON ug.user = u.id
+                      LEFT JOIN group g ON g.id = ug.group
+         WHERE u.status !=-1 And u.id=#{id}
+    </select>
+    <select id="listUserGroup" resultType="com.alibaba.fastjson.JSONObject">
+                 SELECT
+                     u.id                                      userId,
+                     u.username                                username,
+                     u.nickname                                nickname,
+                     g.id                                      groupId,
+                     g.name                                    groupName,
+                     u.status                                  status,
+                 FROM sys_user u
+                      LEFT JOIN user_group ug ON ug.user = u.id
+                      LEFT JOIN group g ON g.id = ug.group
+                 WHERE u.status !=-1 And u.id=#{id}
+                 LIMIT #{offSet}, #{pageRow}
+    </select>
+
+    <select id="countUserDepartment" resultType="Integer">
+        SELECT count(0)
+        FROM sys_user u
+                      LEFT JOIN user_department ug ON ug.user = u.id
+                      LEFT JOIN department g ON g.id = ug.department
+        WHERE u.status !=-1 And u.id=#{id}
+    </select>
+    <select id="listUserDepartment" resultType="com.alibaba.fastjson.JSONObject">
+                 SELECT
+                     u.id                                      userId,
+                     u.username                                username,
+                     u.nickname                                nickname,
+                     g.id                                      departmentId,
+                     g.name                                    departmentName,
+                     u.status                                  status,
+                 FROM sys_user u
+                      LEFT JOIN user_department ug ON ug.user = u.id
+                      LEFT JOIN department g ON g.id = ug.department
+                 WHERE u.status !=-1 And u.id=#{id}
+                 LIMIT #{offSet}, #{pageRow}
+    </select>
+
+
     <select id="getAllRoles" resultType="com.alibaba.fastjson.JSONObject">
         SELECT
             id        roleId,
@@ -78,7 +124,6 @@
         <if test="password !='' and password !=null">
             , password = #{password}
         </if>
-
         , role_id = #{roleId}
         , status = #{status}
         WHERE id = #{userId} and id != 10001
@@ -190,10 +235,10 @@
             role_name = #{roleName}
         WHERE id = #{roleId}
     </update>
+
     <select id="queryExistUsername" resultType="int">
         select count(0)
          from sys_user
          WHERE username=#{username}
-         AND status='1';
     </select>
 </mapper>

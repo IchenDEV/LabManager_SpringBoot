@@ -34,6 +34,20 @@ public class UserServiceImpl implements UserService {
 		List<JSONObject> list = userDao.listUser(jsonObject);
 		return CommonUtil.successPage(jsonObject, list, count);
 	}
+	@Override
+	public JSONObject listUserGroup(JSONObject jsonObject) {
+		CommonUtil.fillPageParam(jsonObject);
+		int count = userDao.countUserGroup(jsonObject);
+		List<JSONObject> list = userDao.listUserGroup(jsonObject);
+		return CommonUtil.successPage(jsonObject, list, count);
+	}
+	@Override
+	public JSONObject listUserDepartment(JSONObject jsonObject) {
+		CommonUtil.fillPageParam(jsonObject);
+		int count = userDao.countUserGroup(jsonObject);
+		List<JSONObject> list = userDao.listUserDepartment(jsonObject);
+		return CommonUtil.successPage(jsonObject, list, count);
+	}
 
 	/**
 	 * 添加用户

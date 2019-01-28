@@ -12,7 +12,8 @@ public interface ProjectService {
 	 * 项目列表
 	 */
 	JSONObject listProject(JSONObject jsonObject);
-
+	JSONObject listProjectGroup(JSONObject jsonObject);
+	
 	/**
 	 * 添加项目
 	 */

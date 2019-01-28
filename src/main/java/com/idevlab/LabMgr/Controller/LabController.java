@@ -1,7 +1,7 @@
 package com.idevlab.LabMgr.Controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.idevlab.LabMgr.Service.DeviceService;
+import com.idevlab.LabMgr.Service.LabService;
 import com.idevlab.LabMgr.Service.LogService;
 import com.idevlab.LabMgr.Util.CommonUtil;
 
@@ -15,49 +15,49 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author: idevlab
- * @description: 用户/角色/权限相关controller
+ * @description: 实验室controller
  * @date: 2019/1/26 23:45
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/device")
-public class DeviceController {
+@RequestMapping("/lab")
+public class LabController {
     @Autowired
-    private DeviceService deviceService;
+    private LabService labService;
     @Autowired
     private LogService logService;
     /**
-     * 查询记录列表
+     * 查询实验室列表
      * offSet 
      * pageRow
      */
     @RequiresPermissions("device:list")
     @PostMapping("/list")
-    public JSONObject listDevice(@RequestBody JSONObject requestJson) {
-        return deviceService.listDevice(requestJson);
+    public JSONObject listLab(@RequestBody JSONObject requestJson) {
+        return labService.listLab(requestJson);
     }
 
     @RequiresPermissions("device:add")
-    @PostMapping("/addDevice")
-    public JSONObject addDevice(@RequestBody JSONObject requestJson) {
+    @PostMapping("/addLab")
+    public JSONObject addLab(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "No,name,description,model,status,band,location");
-        logService.addLog("AddDevice", "New");
-        return deviceService.addDevice(requestJson);
+        logService.addLog("AddLab", "New");
+        return labService.addLab(requestJson);
     }
 
     @RequiresPermissions("device:update")
-    @PostMapping("/updateDevice")
-    public JSONObject updateDevice(@RequestBody JSONObject requestJson) {
+    @PostMapping("/updateLab")
+    public JSONObject updateLab(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
-        logService.addLog("UpdateDevice",requestJson.getString("id"));
-        return deviceService.updateDevice(requestJson);
+        logService.addLog("UpdateLab",requestJson.getString("id"));
+        return labService.updateLab(requestJson);
     }
 
     @RequiresPermissions("device:delete")
-    @PostMapping("/deleteDevice")
-    public JSONObject deleteDevice(@RequestBody JSONObject requestJson) {
+    @PostMapping("/deleteLab")
+    public JSONObject deleteLab(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
-        logService.addLog("DeleteDevice",requestJson.getString("id"));
-        return deviceService.deleteDevice(requestJson);
+        logService.addLog("DeleteLab",requestJson.getString("id"));
+        return labService.deleteLab(requestJson);
     }
 }

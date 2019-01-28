@@ -6,10 +6,19 @@
     <select id="countDepartment" resultType="Integer">
         SELECT count(0)
         FROM department d
-        WHERE d.status = '1'
+        WHERE d.status !=-1
     </select>
 
-    <resultMap id="departmentMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
+    <select id="countDepartmentUser" resultType="Integer">
+                 SELECT
+                     count(0)
+                 FROM user_department ud
+                 WHERE ud.status != -1 
+        <if test="user != null">And ud.user = #{user}</if>
+        <if test="department != null">And ud.department = #{department}</if>
+    </select>
+
+    <resultMap id="departmentMap" type="com.alibaba.fastjson.JSONObject">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="description" property="description"/>
@@ -33,17 +42,18 @@
     </select>
 
 
-    <resultMap id="departmentUserMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
+    <resultMap id="departmentUserMap" type="com.alibaba.fastjson.JSONObject">
         <id column="id" property="id"/>
         <result column="user" property="user"/>
+        <result column="username " property="username"/>
         <result column="nickname" property="nickname"/>
-        <result column="username" property="username"/>
         <result column="department" property="department"/>
         <result column="departmentName" property="departmentName"/>
         <result column="createTime" property="createTime"/>
         <result column="updateTime" property="updateTime"/>
         <result column="status" property="status"/>
     </resultMap>
+
 
     <select id="listDepartmentUser" resultMap="departmentUserMap">
                  SELECT
@@ -59,10 +69,10 @@
                  FROM user_department ud
                       LEFT JOIN sys_user u ON ud.user = u.id
                       LEFT JOIN department dp ON ud.department = dp.id
-                 WHERE ud.status != -1 And u.status != -1 And dp.status != -1
-        <if test="user != null">And user = #{user}</if>
-        <if test="department != null">And department = #{department}</if>
-                 ORDER BY id
+                 WHERE ud.status != -1 
+                 And u.status != -1 And dp.status != -1
+        <if test="department != null">And ud.department = #{department}</if>
+                 ORDER BY ud.id
                  LIMIT #{offSet}, #{pageRow}
     </select>
 
@@ -77,6 +87,14 @@
         (user, department,status) VALUES
             ( #{user}, #{department},#{status})
     </insert>
+
+    <update id="deleteDepartmentUser">
+        UPDATE user_department
+        SET status=-1
+        WHERE 
+        <if test="user!= null">user = #{user}</if>
+        <if test="department != null">And department= #{department}</if>
+    </update>
 
     <update id="updateDepartment">
         UPDATE department

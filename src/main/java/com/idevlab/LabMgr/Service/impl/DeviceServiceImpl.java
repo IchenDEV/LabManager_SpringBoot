@@ -32,13 +32,7 @@ public class DeviceServiceImpl implements  DeviceService {
 		return CommonUtil.successPage(jsonObject, list, count);
 	}
 
-	@Override
-	public JSONObject getDeviceById(JSONObject jsonObject) {
-		CommonUtil.fillPageParam(jsonObject);
-		int count =  deviceDao.countDevice(jsonObject);
-		List<JSONObject> list =  deviceDao.getDeviceById(jsonObject);
-		return CommonUtil.successPage(jsonObject, list, count);
-	}
+
 	/**
 	 * 添加设备
 	 */
@@ -47,7 +41,6 @@ public class DeviceServiceImpl implements  DeviceService {
         deviceDao.addDevice(jsonObject);
 		return CommonUtil.successJson();
 	}
-
 	
 	/**
 	 * 修改设备
@@ -57,7 +50,9 @@ public class DeviceServiceImpl implements  DeviceService {
 		deviceDao.updateDevice(jsonObject);
 		return CommonUtil.successJson();
     }
-    
+    /**
+	 * 删除设备
+	 */
     @Override
     public JSONObject deleteDevice(JSONObject jsonObject){
         deviceDao.deleteDevice(jsonObject);

@@ -9,7 +9,7 @@
         WHERE b.status = '1'
     </select>
 
-    <resultMap id="groupMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
+    <resultMap id="groupMap" type="com.alibaba.fastjson.JSONObject">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="description" property="description"/>
@@ -31,11 +31,104 @@
                      DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
                  FROM group
                  WHERE status != -1
-                       <if test="id != null">And id= #{id}</if>
-                       <if test="name != null">And name like #{name}</if>
+        <if test="id != null">And id= #{id}</if>
+        <if test="name != null">And name like #{name}</if>
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
     </select>
+
+    <select id="countGroupUser" resultType="Integer">
+        SELECT count(0)
+        FROM group g
+                      LEFT JOIN user_group ug ON ug.group = g.id
+                      LEFT JOIN sys_user u ON u.id = ug.user
+        WHERE g.status != -1 And u.status != -1  And ug.status != -1 
+        <if test="id != null">And g.id= #{id}</if>
+    </select>
+
+    <resultMap id="groupUserMap" type="com.alibaba.fastjson.JSONObject">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="userId" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    <select id="listGroupUser" resultMap="groupUserMap">
+                 SELECT
+                     g.id                                      id,
+                     g.name                                    name,
+                     u.id                                      userId,
+                     u.username                                username,
+                     g.status                                  status,
+                 FROM group g
+                      LEFT JOIN user_group ug ON ug.group = g.id
+                      LEFT JOIN sys_user u ON u.id = ug.user
+                 WHERE g.status != -1 And u.status != -1  And ug.status != -1 
+        <if test="id != null">And g.id= #{id}</if>
+                 ORDER BY g.id
+                 LIMIT #{offSet}, #{pageRow}
+    </select>
+
+
+    <select id="countGroupProject" resultType="Integer">
+        SELECT count(0)
+        FROM group g
+                      LEFT JOIN group_project ug ON ug.group = g.id
+                      LEFT JOIN project u ON u.id = ug.project
+        WHERE g.status != -1 And u.status != -1 And ug.status != -1
+        <if test="id != null">And g.id= #{id}</if>
+    </select>
+
+    <resultMap id="groupProjectMap" type="com.alibaba.fastjson.JSONObject">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="userId" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    <select id="listGroupProject" resultMap="groupUserMap">
+                 SELECT
+                     g.id                                      id,
+                     g.name                                    name,
+                     u.id                                      userId,
+                     u.name                                    name,
+                     g.status                                  status,
+                 FROM group g
+                      LEFT JOIN group_project ug ON ug.group = g.id
+                      LEFT JOIN project u ON u.id = ug.project
+                 WHERE g.status != -1 And u.status != -1 And ug.status != -1
+        <if test="id != null">And g.id= #{id}</if>
+                 ORDER BY g.id
+                 LIMIT #{offSet}, #{pageRow}
+    </select>
+
+    <insert id="addUserToGroup" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_group
+        (user, group,status) VALUES
+            ( #{user}, #{group},#{status})
+    </insert>
+
+    <update id="deleteGroupUser">
+        UPDATE user_group
+        SET status=-1
+        WHERE 
+        <if test="group!= null">group = #{group}</if>
+        <if test="user != null">And user= #{user}</if>
+    </update>
+
+    <insert id="addProjectToGroup" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO group_project
+        (project, group,status) VALUES
+            ( #{project}, #{group},#{status})
+    </insert>
+    
+     <update id="deleteGroupProject">
+        UPDATE group_project
+        SET status=-1
+        WHERE 
+        <if test="group!= null">group = #{group}</if>
+        <if test="project != null">And project= #{project}</if>
+    </update>
 
     <insert id="addGroup" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO group

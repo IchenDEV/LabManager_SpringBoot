@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 /**
  * @author: idevlab
  * @Description: 组/角色/权限
@@ -19,7 +18,7 @@ import java.util.List;
 public class GroupServiceImpl implements GroupService {
 
 	@Autowired
-	private  GroupDao  groupDao;
+	private GroupDao groupDao;
 
 	/**
 	 * 组列表
@@ -27,8 +26,30 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public JSONObject listGroup(JSONObject jsonObject) {
 		CommonUtil.fillPageParam(jsonObject);
-		int count =   groupDao.countGroup(jsonObject);
-		List<JSONObject> list =   groupDao.listGroup(jsonObject);
+		int count = groupDao.countGroup(jsonObject);
+		List<JSONObject> list = groupDao.listGroup(jsonObject);
+		return CommonUtil.successPage(jsonObject, list, count);
+	}
+
+	/**
+	 * 组用户列表
+	 */
+	@Override
+	public JSONObject listGroupUser(JSONObject jsonObject) {
+		CommonUtil.fillPageParam(jsonObject);
+		int count = groupDao.countGroupUser(jsonObject);
+		List<JSONObject> list = groupDao.listGroupUser(jsonObject);
+		return CommonUtil.successPage(jsonObject, list, count);
+	}
+
+	/**
+	 * 组项目列表
+	 */
+	@Override
+	public JSONObject listGroupProject(JSONObject jsonObject) {
+		CommonUtil.fillPageParam(jsonObject);
+		int count = groupDao.countGroupProject(jsonObject);
+		List<JSONObject> list = groupDao.listGroupProject(jsonObject);
 		return CommonUtil.successPage(jsonObject, list, count);
 	}
 
@@ -36,12 +57,29 @@ public class GroupServiceImpl implements GroupService {
 	 * 添加组
 	 */
 	@Override
-	public JSONObject addGroup(JSONObject jsonObject) {	
+	public JSONObject addGroup(JSONObject jsonObject) {
 		groupDao.addGroup(jsonObject);
 		return CommonUtil.successJson();
 	}
 
-	
+	/**
+	 * 添加人员
+	 */
+	@Override
+	public JSONObject addUserToGroup(JSONObject jsonObject) {
+		groupDao.addUserToGroup(jsonObject);
+		return CommonUtil.successJson();
+	}
+
+	/**
+	 * 添加人员
+	 */
+	@Override
+	public JSONObject addProjectToGroup(JSONObject jsonObject) {
+		groupDao.addProjectToGroup(jsonObject);
+		return CommonUtil.successJson();
+	}
+
 	/**
 	 * 修改组
 	 */
@@ -49,11 +87,37 @@ public class GroupServiceImpl implements GroupService {
 	public JSONObject updateGroup(JSONObject jsonObject) {
 		groupDao.updateGroup(jsonObject);
 		return CommonUtil.successJson();
-    }
-    
-    @Override
-    public JSONObject deleteGroup(JSONObject jsonObject){
+	}
+
+	/**
+	 * 删除组
+	 */
+	@Override
+	public JSONObject deleteGroup(JSONObject jsonObject) {
+		JSONObject json = new JSONObject();
+		json.put("group", jsonObject.getString("id"));
+		groupDao.deleteGroupUser(json);
+		groupDao.deleteGroupProject(json);
 		groupDao.deleteGroup(jsonObject);
 		return CommonUtil.successJson();
-    }
+	}
+
+	/**
+	 * 删除组成员
+	 */
+	@Override
+	public JSONObject deleteGroupUser(JSONObject jsonObject) {
+		groupDao.deleteGroupUser(jsonObject);
+		return CommonUtil.successJson();
+	}
+
+	/**
+	 * 删除组项目
+	 */
+	@Override
+	public JSONObject deleteGroupProject(JSONObject jsonObject) {
+
+		groupDao.deleteGroupProject(jsonObject);
+		return CommonUtil.successJson();
+	}
 }

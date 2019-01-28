@@ -19,10 +19,6 @@ public interface DeviceDao {
      */
     List<JSONObject> listDevice(JSONObject jsonObject);
 
-    /**
-     * 根据id查询设备列表
-     */
-    List<JSONObject> getDeviceById(JSONObject jsonObject);
 
     /**
      * 新增设备

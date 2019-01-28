@@ -31,7 +31,17 @@ public class ProjectServiceImpl implements ProjectService {
 		List<JSONObject> list =   projectDao.listProject(jsonObject);
 		return CommonUtil.successPage(jsonObject, list, count);
 	}
-
+/**
+	 * 项目的组列表
+	 */
+	@Override
+	public JSONObject listProjectGroup(JSONObject jsonObject) {
+		CommonUtil.fillPageParam(jsonObject);
+		int count =   projectDao.countProjectGroup(jsonObject);
+		List<JSONObject> list =   projectDao.listProjectGroup(jsonObject);
+		return CommonUtil.successPage(jsonObject, list, count);
+	}
+	
 	/**
 	 * 添加项目
 	 */
@@ -50,7 +60,9 @@ public class ProjectServiceImpl implements ProjectService {
 		projectDao.updateProject(jsonObject);
 		return CommonUtil.successJson();
     }
-    
+    /**
+	 * 删除项目
+	 */
     @Override
     public JSONObject deleteProject(JSONObject jsonObject){
 		projectDao.deleteProject(jsonObject);
