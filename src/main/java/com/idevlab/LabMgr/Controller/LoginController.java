@@ -36,11 +36,13 @@ public class LoginController {
 	public JSONObject authLogin(@RequestBody JSONObject requestJson) {
 		CommonUtil.hasAllRequired(requestJson, "username,password");
 		JSONObject x= loginService.authLogin(requestJson);
-		loginService.getInfo();
-		Session session = SecurityUtils.getSubject().getSession();//获得session
-		JSONObject userInfo = (JSONObject) session.getAttribute(Constants.SESSION_USER_INFO);
-		String username = userInfo.getString("username");
-		logService.addLog("login",username);
+		if(x.getJSONObject("info").getInteger("loginCode")==0){
+			loginService.getInfo();
+			Session session = SecurityUtils.getSubject().getSession();//获得session
+			JSONObject userInfo = (JSONObject) session.getAttribute(Constants.SESSION_USER_INFO);
+			String username = userInfo.getString("username");
+			logService.addLog("login",username);
+		}
 		return x;
 	}
 

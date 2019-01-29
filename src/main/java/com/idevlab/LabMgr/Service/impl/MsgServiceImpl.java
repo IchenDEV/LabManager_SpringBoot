@@ -4,10 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.idevlab.LabMgr.Dao.MsgDao;
 import com.idevlab.LabMgr.Service.MsgService;
 import com.idevlab.LabMgr.Util.CommonUtil;
-import com.idevlab.LabMgr.Util.Constants.Constants;
-import org.apache.shiro.session.Session;
-
-import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
