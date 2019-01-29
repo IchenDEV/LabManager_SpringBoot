@@ -15,6 +15,7 @@ public interface UserService {
 	JSONObject listUserGroup(JSONObject jsonObject);
 	JSONObject listUserDepartment(JSONObject jsonObject);
 
+	Boolean SuperAdminAuth(int id, String superPassword) ;
 	/**
 	 * 查询所有的角色
 	 * 在添加/修改用户的时候要使用此方法

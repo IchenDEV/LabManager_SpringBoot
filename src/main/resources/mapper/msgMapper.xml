@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.idevlab.LabMgr.Dao.MsgDao">
+
+    <select id="countMsg" resultType="Integer">
+        SELECT count(0)
+         FROM message m
+                      LEFT JOIN sys_user u ON m.author = u.id
+                      LEFT JOIN sys_user u2 ON m.receiver = u2.id
+                 WHERE status != -1
+                        <if test="id != null">And id= #{id}</if>
+                        <if test="author != null">And author = #{author}</if>
+                        <if test="hasRead != null">And has_read = #{hasRead}</if>
+                        <if test="receiver != null">And receiver = #{receiver}</if>
+    </select>
+
+    <resultMap id="msgMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
+        <id column="id" property="id"/>
+        <result column="author" property="author"/>
+        <result column="authorUserName" property="authorUserName"/>
+        <result column="authorNickName" property="authorNickName"/>
+        <result column="msg" property="msg"/>
+        <result column="hasRead" property="hasRead"/>
+        <result column="receiver" property="receiver"/>
+        <result column="receiverUserName" property="receiverUserName"/>
+        <result column="receiverNickName" property="receiverNickName"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    <select id="listMsg" resultMap="msgMap">
+                 SELECT
+                     m.id                                      id,
+                     m.author                                  author,
+                     u.username                                authorUserName,
+                     u.nickname                                authorNickName,
+                     m.msg                                     msg,
+                     m.has_read                                hasRead,
+                     m.receiver                                receiver,
+                     u2.username                               receiverUserName,
+                     u2.nickname                               receiverNickName,
+                     status                                  status,
+                     DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
+                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
+                 FROM message m
+                      LEFT JOIN sys_user u ON m.author = u.id
+                      LEFT JOIN sys_user u2 ON m.receiver = u2.id
+                 WHERE status != -1
+                        <if test="id != null">And id= #{id}</if>
+                        <if test="author != null">And author = #{author}</if>
+                        <if test="hasRead != null">And has_read = #{hasRead}</if>
+                        <if test="receiver != null">And receiver = #{receiver}</if>
+                 ORDER BY id
+                 LIMIT #{offSet}, #{pageRow}
+    </select>
+
+    <insert id="addMsg" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO log
+        ( author, msg, receiver) VALUES
+            ( #{author}, #{msg}, #{receiver})
+    </insert>
+
+     <update id="deleteLog">
+        UPDATE message
+        SET
+        status=-1
+        WHERE id = #{id}
+    </update>
+</mapper>

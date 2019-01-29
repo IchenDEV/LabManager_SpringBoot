@@ -49,6 +49,18 @@ public class UserServiceImpl implements UserService {
 		return CommonUtil.successPage(jsonObject, list, count);
 	}
 
+	@Override
+	public Boolean SuperAdminAuth(int id, String superPassword) {
+		JSONObject jsonObject =new JSONObject();
+		jsonObject.put("id", id);
+		jsonObject.put("superPassword", superPassword);
+		int count = userDao.countUserGroup(jsonObject);
+		if(count==0){
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * 添加用户
 	 */

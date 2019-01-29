@@ -103,14 +103,6 @@
     </select>
 
 
-    <select id="getAllRoles" resultType="com.alibaba.fastjson.JSONObject">
-        SELECT
-            id        roleId,
-            role_name roleName
-        FROM sys_role
-        WHERE status='1'
-    </select>
-
     <insert id="addUser" useGeneratedKeys="true" keyProperty="userId">
         INSERT INTO sys_user
         (username, password, nickname, role_id) VALUES
@@ -119,15 +111,52 @@
 
     <update id="updateUser">
         UPDATE sys_user
-        SET
-        nickname = #{nickname}
-        <if test="password !='' and password !=null">
+        <set>
+            <if test="nickname !=null">
+          nickname = #{nickname}
+            </if>
+            <if test="password !='' and password !=null">
             , password = #{password}
-        </if>
-        , role_id = #{roleId}
-        , status = #{status}
+            </if>
+            <if test="role_id !=null">
+          ，role_id = #{role_id}
+            </if>
+            <if test="email !=null">
+          ，email = #{email}
+            </if>
+            <if test="phone !=null">
+          ，phone = #{phone}
+            </if>
+            <if test="address !=null">
+          ，address = #{address}
+            </if>
+            <if test="sex !=null">
+          ，sex = #{sex}
+            </if>
+            <if test="status !=null">
+          ，status = #{status}
+            </if>
+        </set>
         WHERE id = #{userId} and id != 10001
     </update>
+
+<select id="countSuper" resultType="Integer">
+        SELECT count(0)
+        FROM sys_user u
+        WHERE u.status !=-1 And u.id=#{id} And u.superPassword=#{superPassword}
+    </select>
+
+
+
+
+
+    <select id="getAllRoles" resultType="com.alibaba.fastjson.JSONObject">
+        SELECT
+            id        roleId,
+            role_name roleName
+        FROM sys_role
+        WHERE status='1'
+    </select>
     <resultMap id="roleMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
         <id column="roleId" property="roleId"/>
         <result column="roleName" property="roleName"/>

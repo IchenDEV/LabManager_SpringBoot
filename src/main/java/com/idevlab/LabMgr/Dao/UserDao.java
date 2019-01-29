@@ -15,6 +15,8 @@ public interface UserDao {
      */
     int countUser(JSONObject jsonObject);
 
+    int countSuper(JSONObject jsonObject);
+    
     /**
      * 查询用户的组的数量
      */
