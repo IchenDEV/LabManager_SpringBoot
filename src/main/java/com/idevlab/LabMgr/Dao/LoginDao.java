@@ -16,7 +16,7 @@ public interface LoginDao {
 
 	JSONObject getCurrentUser(@Param("username") String username);
 
-	JSONObject updateCurrentUser(JSONObject jsonObject);
+	int updateCurrentUser(JSONObject jsonObject);
 
-	JSONObject updateCurrentPassword(@Param("username") String username, @Param("password") String password);
+	int updateCurrentPassword(@Param("username") String username, @Param("password") String password);
 }

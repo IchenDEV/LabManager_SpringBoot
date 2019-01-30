@@ -88,7 +88,8 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public JSONObject updateCurrentPassword(String username, String password) {
-		return loginDao.updateCurrentPassword(username, com.idevlab.LabMgr.Util.CommonUtil.md5(password));
+		loginDao.updateCurrentPassword(username, com.idevlab.LabMgr.Util.CommonUtil.md5(password));
+		return  CommonUtil.successJson();
 	}
 
 	/**

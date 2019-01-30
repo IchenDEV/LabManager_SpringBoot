@@ -56,7 +56,7 @@ public class LoginController {
 	}
 
 	/**
-	 * 查询当前登录用户的信息
+	 * 更新当前登录用户的信息
 	 */
 	@CrossOrigin
 	@PostMapping("/updateInfo")
@@ -66,6 +66,19 @@ public class LoginController {
 		String username = userInfo.getString("username");
 		logService.addLog("updateInfo", username);
 		return loginService.updateCurrentUser(requestJson);
+	}
+
+	/**
+	 * 更新当前登录用户的密码
+	 */
+	@CrossOrigin
+	@PostMapping("/updatePassword")
+	public JSONObject updatePassword(@RequestBody JSONObject requestJson) {
+		Session session = SecurityUtils.getSubject().getSession();//获得session
+		JSONObject userInfo = (JSONObject) session.getAttribute(Constants.SESSION_USER_INFO);
+		String username = userInfo.getString("username");
+		logService.addLog("updateInfo", username);
+		return loginService.updateCurrentPassword(username,requestJson.getString("password"));
 	}
 
 
