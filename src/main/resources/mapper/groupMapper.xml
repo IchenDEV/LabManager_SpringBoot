@@ -124,7 +124,7 @@
         UPDATE group_project
         SET status=-1
         WHERE 
-        <if test="group!= null">group = #{group}</if>
+        <if test="group!= null">`group` = #{group}</if>
         <if test="project != null">And project= #{project}</if>
     </update>
 

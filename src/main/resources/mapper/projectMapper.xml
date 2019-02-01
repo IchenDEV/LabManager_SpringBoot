@@ -43,7 +43,7 @@
         SELECT count(0)
         FROM project u
              LEFT JOIN group_project ug ON ug.project = u.id
-             LEFT JOIN group g ON g.id = ug.group
+             LEFT JOIN `group` g ON g.id = ug.`group`
         WHERE u.status != -1 And g.status != -1 And ug.status != -1
     </select>
     <select id="listProjectGroup" resultType="com.alibaba.fastjson.JSONObject">
@@ -54,7 +54,7 @@
                      u.status                                  status
                      FROM project u
                           LEFT JOIN group_project ug ON ug.project = u.id
-                          LEFT JOIN group g ON g.id = ug.group
+                          LEFT JOIN `group` g ON g.id = ug.`group`
                  WHERE u.status != -1 And g.status != -1 And ug.status != -1
                        <if test="id != null">And u.id= #{id}</if>
                  ORDER BY u.id

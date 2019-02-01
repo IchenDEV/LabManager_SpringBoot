@@ -62,7 +62,7 @@
         SELECT count(0)
          FROM sys_user u
                       LEFT JOIN user_group ug ON ug.user = u.id
-                      LEFT JOIN group g ON g.id = ug.group
+                      LEFT JOIN `group` g ON g.id = ug.`group`
          WHERE u.status !=-1 And u.id=#{id}
     </select>
     <select id="listUserGroup" resultType="com.alibaba.fastjson.JSONObject">
@@ -72,10 +72,10 @@
                      u.nickname                                nickname,
                      g.id                                      groupId,
                      g.name                                    groupName,
-                     u.status                                  status,
+                     u.status                                  status
                  FROM sys_user u
                       LEFT JOIN user_group ug ON ug.user = u.id
-                      LEFT JOIN group g ON g.id = ug.group
+                      LEFT JOIN `group` g ON g.id = ug.`group`
                  WHERE u.status !=-1 And u.id=#{id}
                  LIMIT #{offSet}, #{pageRow}
     </select>
@@ -94,7 +94,7 @@
                      u.nickname                                nickname,
                      g.id                                      departmentId,
                      g.name                                    departmentName,
-                     u.status                                  status,
+                     u.status                                  status
                  FROM sys_user u
                       LEFT JOIN user_department ug ON ug.user = u.id
                       LEFT JOIN department g ON g.id = ug.department
