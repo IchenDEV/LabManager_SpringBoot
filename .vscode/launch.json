@@ -6,24 +6,13 @@
     "configurations": [
         {
             "type": "java",
-            "name": "CodeLens (Launch) - LabMgrApplication",
+            "name": "Spring Boot-LabMgrApplication<LabMgr>",
             "request": "launch",
-            "mainClass": "LabMgrApplication",
-            "projectName": "LabMgr"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch) - Current File",
-            "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-LabMgrApplication<LabMgr>",
-            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
             "mainClass": "com.idevlab.LabMgr.LabMgrApplication",
             "projectName": "LabMgr",
-            
+            "args": ""
         }
     ]
 }

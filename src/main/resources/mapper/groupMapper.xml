@@ -5,16 +5,16 @@
 
     <select id="countGroup" resultType="Integer">
         SELECT count(0)
-        FROM group b
-        WHERE b.status = '1'
+        FROM `group` b
+        WHERE b.status !=-1
+        <if test="id != null">And b.id= #{id}</if>
+        <if test="name != null">And b.name like #{name}</if>
     </select>
 
     <resultMap id="groupMap" type="com.alibaba.fastjson.JSONObject">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="description" property="description"/>
-        <result column="beginTime" property="beginTime"/>
-        <result column="endTime" property="endTime"/>
         <result column="createTime" property="createTime"/>
         <result column="updateTime" property="updateTime"/>
         <result column="status" property="status"/>
@@ -25,11 +25,9 @@
                      name                                    name,
                      description                             description,                  
                      status                                  status,
-                     DATE_FORMAT(begin_time, '%Y.%m.%d %T')  beginTime,
-                     DATE_FORMAT(end_time, '%Y.%m.%d %T')    endTime,
                      DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
                      DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
-                 FROM group
+                 FROM `group`
                  WHERE status != -1
         <if test="id != null">And id= #{id}</if>
         <if test="name != null">And name like #{name}</if>
@@ -37,10 +35,9 @@
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
     </select>
-
     <select id="countGroupUser" resultType="Integer">
         SELECT count(0)
-        FROM group g
+        FROM `group` g
                       LEFT JOIN user_group ug ON ug.group = g.id
                       LEFT JOIN sys_user u ON u.id = ug.user
         WHERE g.status != -1 And u.status != -1  And ug.status != -1 
@@ -61,7 +58,7 @@
                      u.id                                      userId,
                      u.username                                username,
                      g.status                                  status,
-                 FROM group g
+                 FROM `group` g
                       LEFT JOIN user_group ug ON ug.group = g.id
                       LEFT JOIN sys_user u ON u.id = ug.user
                  WHERE g.status != -1 And u.status != -1  And ug.status != -1 
@@ -73,7 +70,7 @@
 
     <select id="countGroupProject" resultType="Integer">
         SELECT count(0)
-        FROM group g
+        FROM `group` g
                       LEFT JOIN group_project ug ON ug.group = g.id
                       LEFT JOIN project u ON u.id = ug.project
         WHERE g.status != -1 And u.status != -1 And ug.status != -1
@@ -94,7 +91,7 @@
                      u.id                                      userId,
                      u.name                                    name,
                      g.status                                  status,
-                 FROM group g
+                 FROM `group` g
                       LEFT JOIN group_project ug ON ug.group = g.id
                       LEFT JOIN project u ON u.id = ug.project
                  WHERE g.status != -1 And u.status != -1 And ug.status != -1
@@ -132,13 +129,13 @@
     </update>
 
     <insert id="addGroup" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO group
+        INSERT INTO `group`
         (name, description,begin_time,end_time,status) VALUES
             (#{name}, #{description}, #{beginTime}, #{endTime},#{status})
     </insert>
 
     <update id="updateGroup">
-        UPDATE group
+        UPDATE `group`
         <set>
             <if test="name != null">name=#{name},</if>
             <if test="description != null">description=#{description},</if>
@@ -150,7 +147,7 @@
     </update>
 
     <update id="deleteGroup">
-        UPDATE group
+        UPDATE `group`
         SET status=-1
         WHERE id = #{id}
     </update>

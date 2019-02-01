@@ -6,22 +6,23 @@
     <select id="countDevice" resultType="Integer">
         SELECT count(0)
         FROM device d
+              LEFT JOIN lab l ON d.location = l.id
         WHERE d.status != -1
-        <if test="id != null">And id= #{id}</if>
+        <if test="id != null">And d.id= #{id}</if>
         <if test="No != null">
-                       AND No like #{No}
+                       AND d.No like #{No}
         </if>
         <if test="name != null">
-                       AND nane like #{name}
+                       AND d.name like #{name}
         </if>
         <if test="location != null">
-                       AND location = #{location}
+                       AND d.location = #{location}
         </if>
         <if test="model != null">
-                       AND model like #{model}
+                       AND d.model like #{model}
         </if>
-        <if test="band != null">
-                       AND band like #{band}
+        <if test="bands != null">
+                       AND d.band like #{bands}
         </if>
     </select>
 
@@ -71,10 +72,10 @@
         <if test="model != null">
                        AND d.model like #{model}
         </if>
-        <if test="band != null">
-                       AND d.band like #{band}
+        <if test="bands != null">
+                       AND d.band like #{bands}
         </if>
-                 ORDER BY id
+                 ORDER BY d.id
                  LIMIT #{offSet}, #{pageRow}
     </select>
 
