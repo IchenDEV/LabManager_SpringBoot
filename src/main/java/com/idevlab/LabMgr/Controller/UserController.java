@@ -61,4 +61,13 @@ public class UserController {
 		}
 		return CommonUtil.errorJson(ErrorEnum.E_502);
 	}
+
+	
+	@RequiresPermissions("user:delete")
+	@PostMapping("/delUser")
+	public JSONObject delUser(@RequestBody JSONObject requestJson) {
+		CommonUtil.hasAllRequired(requestJson, "id");
+		logService.addLog("delUser", requestJson.getString("id"));
+		return userService.delUser(requestJson);
+	}
 }

@@ -40,7 +40,7 @@ public class LabController {
     @RequiresPermissions("device:add")
     @PostMapping("/addLab")
     public JSONObject addLab(@RequestBody JSONObject requestJson) {
-        CommonUtil.hasAllRequired(requestJson, "No,name,description,model,status,band,location");
+        CommonUtil.hasAllRequired(requestJson, "name,description,status,location");
         logService.addLog("AddLab", "New");
         return labService.addLab(requestJson);
     }

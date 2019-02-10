@@ -24,7 +24,7 @@ UserDao userDao;
 
     @RequestMapping("/")
     public String index() {
-       return "Welcome to LabMgr System";
+       return "Welcome  to  LabMgr  System";
     }
 
     @PostMapping("/singUp")

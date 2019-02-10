@@ -51,7 +51,7 @@
                         <if test="author != null">And author = #{author}</if>
                         <if test="hasRead != null">And has_read = #{hasRead}</if>
                         <if test="receiver != null">And receiver = #{receiver}</if>
-                 ORDER BY id
+                 ORDER BY id DESC
                  LIMIT #{offSet}, #{pageRow}
     </select>
 
@@ -60,7 +60,6 @@
         ( author, msg, receiver) VALUES
             ( #{author}, #{msg}, #{receiver})
     </insert>
-
      <update id="deleteLog">
         UPDATE message
         SET

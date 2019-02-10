@@ -32,6 +32,7 @@ public interface UserService {
 	 */
 	JSONObject updateUser(JSONObject jsonObject);
 
+	JSONObject delUser(JSONObject jsonObject);
 	/**
 	 * 角色列表
 	 */

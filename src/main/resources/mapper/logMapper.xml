@@ -9,7 +9,7 @@
         WHERE d.status !=-1
     </select>
 
-    <resultMap id="logMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
+    <resultMap id="logMap" type="com.alibaba.fastjson.JSONObject">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="operation" property="operation"/>
@@ -29,11 +29,11 @@
                      DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
                  FROM log
                  WHERE status != -1
-                        <if test="id != null">And id= #{id}</if>
-                        <if test="user != null">And user = #{user}</if>
-                        <if test="operation != null">And operation = #{operation}</if>
-                        <if test="targer != null">And targer = #{targer}</if>
-                 ORDER BY id
+        <if test="id != null">And id= #{id}</if>
+        <if test="user != null">And user = #{user}</if>
+        <if test="operation != null">And operation = #{operation}</if>
+        <if test="targer != null">And targer = #{targer}</if>
+                 ORDER BY id DESC
                  LIMIT #{offSet}, #{pageRow}
     </select>
 
@@ -53,10 +53,9 @@
         WHERE id = #{id}
     </update>
 
-     <update id="deleteLog">
+    <update id="deleteLog">
         UPDATE log
-        SET
-        status=-1
+        SET status=-1
         WHERE id = #{id}
     </update>
 </mapper>

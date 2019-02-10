@@ -59,7 +59,7 @@
                  FROM device d
                       LEFT JOIN lab l ON d.location = l.id
                  WHERE d.status != -1 And l.status != -1
-        <if test="id != null">And id= #{id}</if>
+        <if test="id != null">And d.id= #{id}</if>
         <if test="No != null">
                        AND d.No like #{No}
         </if>

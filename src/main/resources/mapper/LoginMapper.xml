@@ -17,7 +17,7 @@
             sys_user u
         WHERE u.username = #{username}
           AND u.password = #{password}
-          AND u.status = '1'
+          AND u.status != -1
     </select>
 
     <select id="getCurrentUser" resultType="com.alibaba.fastjson.JSONObject">
@@ -32,7 +32,7 @@
         FROM
             sys_user u
         WHERE u.username = #{username}
-          AND u.status = '1'
+          AND u.status != -1
     </select>
 
     <update id="updateCurrentUser">
@@ -53,7 +53,7 @@
           SET
                 password = #{password}
           WHERE username = #{username}
-            AND status = '1'
+            AND status != -1
     </update>
 
 </mapper>

@@ -6,7 +6,7 @@
     <select id="countUser" resultType="Integer">
         SELECT count(0)
         FROM sys_user u
-        WHERE u.status = '1'
+        WHERE u.status = 1
     </select>
 
     <resultMap id="userMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
@@ -137,18 +137,20 @@
           ，status = #{status}
             </if>
         </set>
-        WHERE id = #{userId} and id != 10001
+        WHERE id = #{id} and id != 10003
+    </update>
+    <update id="delUser">
+        UPDATE sys_user
+        SET
+          status = -1
+        WHERE id = #{id} and id != 10003
     </update>
 
-<select id="countSuper" resultType="Integer">
+    <select id="countSuper" resultType="Integer">
         SELECT count(0)
         FROM sys_user u
         WHERE u.status !=-1 And u.id=#{id} And u.superPassword=#{superPassword}
     </select>
-
-
-
-
 
     <select id="getAllRoles" resultType="com.alibaba.fastjson.JSONObject">
         SELECT
@@ -174,10 +176,10 @@
             p.id              permissionId,
             p.permission_name permissionName
         FROM sys_role r
-            LEFT JOIN sys_user u ON r.id = u.role_id AND u.status = '1'
-            LEFT JOIN sys_role_permission rp ON r.id = rp.role_id AND rp.status = '1'
+            LEFT JOIN sys_user u ON r.id = u.role_id AND u.status != -1
+            LEFT JOIN sys_role_permission rp ON r.id = rp.role_id AND rp.status != -1
             LEFT JOIN sys_permission p ON rp.permission_id = p.id
-        WHERE r.status = '1'
+        WHERE r.status != -1
         ORDER BY r.id, p.id
     </select>
     <resultMap id="permissionMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
@@ -228,8 +230,8 @@
             u.id        userId,
             p.id        permissionId
         FROM sys_role r
-            LEFT JOIN sys_user u ON r.id = u.role_id AND u.status = '1'
-            LEFT JOIN sys_role_permission rp ON r.id = rp.role_id AND rp.status = '1'
+            LEFT JOIN sys_user u ON r.id = u.role_id AND u.status != -1
+            LEFT JOIN sys_role_permission rp ON r.id = rp.role_id AND rp.status != -1
             LEFT JOIN sys_permission p ON rp.permission_id = p.id
         WHERE r.id = #{roleId}
     </select>

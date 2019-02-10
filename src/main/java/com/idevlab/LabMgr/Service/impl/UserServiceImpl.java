@@ -95,6 +95,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	/**
+	 * 修改用户
+	 */
+	@Override
+	public JSONObject delUser(JSONObject jsonObject) {
+		userDao.delUser(jsonObject);
+		return CommonUtil.successJson();
+	}
+
+	/**
 	 * 角色列表
 	 */
 	@Override

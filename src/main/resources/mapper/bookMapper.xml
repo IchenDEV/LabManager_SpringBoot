@@ -14,7 +14,7 @@
                        <if test="time != null"> <![CDATA[ And begin_time<= #{time} And end_time>= #{time} ]]></if>
     </select>
 
-    <resultMap id="bookMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
+    <resultMap id="bookMap" type="com.alibaba.fastjson.JSONObject">
         <id column="id" property="id"/>
         <result column="project" property="project"/>
         <result column="device" property="device"/>

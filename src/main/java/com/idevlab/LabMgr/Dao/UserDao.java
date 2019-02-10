@@ -17,6 +17,7 @@ public interface UserDao {
 
     int countSuper(JSONObject jsonObject);
     
+
     /**
      * 查询用户的组的数量
      */
@@ -62,6 +63,7 @@ public interface UserDao {
      */
     int updateUser(JSONObject jsonObject);
 
+    int delUser(JSONObject jsonObject);
     /**
      * 角色列表
      */

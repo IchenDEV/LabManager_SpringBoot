@@ -1,16 +1,18 @@
 package com.idevlab.LabMgr.Config.Shiro;
 
-import com.alibaba.fastjson.JSONObject;
-import com.idevlab.LabMgr.Util.Constants.ErrorEnum;
-import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
+
+import com.alibaba.fastjson.JSONObject;
+import com.idevlab.LabMgr.Util.Constants.ErrorEnum;
+
+import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 
 /**
  * @author: idevlab
@@ -53,6 +55,10 @@ public class AjaxPermissionsAuthorizationFilter extends FormAuthenticationFilter
 			HttpServletResponse res = (HttpServletResponse) response;
 			try {
 				res.setCharacterEncoding("UTF-8");
+				res.setHeader("Access-Control-Allow-Origin",((HttpServletRequest) request).getHeader("Origin") );
+				res.setHeader("Access-Control-Allow-Credentials", "true");
+				res.setHeader("Access-Control-Allow-Headers",
+						"Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token,XX-Token,XX-Device-Type,sessionID");
 				res.setContentType("application/json");
 				out = response.getWriter();
 				out.println(jsonObject);
@@ -68,8 +74,8 @@ public class AjaxPermissionsAuthorizationFilter extends FormAuthenticationFilter
 	}
 
 	@Bean
-	public FilterRegistrationBean registration(AjaxPermissionsAuthorizationFilter filter) {
-		FilterRegistrationBean registration = new FilterRegistrationBean(filter);
+	public FilterRegistrationBean<AjaxPermissionsAuthorizationFilter> registration(AjaxPermissionsAuthorizationFilter filter) {
+		FilterRegistrationBean<AjaxPermissionsAuthorizationFilter> registration = new FilterRegistrationBean<AjaxPermissionsAuthorizationFilter>(filter);
 		registration.setEnabled(false);
 		return registration;
 	}

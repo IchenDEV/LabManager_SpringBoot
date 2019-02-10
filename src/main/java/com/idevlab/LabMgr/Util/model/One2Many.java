@@ -25,4 +25,116 @@ public class One2Many extends JSONObject{
 	private List<JSONObject> menus;
 	private List<JSONObject> users;
 	private List<JSONObject> permissions;
+
+	/**
+	 * @return the menuList
+	 */
+	public Set<String> getMenuList() {
+		return menuList;
+	}
+
+	/**
+	 * @return the permissions
+	 */
+	public List<JSONObject> getPermissions() {
+		return permissions;
+	}
+
+	/**
+	 * @param permissions the permissions to set
+	 */
+	public void setPermissions(List<JSONObject> permissions) {
+		this.permissions = permissions;
+	}
+
+	/**
+	 * @return the users
+	 */
+	public List<JSONObject> getUsers() {
+		return users;
+	}
+
+	/**
+	 * @param users the users to set
+	 */
+	public void setUsers(List<JSONObject> users) {
+		this.users = users;
+	}
+
+	/**
+	 * @return the picList
+	 */
+	public List<JSONObject> getPicList() {
+		return picList;
+	}
+
+	/**
+	 * @param picList the picList to set
+	 */
+	public void setPicList(List<JSONObject> picList) {
+		this.picList = picList;
+	}
+
+	/**
+	 * @return the permissionIds
+	 */
+	public Set<Integer> getPermissionIds() {
+		return permissionIds;
+	}
+
+	/**
+	 * @param permissionIds the permissionIds to set
+	 */
+	public void setPermissionIds(Set<Integer> permissionIds) {
+		this.permissionIds = permissionIds;
+	}
+
+	/**
+	 * @return the permissionList
+	 */
+	public Set<String> getPermissionList() {
+		return permissionList;
+	}
+
+	/**
+	 * @param permissionList the permissionList to set
+	 */
+	public void setPermissionList(Set<String> permissionList) {
+		this.permissionList = permissionList;
+	}
+
+	/**
+	 * @return the menus
+	 */
+	public List<JSONObject> getMenus() {
+		return menus;
+	}
+
+	/**
+	 * @param menus the menus to set
+	 */
+	public void setMenus(List<JSONObject> menus) {
+		this.menus = menus;
+	}
+
+	/**
+	 * @return the roleList
+	 */
+	public Set<String> getRoleList() {
+		return roleList;
+	}
+
+	/**
+	 * @param roleList the roleList to set
+	 */
+	public void setRoleList(Set<String> roleList) {
+		this.roleList = roleList;
+	}
+
+	/**
+	 * @param menuList the menuList to set
+	 */
+	public void setMenuList(Set<String> menuList) {
+		this.menuList = menuList;
+	}
 }

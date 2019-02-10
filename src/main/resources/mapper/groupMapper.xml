@@ -31,7 +31,6 @@
                  WHERE status != -1
         <if test="id != null">And id= #{id}</if>
         <if test="name != null">And name like #{name}</if>
-        <if test="time != null"><![CDATA[ And #{time} >= begin_time And #{time} <= end_time]]></if>
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
     </select>
@@ -130,8 +129,8 @@
 
     <insert id="addGroup" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `group`
-        (name, description,begin_time,end_time,status) VALUES
-            (#{name}, #{description}, #{beginTime}, #{endTime},#{status})
+        (name, description,status) VALUES
+            (#{name}, #{description}, #{status})
     </insert>
 
     <update id="updateGroup">
@@ -139,8 +138,6 @@
         <set>
             <if test="name != null">name=#{name},</if>
             <if test="description != null">description=#{description},</if>
-            <if test="beginTime != null">begin_time=#{beginTime},</if>
-            <if test="endTime != null">end_time=#{endTime},</if>
             <if test="status != null">status=#{status}</if>
         </set>
         WHERE id = #{id}
