@@ -41,8 +41,9 @@ public class DeviceController {
     @PostMapping("/addDevice")
     public JSONObject addDevice(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "No,name,description,model,status,band,location");
-        logService.addLog("AddDevice", "New");
-        return deviceService.addDevice(requestJson);
+        var x= deviceService.addDevice(requestJson);
+        logService.addLog("AddDevice", "id:"+requestJson.getString("id")+";name:"+requestJson.getString("name"));
+        return x;
     }
 
     @RequiresPermissions("device:update")

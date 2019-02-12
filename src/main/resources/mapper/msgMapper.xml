@@ -8,7 +8,7 @@
          FROM message m
                       LEFT JOIN sys_user u ON m.author = u.id
                       LEFT JOIN sys_user u2 ON m.receiver = u2.id
-                 WHERE status != -1
+                 WHERE m.status != -1
                         <if test="id != null">And id= #{id}</if>
                         <if test="author != null">And author = #{author}</if>
                         <if test="hasRead != null">And has_read = #{hasRead}</if>
@@ -40,13 +40,13 @@
                      m.receiver                                receiver,
                      u2.username                               receiverUserName,
                      u2.nickname                               receiverNickName,
-                     status                                  status,
-                     DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
-                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
+                     m.status                                  status,
+                     DATE_FORMAT(m.create_time, '%Y.%m.%d %T') createTime,
+                     DATE_FORMAT(m.update_time, '%Y.%m.%d %T') updateTime
                  FROM message m
                       LEFT JOIN sys_user u ON m.author = u.id
                       LEFT JOIN sys_user u2 ON m.receiver = u2.id
-                 WHERE status != -1
+                 WHERE m.status != -1
                         <if test="id != null">And id= #{id}</if>
                         <if test="author != null">And author = #{author}</if>
                         <if test="hasRead != null">And has_read = #{hasRead}</if>

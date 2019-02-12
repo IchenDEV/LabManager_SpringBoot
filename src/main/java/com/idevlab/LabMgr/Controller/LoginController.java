@@ -46,6 +46,7 @@ public class LoginController {
 		return x;
 	}
 
+	
 	/**
 	 * 查询当前登录用户的信息
 	 */

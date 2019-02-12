@@ -47,7 +47,7 @@ public class DepartmentController {
     @PostMapping("/addDepartment")
     public JSONObject addDepartment(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "name,description,status");
-        logService.addLog("AddDepartment", "New");
+        logService.addLog("AddDepartment","id:"+requestJson.getString("id")+";name:"+requestJson.getString("name"));
         return departmentService.addDepartment(requestJson);
     }
 
@@ -55,7 +55,7 @@ public class DepartmentController {
     @PostMapping("/addDepartmentUser")
     public JSONObject addDepartmentUser(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "user,department,status");
-        logService.addLog("AddDepartmentUser", "New");
+        logService.addLog("AddDepartmentUser", "id:"+requestJson.getString("id")+";user:"+requestJson.getString("user")+";department'"+requestJson.getString("department"));
         return departmentService.addUserToDepartment(requestJson);
     }
  

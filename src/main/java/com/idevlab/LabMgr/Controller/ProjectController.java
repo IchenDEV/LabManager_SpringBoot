@@ -41,7 +41,7 @@ public class ProjectController {
     @PostMapping("/addProject")
     public JSONObject addProject(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "name,description,status");
-        logService.addLog("AddProject", "New");
+        logService.addLog("AddProject","id:"+requestJson.getString("id")+" name:"+requestJson.getString("name"));
         return projectService.addProject(requestJson);
     }
 

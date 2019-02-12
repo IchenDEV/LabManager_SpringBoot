@@ -51,22 +51,25 @@ public class GroupController {
     @PostMapping("/addGroup")
     public JSONObject addGroup(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "name,description,status");
-        logService.addLog("AddGroup", "New");
-        return groupService.addGroup(requestJson);
+        var x= groupService.addGroup(requestJson);
+        logService.addLog("AddGroup", "id:"+requestJson.getString("id")+";name:"+requestJson.getString("name"));
+        return x;
     }
     @RequiresPermissions("device:add")
     @PostMapping("/addGroupUser")
     public JSONObject addGroupUser(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "user,group,status");
-        logService.addLog("AddGroupUser", "New");
-        return groupService.addUserToGroup(requestJson);
+        var x= groupService.addUserToGroup(requestJson);
+        logService.addLog("AddGroupUser", "id:"+requestJson.getString("id")+";user:"+requestJson.getString("user")+";group:"+requestJson.getString("group"));
+        return x;
     }
     @RequiresPermissions("device:add")
     @PostMapping("/addGroupProject")
     public JSONObject addGroupProject(@RequestBody JSONObject requestJson) {
-        CommonUtil.hasAllRequired(requestJson, "user,group,status");
-        logService.addLog("AddGroupProject", "New");
-        return groupService.addProjectToGroup(requestJson);
+        CommonUtil.hasAllRequired(requestJson, "project,group,status");
+        var x=groupService.addProjectToGroup(requestJson);
+        logService.addLog("AddGroupProject", "id:"+requestJson.getString("id")+";project:"+requestJson.getString("project")+";group:"+requestJson.getString("group"));
+        return x;
     }
 
     @RequiresPermissions("device:update")

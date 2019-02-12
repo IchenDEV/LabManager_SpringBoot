@@ -41,7 +41,6 @@ public class LogServiceImpl implements  LogService {
 	 */
 	@Override
 	public JSONObject addLog(JSONObject jsonObject) {	
-
         logDao.addLog(jsonObject);
 		return CommonUtil.successJson();
 	}

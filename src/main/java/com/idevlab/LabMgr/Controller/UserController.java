@@ -10,9 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @author: hxy
+ * @author: idevlab
  * @description: 用户/角色/权限相关controller
- * @date: 2017/11/2 10:19
  */
 @CrossOrigin
 @RestController
@@ -46,7 +45,7 @@ public class UserController {
 	@PostMapping("/addUser")
 	public JSONObject addUser(@RequestBody JSONObject requestJson) {
 		CommonUtil.hasAllRequired(requestJson, "username, password, nickname,roleId");
-		logService.addLog("addUser", "New");
+		logService.addLog("addUser","id:"+requestJson.getString("id")+" username:"+requestJson.getString("username")+"name "+requestJson.getString("nickname"));
 		return userService.addUser(requestJson);
 	}
 

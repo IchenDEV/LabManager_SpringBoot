@@ -41,7 +41,7 @@ public class BookController {
     @PostMapping("/addBook")
     public JSONObject addBook(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "project,device,beginTime,endTime,applicant,status");
-        logService.addLog("AddBook", "New");
+        logService.addLog("AddBook","id:"+ requestJson.getString("id")+";project:"+requestJson.getString("project")+";device:"+requestJson.getString("device"));
         return bookService.addBook(requestJson);
     }
 

@@ -41,7 +41,7 @@ public class LabController {
     @PostMapping("/addLab")
     public JSONObject addLab(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "name,description,status,location");
-        logService.addLog("AddLab", "New");
+        logService.addLog("AddLab", "id:"+requestJson.getString("id")+";name:"+requestJson.getString("name"));
         return labService.addLab(requestJson);
     }
 

@@ -40,7 +40,7 @@ public class MsgController {
     @PostMapping("/addLab")
     public JSONObject addLab(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "author,receiver,msg");
-        logService.addLog("AddMsg", "New");
+        logService.addLog("AddMsg","id:"+requestJson.getString("id")+" receiver:"+requestJson.getString("receiver"));
         return msgService.addMsg(requestJson);
     }
     @RequiresPermissions("book:delete")

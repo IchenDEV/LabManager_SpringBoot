@@ -12,7 +12,7 @@ public interface LoginService {
 	 * 登录表单提交
 	 */
 	JSONObject authLogin(JSONObject jsonObject);
-
+	JSONObject queryExistUsername(JSONObject jsonObject);
 	/**
 	 * 根据用户名和密码查询对应的用户
 	 *

@@ -2,6 +2,7 @@ package com.idevlab.LabMgr.Service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.idevlab.LabMgr.Dao.LoginDao;
+import com.idevlab.LabMgr.Dao.UserDao;
 import com.idevlab.LabMgr.Service.LoginService;
 import com.idevlab.LabMgr.Service.PermissionService;
 import com.idevlab.LabMgr.Util.CommonUtil;
@@ -24,6 +25,7 @@ public class LoginServiceImpl implements LoginService {
 
 	@Autowired
 	private LoginDao loginDao;
+	private UserDao userDao;
 	@Autowired
 	private PermissionService permissionService;
 
@@ -46,6 +48,13 @@ public class LoginServiceImpl implements LoginService {
 			info.put("loginCode", -1);//登录失败返回loginCode -1
 			info.put("result", "fail");
 		}
+		return CommonUtil.successJson(info);//打包返回
+	}
+
+	@Override
+	public JSONObject queryExistUsername(JSONObject jsonObject) {
+		JSONObject info = new JSONObject();//用于返回JSON包
+		info.put("count", userDao.queryExistUsername(jsonObject));
 		return CommonUtil.successJson(info);//打包返回
 	}
 
