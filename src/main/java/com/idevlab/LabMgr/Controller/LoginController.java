@@ -78,7 +78,7 @@ public class LoginController {
 		Session session = SecurityUtils.getSubject().getSession();//获得session
 		JSONObject userInfo = (JSONObject) session.getAttribute(Constants.SESSION_USER_INFO);
 		String username = userInfo.getString("username");
-		logService.addLog("updateInfo", username);
+		logService.addLog("updatePassword", username);
 		return loginService.updateCurrentPassword(username,requestJson.getString("password"));
 	}
 

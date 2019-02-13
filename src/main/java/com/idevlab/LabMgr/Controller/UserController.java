@@ -45,8 +45,9 @@ public class UserController {
 	@PostMapping("/addUser")
 	public JSONObject addUser(@RequestBody JSONObject requestJson) {
 		CommonUtil.hasAllRequired(requestJson, "username, password, nickname,roleId");
+		var x=userService.addUser(requestJson);
 		logService.addLog("addUser","id:"+requestJson.getString("id")+" username:"+requestJson.getString("username")+"name "+requestJson.getString("nickname"));
-		return userService.addUser(requestJson);
+		return x;
 	}
 
 	@RequiresPermissions("user:update")

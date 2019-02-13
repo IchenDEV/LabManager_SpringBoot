@@ -7,6 +7,15 @@
         SELECT count(0)
         FROM sys_user u
         WHERE u.status = 1
+        <if test="id !=null">
+                    And id = #{id}
+        </if>
+        <if test="username !=null">
+                    And username = #{username}
+        </if>
+        <if test="nickname !=null">
+                    And nickname = #{nickname}
+        </if>
     </select>
 
     <resultMap id="userMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
@@ -47,6 +56,15 @@
                      DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
                  FROM sys_user
                  WHERE status = 1
+        <if test="id !=null">
+                    And id = #{id}
+        </if>
+        <if test="username !=null">
+                    And username = #{username}
+        </if>
+        <if test="nickname !=null">
+                    And nickname = #{nickname}
+        </if>
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
              ) u
