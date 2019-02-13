@@ -56,11 +56,17 @@
     </select>
 
     <insert id="addMsg" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO log
-        ( author, msg, receiver) VALUES
+        INSERT INTO message
+        (author, msg, receiver) VALUES
             ( #{author}, #{msg}, #{receiver})
     </insert>
-     <update id="deleteLog">
+     <update id="readMsg">
+        UPDATE message
+        SET
+        has_read = 1
+        WHERE id = #{id}
+    </update>
+     <update id="deleteMsg">
         UPDATE message
         SET
         status=-1

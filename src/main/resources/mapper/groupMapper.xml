@@ -48,6 +48,7 @@
         <result column="name" property="name"/>
         <result column="userId" property="userId"/>
         <result column="username" property="username"/>
+        <result column="nickname" property="nickname"/>
         <result column="status" property="status"/>
     </resultMap>
     <select id="listGroupUser" resultMap="groupUserMap">
@@ -56,12 +57,13 @@
                      g.name                                    name,
                      u.id                                      userId,
                      u.username                                username,
-                     g.status                                  status,
+                     u.nickname                                nickname,
+                     g.status                                  status
                  FROM `group` g
                       LEFT JOIN user_group ug ON ug.group = g.id
                       LEFT JOIN sys_user u ON u.id = ug.user
                  WHERE g.status != -1 And u.status != -1  And ug.status != -1 
-        <if test="id != null">And g.id= #{id}</if>
+        <if test="group != null">And g.id= #{group}</if>
                  ORDER BY g.id
                  LIMIT #{offSet}, #{pageRow}
     </select>
@@ -101,7 +103,7 @@
 
     <insert id="addUserToGroup" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user_group
-        (user, group,status) VALUES
+        (user,`group`,status) VALUES
             ( #{user}, #{group},#{status})
     </insert>
 
@@ -109,13 +111,13 @@
         UPDATE user_group
         SET status=-1
         WHERE 
-        <if test="group!= null">group = #{group}</if>
+        <if test="group!= null">`group` = #{group}</if>
         <if test="user != null">And user= #{user}</if>
     </update>
 
     <insert id="addProjectToGroup" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO group_project
-        (project, group,status) VALUES
+        (project,`group`,status) VALUES
             ( #{project}, #{group},#{status})
     </insert>
     

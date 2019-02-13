@@ -18,7 +18,7 @@ public interface MsgService {
 	 */
 	JSONObject addMsg(JSONObject jsonObject);
 
-
+	JSONObject readMsg(JSONObject jsonObject);
     	/**
 	 * 删除msg
 	 */

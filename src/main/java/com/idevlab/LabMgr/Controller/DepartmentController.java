@@ -55,8 +55,9 @@ public class DepartmentController {
     @PostMapping("/addDepartmentUser")
     public JSONObject addDepartmentUser(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "user,department,status");
+        var x =departmentService.addUserToDepartment(requestJson);
         logService.addLog("AddDepartmentUser", "id:"+requestJson.getString("id")+";user:"+requestJson.getString("user")+";department'"+requestJson.getString("department"));
-        return departmentService.addUserToDepartment(requestJson);
+        return x;
     }
  
 

@@ -27,7 +27,7 @@ public class MsgController {
     @Autowired
     private LogService logService;
     /**
-     * 查询实验室列表
+     * 查询信息列表
      * offSet 
      * pageRow
      */
@@ -37,11 +37,12 @@ public class MsgController {
         return msgService.listMsg(requestJson);
     }
     @RequiresPermissions("book:add")
-    @PostMapping("/addLab")
+    @PostMapping("/addMsg")
     public JSONObject addLab(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "author,receiver,msg");
+        var x=msgService.addMsg(requestJson);
         logService.addLog("AddMsg","id:"+requestJson.getString("id")+" receiver:"+requestJson.getString("receiver"));
-        return msgService.addMsg(requestJson);
+        return x;
     }
     @RequiresPermissions("book:delete")
     @PostMapping("/deleteMsg")
@@ -49,5 +50,13 @@ public class MsgController {
         CommonUtil.hasAllRequired(requestJson, "id");
         logService.addLog("DeleteMsg",requestJson.getString("id"));
         return msgService.deleteMsg(requestJson);
+    }
+
+    @RequiresPermissions("book:update")
+    @PostMapping("/readMsg")
+    public JSONObject readMsg(@RequestBody JSONObject requestJson) {
+        CommonUtil.hasAllRequired(requestJson, "id");
+        logService.addLog("readMsg",requestJson.getString("id"));
+        return msgService.readMsg(requestJson);
     }
 }

@@ -23,7 +23,7 @@ public interface MsgDao {
      * 新增msg
      */
     int addMsg(JSONObject jsonObject);
-
+    int readMsg(JSONObject jsonObject);
 
     /**
      * 删除msg

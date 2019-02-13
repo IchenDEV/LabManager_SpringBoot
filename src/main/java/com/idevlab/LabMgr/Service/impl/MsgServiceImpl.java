@@ -39,6 +39,11 @@ public class MsgServiceImpl implements  MsgService {
         msgDao.addMsg(jsonObject);
 		return CommonUtil.successJson();
 	}
+	@Override
+	public JSONObject readMsg(JSONObject jsonObject) {	
+        msgDao.readMsg(jsonObject);
+		return CommonUtil.successJson();
+	}
     /**
 	 * 删除msg
 	 */

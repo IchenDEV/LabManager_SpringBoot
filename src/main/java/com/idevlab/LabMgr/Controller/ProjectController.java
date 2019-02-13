@@ -41,8 +41,9 @@ public class ProjectController {
     @PostMapping("/addProject")
     public JSONObject addProject(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "name,description,status");
+        var x = projectService.addProject(requestJson);
         logService.addLog("AddProject","id:"+requestJson.getString("id")+" name:"+requestJson.getString("name"));
-        return projectService.addProject(requestJson);
+        return x;
     }
 
     @RequiresPermissions("device:update")
