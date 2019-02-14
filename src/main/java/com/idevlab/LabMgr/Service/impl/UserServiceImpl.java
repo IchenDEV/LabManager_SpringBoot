@@ -56,9 +56,9 @@ public class UserServiceImpl implements UserService {
 		jsonObject.put("superPassword", superPassword);
 		int count = userDao.countUserGroup(jsonObject);
 		if(count==0){
-			return true;
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	/**
@@ -90,6 +90,14 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public JSONObject updateUser(JSONObject jsonObject) {
+		if(jsonObject.getString("password")!=null){
+			String password = com.idevlab.LabMgr.Util.CommonUtil.md5(jsonObject.getString("password"));
+			jsonObject.replace("password",password);
+		}
+		if(jsonObject.getString("superPassword")!=null){
+		String superPassword = com.idevlab.LabMgr.Util.CommonUtil.md5(jsonObject.getString("superPassword"));
+		jsonObject.replace("superPassword",superPassword);
+		}
 		userDao.updateUser(jsonObject);
 		return CommonUtil.successJson();
 	}

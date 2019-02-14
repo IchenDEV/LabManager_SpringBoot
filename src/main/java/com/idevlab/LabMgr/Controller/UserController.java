@@ -55,8 +55,8 @@ public class UserController {
 	public JSONObject updateUser(@RequestBody JSONObject requestJson) {
 		CommonUtil.hasAllRequired(requestJson, "userId,adminId,adminSuperPassword");
 		if (userService.SuperAdminAuth(requestJson.getInteger("adminId"),
-				requestJson.getString("adminSuperPassword"))) {
-			logService.addLog("addUser", requestJson.getString("username"));
+			requestJson.getString("adminSuperPassword"))) {
+			logService.addLog("updateUser", requestJson.getString("username"));
 			return userService.updateUser(requestJson);
 		}
 		return CommonUtil.errorJson(ErrorEnum.E_502);

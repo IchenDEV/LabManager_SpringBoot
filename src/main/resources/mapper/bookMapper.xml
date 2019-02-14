@@ -17,7 +17,9 @@
     <resultMap id="bookMap" type="com.alibaba.fastjson.JSONObject">
         <id column="id" property="id"/>
         <result column="project" property="project"/>
+        <result column="projectName" property="projectName"/>
         <result column="device" property="device"/>
+        <result column="deviceName" property="deviceName"/>
         <result column="applicant" property="applicant"/>
         <result column="beginTime" property="beginTime"/>
         <result column="endTime" property="endTime"/>
@@ -27,23 +29,34 @@
     </resultMap>
     <select id="listBook" resultMap="bookMap">
                  SELECT
-                     id                                      id,
-                     project                                 project,
-                     device                                  device,
-                     applicant                               applicant,
-                     status                                  status,
-                     DATE_FORMAT(begin_time, '%Y.%m.%d %T')  beginTime,
-                     DATE_FORMAT(end_time, '%Y.%m.%d %T')    endTime,
-                     DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
-                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
-                 FROM book_recode
-                 WHERE status != -1
-                       <if test="id != null">And id= #{id}</if>
-                       <if test="project != null">And project = #{project}</if>
-                       <if test="device != null">And device = #{device}</if>
-                       <if test="applicant != null">And applicant = #{applicant}</if>
-                       <if test="time != null"> <![CDATA[ And begin_time<= #{time} And end_time>= #{time} ]]></if>
-                 ORDER BY id
+                     b.id                                      id,
+                     b.project                                 project,
+                     p.name                                    projectName,
+                     p.description                             projectDescription,
+                     b.device                                  device,
+                     d.name                                    deviceName,
+                     d.band                                    deviceBand,
+                     d.No                                      deviceNo,
+                     d.Model                                   deviceModel,
+                     d.description                             deviceDescription,
+                     b.applicant                               applicant,
+                     u.nickname                                applicantNickname,
+                     b.status                                  status,
+                     DATE_FORMAT(b.begin_time, '%Y.%m.%d %T')  beginTime,
+                     DATE_FORMAT(b.end_time, '%Y.%m.%d %T')    endTime,
+                     DATE_FORMAT(b.create_time, '%Y.%m.%d %T') createTime,
+                     DATE_FORMAT(b.update_time, '%Y.%m.%d %T') updateTime
+                 FROM book_recode b
+                      LEFT JOIN project p ON p.id = b.project
+                      LEFT JOIN sys_user u ON u.id = b.applicant
+                      LEFT JOIN device d ON d.id = b.device
+                 WHERE b.status != -1
+                       <if test="id != null">And b.id= #{id}</if>
+                       <if test="project != null">And b.project = #{project}</if>
+                       <if test="device != null">And b.device = #{device}</if>
+                       <if test="applicant != null">And b.applicant = #{applicant}</if>
+                       <if test="time != null"> <![CDATA[ And b.begin_time<= #{time} And b.end_time>= #{time} ]]></if>
+                 ORDER BY b.id
                  LIMIT #{offSet}, #{pageRow}
     </select>
 

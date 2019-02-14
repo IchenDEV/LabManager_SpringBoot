@@ -131,31 +131,34 @@
         UPDATE sys_user
         <set>
             <if test="nickname !=null">
-          nickname = #{nickname}
+                nickname = #{nickname}
             </if>
             <if test="password !='' and password !=null">
-            , password = #{password}
+                ,password = #{password}
             </if>
-            <if test="role_id !=null">
-          ，role_id = #{role_id}
+            <if test="superPassword !='' and superPassword !=null">
+                ,super_password = #{superPassword}
+            </if>
+            <if test="roleId !=null">
+                ,role_id = #{roleId}
             </if>
             <if test="email !=null">
-          ，email = #{email}
+                ,email = #{email}
             </if>
             <if test="phone !=null">
-          ，phone = #{phone}
+                ,phone = #{phone}
             </if>
             <if test="address !=null">
-          ，address = #{address}
+                ,address = #{address}
             </if>
             <if test="sex !=null">
-          ，sex = #{sex}
+                ,sex = #{sex}
             </if>
             <if test="status !=null">
-          ，status = #{status}
+                ,status = #{status}
             </if>
         </set>
-        WHERE id = #{id} and id != 10003
+        WHERE id = #{userId} and id != 10003
     </update>
     <update id="delUser">
         UPDATE sys_user

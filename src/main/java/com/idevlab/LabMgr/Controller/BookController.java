@@ -52,4 +52,12 @@ public class BookController {
         logService.addLog("UpdateBook", requestJson.getString("id"));
         return bookService.updateBook(requestJson);
     }
+
+    @RequiresPermissions("device:delete")
+    @PostMapping("/deleteBook")
+    public JSONObject deleteBook(@RequestBody JSONObject requestJson) {
+        CommonUtil.hasAllRequired(requestJson, "id");
+        logService.addLog("DeleteBook",requestJson.getString("id"));
+        return bookService.deleteBook(requestJson);
+    }
 }

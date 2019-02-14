@@ -91,7 +91,7 @@
                      g.name                                    name,
                      u.id                                      userId,
                      u.name                                    name,
-                     g.status                                  status,
+                     g.status                                  status
                  FROM `group` g
                       LEFT JOIN group_project ug ON ug.group = g.id
                       LEFT JOIN project u ON u.id = ug.project
