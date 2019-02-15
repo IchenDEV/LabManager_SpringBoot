@@ -40,7 +40,7 @@
         <if test="id != null">And id= #{id}</if>
         <if test="name != null">And name like #{name}</if>
         <if test="time != null"><![CDATA[And #{time}>= begin_time And #{time}<= end_time]]></if>
-        <if test="status != null and status ！=-1">
+        <if test="status != null and status !=-1">
                        AND status = #{status}
         </if>
                  ORDER BY id

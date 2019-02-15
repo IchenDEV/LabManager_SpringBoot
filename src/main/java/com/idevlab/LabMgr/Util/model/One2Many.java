@@ -17,6 +17,7 @@ import java.util.Set;
  * @date: 2017/10/24 10:17
  */
 public class One2Many extends JSONObject{
+	private static final long serialVersionUID = 1L;
 	private Set<String> roleList;
 	private Set<String> menuList;
 	private Set<String> permissionList;
