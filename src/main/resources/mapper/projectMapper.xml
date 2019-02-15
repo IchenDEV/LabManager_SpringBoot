@@ -5,8 +5,14 @@
 
     <select id="countProject" resultType="Integer">
         SELECT count(0)
-        FROM project b
-        WHERE b.status != -1
+        FROM project 
+        WHERE status != -1
+        <if test="id != null">And id= #{id}</if>
+        <if test="name != null">And name like #{name}</if>
+        <if test="time != null"><![CDATA[And #{time}>= begin_time And #{time}<= end_time]]></if>
+        <if test="status != null and status !=-1">
+                       AND status = #{status}
+        </if>
     </select>
 
     <resultMap id="projectMap" type="com.alibaba.fastjson.JSONObject">
@@ -31,15 +37,18 @@
                      DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
                  FROM project
                  WHERE status != -1
-                       <if test="id != null">And id= #{id}</if>
-                       <if test="name != null">And name like #{name}</if>
-                       <if test="time != null"><![CDATA[And #{time}>= begin_time And #{time}<= end_time]]></if>
+        <if test="id != null">And id= #{id}</if>
+        <if test="name != null">And name like #{name}</if>
+        <if test="time != null"><![CDATA[And #{time}>= begin_time And #{time}<= end_time]]></if>
+        <if test="status != null and status ！=-1">
+                       AND status = #{status}
+        </if>
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
     </select>
 
 
-   <select id="countProjectGroup" resultType="Integer">
+    <select id="countProjectGroup" resultType="Integer">
         SELECT count(0)
         FROM project u
              LEFT JOIN group_project ug ON ug.project = u.id
@@ -56,7 +65,7 @@
                           LEFT JOIN group_project ug ON ug.project = u.id
                           LEFT JOIN `group` g ON g.id = ug.`group`
                  WHERE u.status != -1 And g.status != -1 And ug.status != -1
-                       <if test="id != null">And u.id= #{id}</if>
+        <if test="id != null">And u.id= #{id}</if>
                  ORDER BY u.id
                  LIMIT #{offSet}, #{pageRow}
     </select>
@@ -79,10 +88,9 @@
         WHERE id = #{id}
     </update>
 
-     <update id="deleteProject">
+    <update id="deleteProject">
         UPDATE project
-        SET
-        status=-1
+        SET status=-1
         WHERE id = #{id}
     </update>
 </mapper>

@@ -24,6 +24,9 @@
         <if test="bands != null">
                        AND d.band like #{bands}
         </if>
+        <if test="status != null and status !=-1" >
+                       AND d.status = #{status}
+        </if>
     </select>
 
     <resultMap id="deviceMap" type="com.alibaba.fastjson.JSONObject">
@@ -32,7 +35,7 @@
         <result column="name" property="name"/>
         <result column="description" property="description"/>
         <result column="model" property="model"/>
-        <result column="band" property="band"/>
+        <result column="bands" property="bands"/>
         <result column="location" property="location"/>
         <result column="locationName" property="locationName"/>
         <result column="locationDescription" property="locationDescription"/>
@@ -51,7 +54,7 @@
                      l.name                                    locationName,
                      l.description                             locationDescription,
                      l.location                                locationAddress,
-                     d.band                                    band,
+                     d.band                                    bands,
                      d.model                                   model,
                      d.status                                  status,
                      DATE_FORMAT(d.create_time, '%Y.%m.%d %T') createTime,
@@ -75,6 +78,9 @@
         <if test="bands != null">
                        AND d.band like #{bands}
         </if>
+        <if test="status != null and status !=-1">
+                       AND d.status = #{status}
+        </if>
                  ORDER BY d.id
                  LIMIT #{offSet}, #{pageRow}
     </select>
@@ -91,8 +97,8 @@
             <if test="name != null">name=#{name},</if>
             <if test="No != null">No=#{No},</if>
             <if test="description != null">description=#{description},</if>
-            <if test="model != null">model=#{model}</if>
-            <if test="band!= null">band=#{band},</if>
+            <if test="model != null">model=#{model},</if>
+            <if test="bands != null">`band`=#{bands},</if>
             <if test="location != null">location=#{location},</if>
             <if test="status != null">status=#{status}</if>
         </set>
