@@ -26,15 +26,7 @@ public class BackupController {
    @PostMapping("/now")
    @RequiresPermissions("device:delete")
    public JSONObject now() {
-      try {
-         System.out.print("Backup Start");
-         logService.addLog("Backup", "Now");
-         String shpath = "/home/backup.sh";
-         Process ps = Runtime.getRuntime().exec(shpath);
-         ps.waitFor();
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
+      dynamicScheduledTask.Task();
       return CommonUtil.successJson();
    }
 
@@ -52,6 +44,7 @@ public class BackupController {
    public JSONObject setSchedule() {
      JSONObject js=new JSONObject();
      js.put("cron",dynamicScheduledTask.getCron());
-      return CommonUtil.successJson(js);
+     js.put("lastBackupTime", dynamicScheduledTask.getLastBackTime());
+     return CommonUtil.successJson(js);
    }
 }

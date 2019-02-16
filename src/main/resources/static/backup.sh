@@ -5,7 +5,7 @@ backupDir=/usr/local/work/backup/daily
 mysqlDir=/var/lib/mysql
 #mysql的数据目录
 logFile=/usr/local/work/backup/bak.log
-BinFile=/var/lib/mysql/mysql-bin.index
+BinFile=/var/lib/mysql/binlog.index
 #mysql的index文件路径，放在数据目录下的
 
 mysqladmin -uroot -pLabMgr@137 flush-logs
