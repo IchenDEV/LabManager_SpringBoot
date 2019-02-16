@@ -58,6 +58,16 @@ public class LogServiceImpl implements  LogService {
 		return CommonUtil.successJson();
 	}
 
+	@Override
+	public JSONObject addLog(String operator,String operation, String targer) {	
+		JSONObject jsonObject =new JSONObject();
+		jsonObject.put("user", operator);
+		jsonObject.put("operation", operation);
+		jsonObject.put("targer", targer);
+        logDao.addLog(jsonObject);
+		return CommonUtil.successJson();
+	}
+
 	
 	/**
 	 * 修改log

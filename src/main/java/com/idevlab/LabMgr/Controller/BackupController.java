@@ -2,6 +2,7 @@ package com.idevlab.LabMgr.Controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.idevlab.LabMgr.Config.DynamicScheduledTask;
+import com.idevlab.LabMgr.Service.LogService;
 import com.idevlab.LabMgr.Util.CommonUtil;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -19,11 +20,15 @@ public class BackupController {
 
    @Autowired
    DynamicScheduledTask dynamicScheduledTask;
+   @Autowired
+   LogService logService;
 
    @PostMapping("/now")
    @RequiresPermissions("device:delete")
-   public JSONObject now(@RequestBody JSONObject requestJson) {
+   public JSONObject now() {
       try {
+         System.out.print("Backup Start");
+         logService.addLog("Backup", "Now");
          String shpath = "/home/backup.sh";
          Process ps = Runtime.getRuntime().exec(shpath);
          ps.waitFor();
@@ -37,7 +42,16 @@ public class BackupController {
    @PostMapping("/setSchedule")
    public JSONObject setSchedule(@RequestBody JSONObject requestJson) {
       CommonUtil.hasAllRequired(requestJson, "schedule");
-      dynamicScheduledTask.setCron("0/10 * * * * ?");
+      logService.addLog("SetBackupSchedule", requestJson.getString("schedule"));
+      dynamicScheduledTask.setCron(requestJson.getString("schedule"));
       return CommonUtil.successJson();
+   }
+
+   @RequiresPermissions("device:delete")
+   @PostMapping("/getSchedule")
+   public JSONObject setSchedule() {
+     JSONObject js=new JSONObject();
+     js.put("cron",dynamicScheduledTask.getCron());
+      return CommonUtil.successJson(js);
    }
 }

@@ -22,6 +22,10 @@ public interface LogService {
 	 * 添加log
 	 */
 	JSONObject addLog(String operation, String targer);
+	/**
+	 * 添加log
+	 */
+	JSONObject addLog(String operator,String operation, String targer);
 
 	/**
 	 * 修改log
