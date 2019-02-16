@@ -14,6 +14,14 @@
                        <if test="time != null"> <![CDATA[ And begin_time<= #{time} And end_time>= #{time} ]]></if>
     </select>
 
+    <select id="checkTimeFree" resultType="Integer">
+        SELECT count(0)
+        FROM book_recode b
+        WHERE status != -1
+              <if test="device != null">And device = #{device}</if>
+              <![CDATA[ And (end_time<= #{beginTime} Or begin_time>= #{endTime} )]]>
+    </select>
+
     <resultMap id="bookMap" type="com.alibaba.fastjson.JSONObject">
         <id column="id" property="id"/>
         <result column="project" property="project"/>
@@ -56,6 +64,7 @@
                        <if test="device != null">And b.device = #{device}</if>
                        <if test="applicant != null">And b.applicant = #{applicant}</if>
                        <if test="time != null"> <![CDATA[ And b.begin_time<= #{time} And b.end_time>= #{time} ]]></if>
+                       <if test="beginTime != null and endTime != null"> <![CDATA[ And b.begin_time >= #{beginTime} And b.end_time<= #{endTime} ]]></if>
                  ORDER BY b.id
                  LIMIT #{offSet}, #{pageRow}
     </select>

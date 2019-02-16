@@ -13,6 +13,7 @@ public interface BookDao {
      * 查询预定数量
      */
     int countBook(JSONObject jsonObject);
+    int checkTimeFree(JSONObject jsonObject);
 
     /**
      * 查询预定列表

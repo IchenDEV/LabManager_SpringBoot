@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.idevlab.LabMgr.Dao.BookDao;
 import com.idevlab.LabMgr.Service.BookService;
 import com.idevlab.LabMgr.Util.CommonUtil;
+import com.idevlab.LabMgr.Util.Constants.ErrorEnum;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +38,11 @@ public class BookServiceImpl implements BookService {
 	 */
 	@Override
 	public JSONObject addBook(JSONObject jsonObject) {
-		bookDao.addBook(jsonObject);
-		return CommonUtil.successJson();
+		if(bookDao.checkTimeFree(jsonObject)>0){
+			bookDao.addBook(jsonObject);
+			return CommonUtil.successJson();
+		};
+		return CommonUtil.errorJson(ErrorEnum.E_90004);
 	}
 
 	/**

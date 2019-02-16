@@ -98,6 +98,26 @@
                  LIMIT #{offSet}, #{pageRow}
     </select>
 
+    <select id="countUserProject" resultType="Integer">
+        SELECT count(0)
+         FROM user_group ug
+                      LEFT JOIN `group_project` gp ON gp.group = ug.group
+                      LEFT JOIN `project` p ON p.id= gp.project
+         WHERE p.status !=-1 AND ug.user=#{id}
+    </select>
+    <select id="listUserProject" resultType="com.alibaba.fastjson.JSONObject">
+                 SELECT
+                     ug.user                                   userId,
+                     p.id                                      projectId,
+                     p.name                                    projectName,
+                     p.status                                  status
+                 FROM user_group ug
+                      LEFT JOIN `group_project` gp ON gp.group = ug.group
+                      LEFT JOIN `project` p ON p.id= gp.project
+                 WHERE p.status !=-1 AND ug.user=#{id}
+                 LIMIT #{offSet}, #{pageRow}
+    </select>
+
     <select id="countUserDepartment" resultType="Integer">
         SELECT count(0)
         FROM sys_user u

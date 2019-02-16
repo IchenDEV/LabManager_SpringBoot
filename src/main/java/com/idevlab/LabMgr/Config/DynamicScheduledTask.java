@@ -57,6 +57,7 @@ public class DynamicScheduledTask implements SchedulingConfigurer {
             ps.waitFor();
             System.out.println("备份数据库成功");
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("备份数据库失败");
         }
     }

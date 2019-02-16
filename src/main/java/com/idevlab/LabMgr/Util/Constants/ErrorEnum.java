@@ -13,7 +13,9 @@ public enum ErrorEnum {
 	E_10008("10008", "角色删除失败,尚有用户属于此角色"),
 	E_10009("10009", "账户名存在"),
 	E_20011("20011", "登陆已过期,请重新登陆"),
-	E_90003("90003", "缺少必填参数");
+	E_90003("90003", "缺少必填参数"),
+	E_90004("90004", "时间冲突");
+
 	private String errorCode;
 	private String errorMsg;
 	ErrorEnum(String errorCode, String errorMsg) {
