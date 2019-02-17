@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DynamicScheduledTask implements SchedulingConfigurer {
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     private static final String DEFAULT_CRON = "0 0 0/5 * * ?";
     private String cron = DEFAULT_CRON;

@@ -19,7 +19,7 @@
         FROM book_recode b
         WHERE status != -1
               <if test="device != null">And device = #{device}</if>
-              <![CDATA[ And (end_time<= #{beginTime} Or begin_time>= #{endTime} )]]>
+              <![CDATA[ And (end_time >= #{beginTime} And begin_time<= #{endTime} )]]>
     </select>
 
     <resultMap id="bookMap" type="com.alibaba.fastjson.JSONObject">

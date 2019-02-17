@@ -38,7 +38,7 @@ public class BookServiceImpl implements BookService {
 	 */
 	@Override
 	public JSONObject addBook(JSONObject jsonObject) {
-		if(bookDao.checkTimeFree(jsonObject)>0){
+		if(bookDao.checkTimeFree(jsonObject)==0){
 			bookDao.addBook(jsonObject);
 			return CommonUtil.successJson();
 		};
