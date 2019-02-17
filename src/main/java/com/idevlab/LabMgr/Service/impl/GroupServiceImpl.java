@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.idevlab.LabMgr.Dao.GroupDao;
 import com.idevlab.LabMgr.Service.GroupService;
 import com.idevlab.LabMgr.Util.CommonUtil;
+import com.idevlab.LabMgr.Util.Constants.ErrorEnum;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,17 +69,23 @@ public class GroupServiceImpl implements GroupService {
 	 */
 	@Override
 	public JSONObject addUserToGroup(JSONObject jsonObject) {
-		groupDao.addUserToGroup(jsonObject);
-		return CommonUtil.successJson();
+		if (groupDao.countGroupUser(jsonObject) == 0) {
+			groupDao.addUserToGroup(jsonObject);
+			return CommonUtil.successJson();
+		}
+		return CommonUtil.errorJson(ErrorEnum.E_90004);
 	}
 
 	/**
-	 * 添加人员
+	 * 添加项目
 	 */
 	@Override
 	public JSONObject addProjectToGroup(JSONObject jsonObject) {
-		groupDao.addProjectToGroup(jsonObject);
-		return CommonUtil.successJson();
+		if (groupDao.countGroupProject(jsonObject) == 0) {
+			groupDao.addProjectToGroup(jsonObject);
+			return CommonUtil.successJson();
+		}
+		return CommonUtil.errorJson(ErrorEnum.E_90004);
 	}
 
 	/**

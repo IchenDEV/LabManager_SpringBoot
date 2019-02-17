@@ -53,8 +53,7 @@
     </resultMap>
     <select id="listGroupUser" resultMap="groupUserMap">
                  SELECT
-                     g.id                                      id,
-                     g.name                                    name,
+                     ug.id                                     id,
                      u.id                                      userId,
                      u.username                                username,
                      u.nickname                                nickname,
@@ -87,11 +86,10 @@
     </resultMap>
     <select id="listGroupProject" resultMap="groupUserMap">
                  SELECT
-                     g.id                                      id,
-                     g.name                                    name,
-                     u.id                                      userId,
+                     ug.id                                     id,
                      u.name                                    name,
-                     g.status                                  status
+                     u.id                                      projectId,
+                     ug.status                                 status
                  FROM `group` g
                       LEFT JOIN group_project ug ON ug.group = g.id
                       LEFT JOIN project u ON u.id = ug.project
@@ -110,9 +108,11 @@
     <update id="deleteGroupUser">
         UPDATE user_group
         SET status=-1
-        WHERE 
+        <where>
         <if test="group!= null">`group` = #{group}</if>
         <if test="user != null">And user= #{user}</if>
+        <if test="id != null">And id= #{id}</if>
+        </where>
     </update>
 
     <insert id="addProjectToGroup" useGeneratedKeys="true" keyProperty="id">
@@ -124,9 +124,11 @@
      <update id="deleteGroupProject">
         UPDATE group_project
         SET status=-1
-        WHERE 
+        <where>
         <if test="group!= null">`group` = #{group}</if>
         <if test="project != null">And project= #{project}</if>
+        <if test="id != null">And id= #{id}</if>
+        </where>
     </update>
 
     <insert id="addGroup" useGeneratedKeys="true" keyProperty="id">

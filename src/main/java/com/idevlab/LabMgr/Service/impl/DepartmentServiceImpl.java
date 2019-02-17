@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.idevlab.LabMgr.Dao.DepartmentDao;
 import com.idevlab.LabMgr.Service.DepartmentService;
 import com.idevlab.LabMgr.Util.CommonUtil;
+import com.idevlab.LabMgr.Util.Constants.ErrorEnum;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,8 +58,11 @@ public class DepartmentServiceImpl implements DepartmentService {
 	 */
 	@Override
 	public JSONObject addUserToDepartment(JSONObject jsonObject) {
-		departmentDao.addUserToDepartment(jsonObject);
-		return CommonUtil.successJson();
+		if (departmentDao.countDepartmentUser(jsonObject) == 0) {
+			departmentDao.addUserToDepartment(jsonObject);
+			return CommonUtil.successJson();
+		}
+		return CommonUtil.errorJson(ErrorEnum.E_90004);
 	}
 
 	/**
