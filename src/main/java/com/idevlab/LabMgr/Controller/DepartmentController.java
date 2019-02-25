@@ -26,11 +26,7 @@ public class DepartmentController {
     private DepartmentService departmentService;
     @Autowired
     private LogService logService;
-    /**
-     * 查询部门列表
-     * offSet 
-     * pageRow
-     */
+
     @RequiresPermissions("device:list")
     @PostMapping("/list")
     public JSONObject listDepartment(@RequestBody JSONObject requestJson) {
@@ -47,8 +43,9 @@ public class DepartmentController {
     @PostMapping("/addDepartment")
     public JSONObject addDepartment(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "name,description,status");
+        var result=departmentService.addDepartment(requestJson);
         logService.addLog("AddDepartment","id:"+requestJson.getString("id")+";name:"+requestJson.getString("name"));
-        return departmentService.addDepartment(requestJson);
+        return result;
     }
 
     @RequiresPermissions("device:add")

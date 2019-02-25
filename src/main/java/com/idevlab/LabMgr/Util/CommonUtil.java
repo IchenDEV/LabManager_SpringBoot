@@ -102,7 +102,6 @@ public class CommonUtil {
      * 获取总页数
      * 
      * @param pageRow   每页行数
-     * 
      * @param itemCount 结果的总条数
      * 
      */
@@ -142,7 +141,6 @@ public class CommonUtil {
     /**
      * 
      * 将request转JSON
-     * 
      * 并且验证非空字段
      * 
      */
@@ -155,9 +153,7 @@ public class CommonUtil {
     /**
      * 
      * 验证是否含有全部必填字段
-     * 
      * @param requiredColumns 必填的参数字段名称 逗号隔开 比如"userId,name,telephone"
-     * 
      */
     public static void hasAllRequired(final JSONObject jsonObject, String requiredColumns) {
         if (!StringTools.isNullOrEmpty(requiredColumns)) {
@@ -184,9 +180,7 @@ public class CommonUtil {
     /**
      * 
      * 在分页查询之前,为查询条件里加上分页参数
-     * 
      * @param paramObject    查询条件json
-     * 
      * @param defaultPageRow 默认的每页条数,即前端不传pageRow参数时的每页条数
      * 
      */

@@ -23,11 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LogController {
     @Autowired
     private LogService logService;
-    /**
-     * 查询实验室列表
-     * offSet 
-     * pageRow
-     */
+
     @RequiresPermissions("device:list")
     @PostMapping("/list")
     public JSONObject listLog(@RequestBody JSONObject requestJson) {

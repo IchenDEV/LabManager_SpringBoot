@@ -33,12 +33,19 @@ public class UserController {
 
 	@PostMapping("/listGroup")
 	public JSONObject listUserGroup(@RequestBody JSONObject requestJson) {
+		CommonUtil.hasAllRequired(requestJson, "id");
 		return userService.listUserGroup(requestJson);
 	}
 
 	@PostMapping("/listDepartment")
 	public JSONObject listUserDepartment(@RequestBody JSONObject requestJson) {
+		CommonUtil.hasAllRequired(requestJson, "id");
 		return userService.listUserDepartment(requestJson);
+	}
+	@PostMapping("/listProject")
+	public JSONObject listUserProject(@RequestBody JSONObject requestJson) {
+		CommonUtil.hasAllRequired(requestJson, "id");
+		return userService.listUserProject(requestJson);
 	}
 
 	@RequiresPermissions("user:add")
@@ -53,7 +60,7 @@ public class UserController {
 	@RequiresPermissions("user:update")
 	@PostMapping("/updateUser")
 	public JSONObject updateUser(@RequestBody JSONObject requestJson) {
-		CommonUtil.hasAllRequired(requestJson, "userId,adminId,adminSuperPassword");
+		CommonUtil.hasAllRequired(requestJson, "id,adminId,adminSuperPassword");
 		if (userService.SuperAdminAuth(requestJson.getInteger("adminId"),
 			requestJson.getString("adminSuperPassword"))) {
 			logService.addLog("updateUser", requestJson.getString("username"));
@@ -62,7 +69,6 @@ public class UserController {
 		return CommonUtil.errorJson(ErrorEnum.E_502);
 	}
 
-	
 	@RequiresPermissions("user:delete")
 	@PostMapping("/delUser")
 	public JSONObject delUser(@RequestBody JSONObject requestJson) {

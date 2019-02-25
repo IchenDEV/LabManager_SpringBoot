@@ -5,6 +5,8 @@ import java.util.Date;
 
 import com.idevlab.LabMgr.Service.LogService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.TriggerContext;
@@ -27,6 +29,7 @@ public class DynamicScheduledTask implements SchedulingConfigurer {
     private String lastBackTime = null;
     @Autowired
     private LogService logService;
+    private Logger logger = LoggerFactory.getLogger(DynamicScheduledTask.class);
 
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
@@ -48,17 +51,17 @@ public class DynamicScheduledTask implements SchedulingConfigurer {
 
     public void Task() {
         // 定时任务的业务逻辑
-        System.out.println("尝试备份，当前时间：" + dateFormat.format(new Date()));
+        logger.info("尝试备份，当前时间：" + dateFormat.format(new Date()));
         setLastBackTime(dateFormat.format(new Date()));
         logService.addLog("System", "Backup", "DB");
         try {
             String shpath = "/home/backup.sh";
             Process ps = Runtime.getRuntime().exec(shpath);
             ps.waitFor();
-            System.out.println("备份数据库成功");
+            logger.info("备份数据库成功");
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("备份数据库失败");
+            logger.error("备份数据库失败");
         }
     }
 

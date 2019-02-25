@@ -26,11 +26,6 @@ public class BookController {
     @Autowired
     private LogService logService;
 
-    /**
-     * 查询用户列表
-     * offSet 
-     * pageRow
-     */
     @RequiresPermissions("book:list")
     @PostMapping("/list")
     public JSONObject listBook(@RequestBody JSONObject requestJson) {

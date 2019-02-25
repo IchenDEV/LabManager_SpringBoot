@@ -10,18 +10,15 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Collection;
 /**
- * @author: hxy
+ * @author: idevlab
  * @description: 自定义Realm
  * @date: 2017/10/24 10:06
  */
 
 public class UserRealm extends AuthorizingRealm {
-	private Logger logger = LoggerFactory.getLogger(UserRealm.class);
 	@Autowired
     private LoginService loginService;
     
@@ -31,8 +28,6 @@ public class UserRealm extends AuthorizingRealm {
 		Session session = SecurityUtils.getSubject().getSession();
 		//查询用户的权限
 		JSONObject permission = (JSONObject) session.getAttribute(Constants.SESSION_USER_PERMISSION);
-		logger.info("permission的值为:" + permission);
-		logger.info("本用户权限为:" + permission.get("permissionList"));
 		//为当前用户设置角色和权限
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 		authorizationInfo.addStringPermissions((Collection<String>) permission.get("permissionList"));

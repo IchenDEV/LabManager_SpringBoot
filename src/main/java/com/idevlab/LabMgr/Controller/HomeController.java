@@ -1,8 +1,6 @@
 package com.idevlab.LabMgr.Controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.idevlab.LabMgr.Dao.DepartmentDao;
-import com.idevlab.LabMgr.Dao.UserDao;
 import com.idevlab.LabMgr.Service.LoginService;
 import com.idevlab.LabMgr.Service.UserService;
 import com.idevlab.LabMgr.Util.CommonUtil;
@@ -17,11 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin
 public class HomeController {
-
-   @Autowired
-   DepartmentDao departmentDao;
-   @Autowired
-   UserDao userDao;
    @Autowired
    UserService userService;
    @Autowired
@@ -30,7 +23,7 @@ public class HomeController {
 
    @RequestMapping("/")
    public String index() {
-      return "Welcome  to  LabMgr  System";
+      return "Welcome  to  LabMgr  System  0.8";
    }
 
    @PostMapping("/singUp")

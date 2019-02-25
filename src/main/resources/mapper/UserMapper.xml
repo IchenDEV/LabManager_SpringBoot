@@ -19,7 +19,7 @@
     </select>
 
     <resultMap id="userMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
-        <id column="userId" property="userId"/>
+        <id column="id" property="id"/>
         <result column="username" property="username"/>
         <result column="nickname" property="nickname"/>
         <result column="roleId" property="roleId"/>
@@ -43,7 +43,7 @@
             CONCAT(p.menu_name, p.permission_name) permissionName
         FROM (
                  SELECT
-                     id                                      userId,
+                     id                                      id,
                      username                                username,
                      nickname                                nickname,
                      role_id                                 roleId,
@@ -72,7 +72,7 @@
             LEFT JOIN sys_role_permission rp ON rp.role_id = r.id
             LEFT JOIN sys_permission p ON p.id = rp.permission_id
 
-        ORDER BY u.userId
+        ORDER BY u.id
     </select>
 
 
@@ -85,7 +85,7 @@
     </select>
     <select id="listUserGroup" resultType="com.alibaba.fastjson.JSONObject">
                  SELECT
-                     u.id                                      userId,
+                     u.id                                      id,
                      u.username                                username,
                      u.nickname                                nickname,
                      g.id                                      groupId,
@@ -100,21 +100,21 @@
 
     <select id="countUserProject" resultType="Integer">
         SELECT count(0)
-         FROM user_group ug
+        FROM user_group ug
                       LEFT JOIN `group_project` gp ON gp.group = ug.group
                       LEFT JOIN `project` p ON p.id= gp.project
-         WHERE p.status !=-1 AND ug.user=#{id}
+        WHERE ug.status !=-1 AND gp.status !=-1 AND p.status !=-1 AND ug.user=#{id}
     </select>
     <select id="listUserProject" resultType="com.alibaba.fastjson.JSONObject">
                  SELECT
-                     ug.user                                   userId,
+                     gp.group                                  GrouId,
                      p.id                                      projectId,
                      p.name                                    projectName,
                      p.status                                  status
                  FROM user_group ug
                       LEFT JOIN `group_project` gp ON gp.group = ug.group
                       LEFT JOIN `project` p ON p.id= gp.project
-                 WHERE p.status !=-1 AND ug.user=#{id}
+                 WHERE ug.status !=-1 AND gp.status !=-1 AND p.status !=-1 AND ug.user=#{id}
                  LIMIT #{offSet}, #{pageRow}
     </select>
 
@@ -127,7 +127,7 @@
     </select>
     <select id="listUserDepartment" resultType="com.alibaba.fastjson.JSONObject">
                  SELECT
-                     u.id                                      userId,
+                     u.id                                      id,
                      u.username                                username,
                      u.nickname                                nickname,
                      g.id                                      departmentId,
@@ -141,7 +141,7 @@
     </select>
 
 
-    <insert id="addUser" useGeneratedKeys="true" keyProperty="userId">
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO sys_user
         (username, password, nickname, role_id) VALUES
             (#{username}, #{password}, #{nickname}, #{roleId})
@@ -178,7 +178,7 @@
                 ,status = #{status}
             </if>
         </set>
-        WHERE id = #{userId} and id != 10003
+        WHERE id = #{id} and id != 10003
     </update>
     <update id="delUser">
         UPDATE sys_user
@@ -204,7 +204,7 @@
         <id column="roleId" property="roleId"/>
         <result column="roleName" property="roleName"/>
         <collection property="users" ofType="com.alibaba.fastjson.JSONObject">
-            <id column="userId" property="userId"/>
+            <id column="id" property="id"/>
             <result column="nickname" property="nickname"/>
         </collection>
     </resultMap>
@@ -212,7 +212,7 @@
         SELECT
             r.id              roleId,
             r.role_name       roleName,
-            u.id              userId,
+            u.id              id,
             u.nickname        nickname,
             p.id              permissionId,
             p.permission_name permissionName
@@ -258,7 +258,7 @@
         <id column="roleId" property="roleId"/>
         <result column="roleName" property="roleName"/>
         <collection property="users" ofType="com.alibaba.fastjson.JSONObject">
-            <id column="userId" property="userId"/>
+            <id column="id" property="id"/>
         </collection>
         <collection property="permissionIds" ofType="Integer">
             <id column="permissionId" property="permissionId"/>
@@ -268,7 +268,7 @@
         SELECT
             r.id        roleId,
             r.role_name roleName,
-            u.id        userId,
+            u.id        id,
             p.id        permissionId
         FROM sys_role r
             LEFT JOIN sys_user u ON r.id = u.role_id AND u.status != -1

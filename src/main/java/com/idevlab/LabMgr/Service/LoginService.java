@@ -1,5 +1,4 @@
 package com.idevlab.LabMgr.Service;
-
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -8,9 +7,6 @@ import com.alibaba.fastjson.JSONObject;
  * @date: 2017/10/24 11:02
  */
 public interface LoginService {
-	/**
-	 * 登录表单提交
-	 */
 	JSONObject authLogin(JSONObject jsonObject);
 	JSONObject queryExistUsername(JSONObject jsonObject);
 	/**
@@ -25,19 +21,7 @@ public interface LoginService {
 	 * 查询当前登录用户的权限等信息
 	 */
 	JSONObject getInfo();
-
-	/**
-	 * 更新当前登录用户信息
-	 */
 	JSONObject updateCurrentUser(JSONObject jsonObject);
-
-	/**
-	 * 更新当前登录用户密码
-	 */
 	JSONObject updateCurrentPassword(String username, String password);
-
-	/**
-	 * 退出登录
-	 */
 	JSONObject logout();
 }

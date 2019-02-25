@@ -26,11 +26,7 @@ public class LabController {
     private LabService labService;
     @Autowired
     private LogService logService;
-    /**
-     * 查询实验室列表
-     * offSet 
-     * pageRow
-     */
+   
     @RequiresPermissions("device:list")
     @PostMapping("/list")
     public JSONObject listLab(@RequestBody JSONObject requestJson) {
@@ -41,8 +37,9 @@ public class LabController {
     @PostMapping("/addLab")
     public JSONObject addLab(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "name,description,status,location");
+        var result =labService.addLab(requestJson);
         logService.addLog("AddLab", "id:"+requestJson.getString("id")+";name:"+requestJson.getString("name"));
-        return labService.addLab(requestJson);
+        return result;
     }
 
     @RequiresPermissions("device:update")

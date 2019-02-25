@@ -26,11 +26,7 @@ public class MsgController {
     private MsgService msgService;
     @Autowired
     private LogService logService;
-    /**
-     * 查询信息列表
-     * offSet 
-     * pageRow
-     */
+ 
     @RequiresPermissions("book:list")
     @PostMapping("/list")
     public JSONObject listMsg(@RequestBody JSONObject requestJson) {
@@ -40,9 +36,9 @@ public class MsgController {
     @PostMapping("/addMsg")
     public JSONObject addLab(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "author,receiver,msg");
-        var x=msgService.addMsg(requestJson);
+        var result=msgService.addMsg(requestJson);
         logService.addLog("AddMsg","id:"+requestJson.getString("id")+" receiver:"+requestJson.getString("receiver"));
-        return x;
+        return result;
     }
     @RequiresPermissions("book:delete")
     @PostMapping("/deleteMsg")

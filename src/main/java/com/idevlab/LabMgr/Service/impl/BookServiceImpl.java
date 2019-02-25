@@ -18,13 +18,9 @@ import java.util.List;
  */
 @Service
 public class BookServiceImpl implements BookService {
-
 	@Autowired
 	private BookDao bookDao;
 
-	/**
-	 * 预定列表
-	 */
 	@Override
 	public JSONObject listBook(JSONObject jsonObject) {
 		CommonUtil.fillPageParam(jsonObject);
@@ -33,30 +29,21 @@ public class BookServiceImpl implements BookService {
 		return CommonUtil.successPage(jsonObject, list, count);
 	}
 
-	/**
-	 * 添加预定
-	 */
 	@Override
 	public JSONObject addBook(JSONObject jsonObject) {
-		if(bookDao.checkTimeFree(jsonObject)==0){
+		if (bookDao.checkTimeFree(jsonObject) == 0) {
 			bookDao.addBook(jsonObject);
 			return CommonUtil.successJson();
-		};
+		}
 		return CommonUtil.errorJson(ErrorEnum.E_90004);
 	}
 
-	/**
-	 * 修改预定
-	 */
 	@Override
 	public JSONObject updateBook(JSONObject jsonObject) {
 		bookDao.updateBook(jsonObject);
 		return CommonUtil.successJson();
 	}
 
-	/**
-	 * 删除预定
-	 */
 	@Override
 	public JSONObject deleteBook(JSONObject jsonObject) {
 		bookDao.deleteBook(jsonObject);

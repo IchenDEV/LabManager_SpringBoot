@@ -34,28 +34,28 @@ public class LoginServiceImpl implements LoginService {
 	 */
 	@Override
 	public JSONObject authLogin(JSONObject jsonObject) {
-		JSONObject info = new JSONObject();//用于返回JSON包
+		JSONObject info = new JSONObject();// 用于返回JSON包
 
-		String username = jsonObject.getString("username");//截取用户名
-		String password = com.idevlab.LabMgr.Util.CommonUtil.md5(jsonObject.getString("password"));//截取密码并加密
+		String username = jsonObject.getString("username");// 截取用户名
+		String password = com.idevlab.LabMgr.Util.CommonUtil.md5(jsonObject.getString("password"));// 截取密码并加密
 		Subject currentUser = SecurityUtils.getSubject();
-		UsernamePasswordToken token = new UsernamePasswordToken(username, password);//获得token
+		UsernamePasswordToken token = new UsernamePasswordToken(username, password);// 获得token
 		try {
-			currentUser.login(token);//登录
-			info.put("loginCode", 0);//登录成功返回loginCode 0
+			currentUser.login(token);// 登录
+			info.put("loginCode", 0);// 登录成功返回loginCode 0
 			info.put("result", "success");
 		} catch (AuthenticationException e) {
-			info.put("loginCode", -1);//登录失败返回loginCode -1
+			info.put("loginCode", -1);// 登录失败返回loginCode -1
 			info.put("result", "fail");
 		}
-		return CommonUtil.successJson(info);//打包返回
+		return CommonUtil.successJson(info);// 打包返回
 	}
 
 	@Override
 	public JSONObject queryExistUsername(JSONObject jsonObject) {
-		JSONObject info = new JSONObject();//用于返回JSON包
+		JSONObject info = new JSONObject();// 用于返回JSON包
 		info.put("count", userDao.queryExistUsername(jsonObject));
-		return CommonUtil.successJson(info);//打包返回
+		return CommonUtil.successJson(info);// 打包返回
 	}
 
 	/**
@@ -71,8 +71,8 @@ public class LoginServiceImpl implements LoginService {
 	 */
 	@Override
 	public JSONObject getInfo() {
-		//从session获取用户信息
-		Session session = SecurityUtils.getSubject().getSession();//获得session
+		// 从session获取用户信息
+		Session session = SecurityUtils.getSubject().getSession();// 获得session
 		JSONObject userInfo = (JSONObject) session.getAttribute(Constants.SESSION_USER_INFO);
 		String username = userInfo.getString("username");
 		JSONObject info = new JSONObject();
@@ -84,13 +84,13 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public JSONObject updateCurrentUser(JSONObject jsonObject) {
-		//从session获取用户信息
-		Session session = SecurityUtils.getSubject().getSession();//获得session
+		// 从session获取用户信息
+		Session session = SecurityUtils.getSubject().getSession();// 获得session
 		JSONObject userInfo = (JSONObject) session.getAttribute(Constants.SESSION_USER_INFO);
 		String username = userInfo.getString("username");
 		jsonObject.remove("username");
 		jsonObject.remove("password");
-		jsonObject.put("username",username);
+		jsonObject.put("username", username);
 		loginDao.updateCurrentUser(jsonObject);
 		return CommonUtil.successJson();
 	}
@@ -98,19 +98,13 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public JSONObject updateCurrentPassword(String username, String password) {
 		loginDao.updateCurrentPassword(username, com.idevlab.LabMgr.Util.CommonUtil.md5(password));
-		return  CommonUtil.successJson();
+		return CommonUtil.successJson();
 	}
 
-	/**
-	 * 退出登录
-	 */
 	@Override
 	public JSONObject logout() {
-		try {
-			Subject currentUser = SecurityUtils.getSubject();
-			currentUser.logout();//登出
-		} catch (Exception e) {
-		}
+		Subject currentUser = SecurityUtils.getSubject();
+		currentUser.logout();// 登出
 		return CommonUtil.successJson();
 	}
 

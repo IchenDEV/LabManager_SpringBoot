@@ -26,11 +26,7 @@ public class GroupController {
     private GroupService groupService;
     @Autowired
     private LogService logService;
-    /**
-     * 查询组列表
-     * offSet 
-     * pageRow
-     */
+ 
     @RequiresPermissions("device:list")
     @PostMapping("/list")
     public JSONObject listGroup(@RequestBody JSONObject requestJson) {

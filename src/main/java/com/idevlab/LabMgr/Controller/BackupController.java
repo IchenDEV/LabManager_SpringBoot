@@ -6,6 +6,7 @@ import com.idevlab.LabMgr.Service.LogService;
 import com.idevlab.LabMgr.Util.CommonUtil;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ public class BackupController {
 
    @PostMapping("/now")
    @RequiresPermissions("device:delete")
+   @RequiresRoles("admin")
    public JSONObject now() {
       dynamicScheduledTask.Task();
       return CommonUtil.successJson();

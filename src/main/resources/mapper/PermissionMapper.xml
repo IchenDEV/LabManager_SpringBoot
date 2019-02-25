@@ -4,7 +4,7 @@
 <mapper namespace="com.idevlab.LabMgr.Dao.PermissionDao">
 
     <resultMap id="permissionMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
-        <id column="userId" property="userId"/>
+        <id column="id" property="id"/>
         <result column="nickname" property="nickname"/>
         <result column="phone" property="phone"/>
         <result column="sex" property="sex"/>
@@ -21,7 +21,7 @@
     </resultMap>
     <select id="getUserPermission" resultMap="permissionMap">
         SELECT
-            u.id              userId,
+            u.id              id,
             u.nickname        nickname,
             u.phone           phone,
             u.sex             sex,

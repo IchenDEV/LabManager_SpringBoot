@@ -26,11 +26,7 @@ public class ProjectController {
     private ProjectService projectService;
     @Autowired
     private LogService logService;
-    /**
-     * 查询项目列表
-     * offSet 
-     * pageRow
-     */
+ 
     @RequiresPermissions("device:list")
     @PostMapping("/list")
     public JSONObject listProject(@RequestBody JSONObject requestJson) {
@@ -41,9 +37,9 @@ public class ProjectController {
     @PostMapping("/addProject")
     public JSONObject addProject(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "name,description,status");
-        var x = projectService.addProject(requestJson);
+        var result = projectService.addProject(requestJson);
         logService.addLog("AddProject","id:"+requestJson.getString("id")+" name:"+requestJson.getString("name"));
-        return x;
+        return result;
     }
 
     @RequiresPermissions("device:update")

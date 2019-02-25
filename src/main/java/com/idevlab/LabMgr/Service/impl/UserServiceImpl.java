@@ -1,6 +1,8 @@
 package com.idevlab.LabMgr.Service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.idevlab.LabMgr.Dao.DepartmentDao;
+import com.idevlab.LabMgr.Dao.GroupDao;
 import com.idevlab.LabMgr.Dao.UserDao;
 import com.idevlab.LabMgr.Service.UserService;
 import com.idevlab.LabMgr.Util.CommonUtil;
@@ -23,6 +25,8 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDao userDao;
+	private DepartmentDao departmentDao;
+	private GroupDao groupDao;
 
 	/**
 	 * 用户列表
@@ -34,6 +38,7 @@ public class UserServiceImpl implements UserService {
 		List<JSONObject> list = userDao.listUser(jsonObject);
 		return CommonUtil.successPage(jsonObject, list, count);
 	}
+
 	@Override
 	public JSONObject listUserGroup(JSONObject jsonObject) {
 		CommonUtil.fillPageParam(jsonObject);
@@ -41,6 +46,7 @@ public class UserServiceImpl implements UserService {
 		List<JSONObject> list = userDao.listUserGroup(jsonObject);
 		return CommonUtil.successPage(jsonObject, list, count);
 	}
+
 	@Override
 	public JSONObject listUserDepartment(JSONObject jsonObject) {
 		CommonUtil.fillPageParam(jsonObject);
@@ -50,12 +56,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public JSONObject listUserProject(JSONObject jsonObject) {
+		CommonUtil.fillPageParam(jsonObject);
+		int count = userDao.countUserProject(jsonObject);
+		List<JSONObject> list = userDao.listUserProject(jsonObject);
+		return CommonUtil.successPage(jsonObject, list, count);
+	}
+
+	@Override
 	public Boolean SuperAdminAuth(int id, String superPassword) {
-		JSONObject jsonObject =new JSONObject();
+		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("id", id);
 		jsonObject.put("superPassword", superPassword);
 		int count = userDao.countUserGroup(jsonObject);
-		if(count==0){
+		if (count == 0) {
 			return false;
 		}
 		return true;
@@ -71,7 +85,7 @@ public class UserServiceImpl implements UserService {
 			return CommonUtil.errorJson(ErrorEnum.E_10009);
 		}
 		String password = com.idevlab.LabMgr.Util.CommonUtil.md5(jsonObject.getString("password"));
-		jsonObject.replace("password",password);
+		jsonObject.replace("password", password);
 		userDao.addUser(jsonObject);
 		return CommonUtil.successJson();
 	}
@@ -90,13 +104,13 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public JSONObject updateUser(JSONObject jsonObject) {
-		if(jsonObject.getString("password")!=null){
+		if (jsonObject.getString("password") != null) {
 			String password = com.idevlab.LabMgr.Util.CommonUtil.md5(jsonObject.getString("password"));
-			jsonObject.replace("password",password);
+			jsonObject.replace("password", password);
 		}
-		if(jsonObject.getString("superPassword")!=null){
-		String superPassword = com.idevlab.LabMgr.Util.CommonUtil.md5(jsonObject.getString("superPassword"));
-		jsonObject.replace("superPassword",superPassword);
+		if (jsonObject.getString("superPassword") != null) {
+			String superPassword = com.idevlab.LabMgr.Util.CommonUtil.md5(jsonObject.getString("superPassword"));
+			jsonObject.replace("superPassword", superPassword);
 		}
 		userDao.updateUser(jsonObject);
 		return CommonUtil.successJson();
@@ -107,6 +121,11 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public JSONObject delUser(JSONObject jsonObject) {
+		JSONObject json = new JSONObject ();
+		json.put("group", jsonObject.getString("id"));
+		json.put("department", jsonObject.getString("id"));
+		departmentDao.deleteDepartmentUser(json);
+		groupDao.deleteGroup(json);
 		userDao.delUser(jsonObject);
 		return CommonUtil.successJson();
 	}

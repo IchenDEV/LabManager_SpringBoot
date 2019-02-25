@@ -1,14 +1,13 @@
 package com.idevlab.LabMgr.Service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.idevlab.LabMgr.Dao. DeviceDao;
-import com.idevlab.LabMgr.Service. DeviceService;
+import com.idevlab.LabMgr.Dao.DeviceDao;
+import com.idevlab.LabMgr.Service.DeviceService;
 import com.idevlab.LabMgr.Util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 
 /**
  * @author: idevlab
@@ -16,46 +15,34 @@ import java.util.List;
  * @date: 2019/1/22 10:18
  */
 @Service
-public class DeviceServiceImpl implements  DeviceService {
+public class DeviceServiceImpl implements DeviceService {
 
 	@Autowired
-	private  DeviceDao  deviceDao;
+	private DeviceDao deviceDao;
 
-	/**
-	 * 设备列表
-	 */
 	@Override
 	public JSONObject listDevice(JSONObject jsonObject) {
 		CommonUtil.fillPageParam(jsonObject);
-		int count =  deviceDao.countDevice(jsonObject);
-		List<JSONObject> list =  deviceDao.listDevice(jsonObject);
+		int count = deviceDao.countDevice(jsonObject);
+		List<JSONObject> list = deviceDao.listDevice(jsonObject);
 		return CommonUtil.successPage(jsonObject, list, count);
 	}
 
-
-	/**
-	 * 添加设备
-	 */
 	@Override
-	public JSONObject addDevice(JSONObject jsonObject) {	
-        deviceDao.addDevice(jsonObject);
+	public JSONObject addDevice(JSONObject jsonObject) {
+		deviceDao.addDevice(jsonObject);
 		return CommonUtil.successJson();
 	}
-	
-	/**
-	 * 修改设备
-	 */
+
 	@Override
 	public JSONObject updateDevice(JSONObject jsonObject) {
 		deviceDao.updateDevice(jsonObject);
 		return CommonUtil.successJson();
-    }
-    /**
-	 * 删除设备
-	 */
-    @Override
-    public JSONObject deleteDevice(JSONObject jsonObject){
-        deviceDao.deleteDevice(jsonObject);
+	}
+
+	@Override
+	public JSONObject deleteDevice(JSONObject jsonObject) {
+		deviceDao.deleteDevice(jsonObject);
 		return CommonUtil.successJson();
-    }
+	}
 }

@@ -1,4 +1,5 @@
 package com.idevlab.LabMgr.Util.Constants;
+
 /**
  * @author: idevlab ori Heeexy
  * @description: 通用常量类, 单个业务的常量请单开一个类, 方便常量的分类管理

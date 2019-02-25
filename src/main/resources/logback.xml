@@ -53,5 +53,5 @@
     <logger name="org.springframework" level="WARN"/>
     <logger name="org.apache" level="WARN"/>
     <!--如果需要打印SQL,可以把下面的级别设置为DEBUG -->
-    <logger name="com.idevlab.LabMgr.dao" level="DEBUG"/>
+    <logger name="com.idevlab.LabMgr.Dao" level="DEBUG"/>
 </configuration>

@@ -9,10 +9,10 @@
                       LEFT JOIN sys_user u ON m.author = u.id
                       LEFT JOIN sys_user u2 ON m.receiver = u2.id
                  WHERE m.status != -1
-                        <if test="id != null">And id= #{id}</if>
-                        <if test="author != null">And author = #{author}</if>
-                        <if test="hasRead != null">And has_read = #{hasRead}</if>
-                        <if test="receiver != null">And receiver = #{receiver}</if>
+        <if test="id != null">And id= #{id}</if>
+        <if test="author != null">And author = #{author}</if>
+        <if test="hasRead != null">And has_read = #{hasRead}</if>
+        <if test="receiver != null">And receiver = #{receiver}</if>
     </select>
 
     <resultMap id="msgMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
@@ -47,10 +47,10 @@
                       LEFT JOIN sys_user u ON m.author = u.id
                       LEFT JOIN sys_user u2 ON m.receiver = u2.id
                  WHERE m.status != -1
-                        <if test="id != null">And id= #{id}</if>
-                        <if test="author != null">And author = #{author}</if>
-                        <if test="hasRead != null">And has_read = #{hasRead}</if>
-                        <if test="receiver != null">And receiver = #{receiver}</if>
+        <if test="id != null">And id= #{id}</if>
+        <if test="author != null">And author = #{author}</if>
+        <if test="hasRead != null">And has_read = #{hasRead}</if>
+        <if test="receiver != null">And receiver = #{receiver}</if>
                  ORDER BY id DESC
                  LIMIT #{offSet}, #{pageRow}
     </select>
@@ -60,16 +60,15 @@
         (author, msg, receiver) VALUES
             ( #{author}, #{msg}, #{receiver})
     </insert>
-     <update id="readMsg">
+    <update id="readMsg">
         UPDATE message
         SET
         has_read = 1
         WHERE id = #{id}
     </update>
-     <update id="deleteMsg">
+    <update id="deleteMsg">
         UPDATE message
-        SET
-        status=-1
+        SET status=-1
         WHERE id = #{id}
     </update>
 </mapper>

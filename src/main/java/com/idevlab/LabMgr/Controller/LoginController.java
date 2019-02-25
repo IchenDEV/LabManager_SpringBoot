@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date: 2019/1/22 10:33
  */
 @RestController
+@CrossOrigin
 @RequestMapping("/login")
 public class LoginController {
 
@@ -31,7 +32,6 @@ public class LoginController {
 	/**
 	 * 登录
 	 */
-	@CrossOrigin
 	@PostMapping("/auth")
 	public JSONObject authLogin(@RequestBody JSONObject requestJson) {
 		CommonUtil.hasAllRequired(requestJson, "username,password");
@@ -50,16 +50,12 @@ public class LoginController {
 	/**
 	 * 查询当前登录用户的信息
 	 */
-	@CrossOrigin
+	
 	@PostMapping("/getInfo")
 	public JSONObject getInfo() {
 		return loginService.getInfo();
 	}
 
-	/**
-	 * 更新当前登录用户的信息
-	 */
-	@CrossOrigin
 	@PostMapping("/updateInfo")
 	public JSONObject updateInfo(@RequestBody JSONObject requestJson) {
 		Session session = SecurityUtils.getSubject().getSession();//获得session
@@ -69,10 +65,6 @@ public class LoginController {
 		return loginService.updateCurrentUser(requestJson);
 	}
 
-	/**
-	 * 更新当前登录用户的密码
-	 */
-	@CrossOrigin
 	@PostMapping("/updatePassword")
 	public JSONObject updatePassword(@RequestBody JSONObject requestJson) {
 		Session session = SecurityUtils.getSubject().getSession();//获得session
@@ -82,11 +74,6 @@ public class LoginController {
 		return loginService.updateCurrentPassword(username,requestJson.getString("password"));
 	}
 
-
-	/**
-	 * 登出
-	 */
-	@CrossOrigin
 	@PostMapping("/logout")
 	public JSONObject logout() {
 		return loginService.logout();

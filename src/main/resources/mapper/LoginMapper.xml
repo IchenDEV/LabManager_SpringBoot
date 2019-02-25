@@ -5,7 +5,7 @@
 
     <select id="getUser" resultType="com.alibaba.fastjson.JSONObject">
         SELECT
-            u.id       userId,
+            u.id       id,
             u.username username,
             u.password password,
             u.nickname nickname,
@@ -22,7 +22,7 @@
 
     <select id="getCurrentUser" resultType="com.alibaba.fastjson.JSONObject">
         SELECT
-            u.id       userId,
+            u.id       id,
             u.username username,
             u.nickname nickname,
             u.phone phone,

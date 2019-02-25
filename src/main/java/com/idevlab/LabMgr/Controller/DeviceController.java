@@ -26,11 +26,7 @@ public class DeviceController {
     private DeviceService deviceService;
     @Autowired
     private LogService logService;
-    /**
-     * 查询记录列表
-     * offSet 
-     * pageRow
-     */
+  
     @RequiresPermissions("device:list")
     @PostMapping("/list")
     public JSONObject listDevice(@RequestBody JSONObject requestJson) {
@@ -41,9 +37,9 @@ public class DeviceController {
     @PostMapping("/addDevice")
     public JSONObject addDevice(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "No,name,description,model,status,band,location");
-        var x= deviceService.addDevice(requestJson);
+        var result= deviceService.addDevice(requestJson);
         logService.addLog("AddDevice", "id:"+requestJson.getString("id")+";name:"+requestJson.getString("name"));
-        return x;
+        return result;
     }
 
     @RequiresPermissions("device:update")

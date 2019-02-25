@@ -20,9 +20,6 @@ public class LabServiceImpl implements LabService {
 	@Autowired
 	private LabDao labDao;
 
-	/**
-	 * 实验室列表
-	 */
 	@Override
 	public JSONObject listLab(JSONObject jsonObject) {
 		CommonUtil.fillPageParam(jsonObject);
@@ -31,27 +28,18 @@ public class LabServiceImpl implements LabService {
 		return CommonUtil.successPage(jsonObject, list, count);
 	}
 
-	/**
-	 * 添加实验室
-	 */
 	@Override
 	public JSONObject addLab(JSONObject jsonObject) {
 		labDao.addLab(jsonObject);
 		return CommonUtil.successJson();
 	}
 
-	/**
-	 * 修改实验室
-	 */
 	@Override
 	public JSONObject updateLab(JSONObject jsonObject) {
 		labDao.updateLab(jsonObject);
 		return CommonUtil.successJson();
 	}
 
-	/**
-	 * 删除实验室
-	 */
 	@Override
 	public JSONObject deleteLab(JSONObject jsonObject) {
 		labDao.deleteLab(jsonObject);
