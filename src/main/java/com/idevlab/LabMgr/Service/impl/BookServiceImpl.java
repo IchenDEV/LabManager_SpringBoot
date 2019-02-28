@@ -25,8 +25,9 @@ public class BookServiceImpl implements BookService {
 	public JSONObject listBook(JSONObject jsonObject) {
 		CommonUtil.fillPageParam(jsonObject);
 		int count = bookDao.countBook(jsonObject);
+		int totalBookedTime=bookDao.countBookedTime(jsonObject);
 		List<JSONObject> list = bookDao.listBook(jsonObject);
-		return CommonUtil.successPage(jsonObject, list, count);
+		return CommonUtil.MsgSuccessPage(jsonObject, list, count,"totalBookedTime",totalBookedTime);
 	}
 
 	@Override

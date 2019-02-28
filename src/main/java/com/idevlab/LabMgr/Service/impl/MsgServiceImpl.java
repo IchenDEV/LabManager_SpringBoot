@@ -24,8 +24,12 @@ public class MsgServiceImpl implements MsgService {
 	public JSONObject listMsg(JSONObject jsonObject) {
 		CommonUtil.fillPageParam(jsonObject);
 		int count = msgDao.countMsg(jsonObject);
+		JSONObject hasReadRequest = new JSONObject();
+		hasReadRequest.put("hasRead",0);
+		hasReadRequest.put("receiver",jsonObject.getString("receiver"));
+		int countUnread = msgDao.countMsg(hasReadRequest);
 		List<JSONObject> list = msgDao.listMsg(jsonObject);
-		return CommonUtil.successPage(jsonObject, list, count);
+		return CommonUtil.MsgSuccessPage(jsonObject, list, count,"unread",countUnread);
 	}
 
 	@Override

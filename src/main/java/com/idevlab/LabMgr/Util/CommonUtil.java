@@ -83,6 +83,19 @@ public class CommonUtil {
         return result;
     }
 
+    public static JSONObject MsgSuccessPage(final JSONObject requestJson, List<JSONObject> list, int totalCount,String outname,int outinfo) {
+        int pageRow = requestJson.getIntValue("pageRow");
+        int totalPage = getPageCounts(pageRow, totalCount);
+        JSONObject result = successJson();
+        JSONObject info = new JSONObject();
+        info.put("list", list);
+        info.put(outname,outinfo);
+        info.put("totalCount", totalCount);
+        info.put("totalPage", totalPage);
+        result.put("info", info);
+        return result;
+    }
+
     /**
      * 
      * 查询分页结果后的封装工具方法
