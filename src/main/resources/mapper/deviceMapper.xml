@@ -24,7 +24,32 @@
         <if test="bands != null">
                        AND d.band like #{bands}
         </if>
-        <if test="status != null and status !=-1" >
+        <if test="status != null and status !=-1">
+                       AND d.status = #{status}
+        </if>
+    </select>
+
+    <select id="countDeviceTime" resultType="Integer">
+        SELECT SUM(NOW()-d.create_time)
+        FROM device d
+         WHERE d.status != -1
+        <if test="id != null">And d.id= #{id}</if>
+        <if test="No != null">
+                       AND d.No like #{No}
+        </if>
+        <if test="name != null">
+                       AND d.name like #{name}
+        </if>
+        <if test="location != null">
+                       AND d.location = #{location}
+        </if>
+        <if test="model != null">
+                       AND d.model like #{model}
+        </if>
+        <if test="bands != null">
+                       AND d.band like #{bands}
+        </if>
+        <if test="status != null and status !=-1">
                        AND d.status = #{status}
         </if>
     </select>

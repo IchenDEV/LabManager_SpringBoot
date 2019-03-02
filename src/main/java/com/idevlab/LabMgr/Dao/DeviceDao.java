@@ -10,6 +10,7 @@ import java.util.List;
  */
 public interface DeviceDao {
     int countDevice(JSONObject jsonObject);
+    int countDeviceTime(JSONObject jsonObject);
     List<JSONObject> listDevice(JSONObject jsonObject);
     int addDevice(JSONObject jsonObject);
     int updateDevice(JSONObject jsonObject);

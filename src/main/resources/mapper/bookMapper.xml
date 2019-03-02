@@ -5,7 +5,7 @@
 
     <select id="countBook" resultType="Integer">
         SELECT count(0)
-        FROM book_recode b
+        FROM book_recode
         WHERE status != -1
                        <if test="id != null">And id= #{id}</if>
                        <if test="project != null">And project = #{project}</if>
@@ -15,19 +15,19 @@
     </select>
 
     <select id="countBookedTime" resultType="Integer">
-        SELECT SUM(b.end_time-b.begin_time)
-        FROM book_recode b
-        WHERE status != -1
+        SELECT SUM(end_time-begin_time)
+        FROM book_recode
+        WHERE status != -1 <![CDATA[ And begin_time<= NOW() ]]>
                        <if test="id != null">And id= #{id}</if>
                        <if test="project != null">And project = #{project}</if>
                        <if test="device != null">And device = #{device}</if>
                        <if test="applicant != null">And applicant = #{applicant}</if>
-                       <if test="time != null"> <![CDATA[ And begin_time<= #{time} And end_time>= #{time} ]]></if>
+                       
     </select>
 
     <select id="checkTimeFree" resultType="Integer">
         SELECT count(0)
-        FROM book_recode b
+        FROM book_recode
         WHERE status != -1
               <if test="device != null">And device = #{device}</if>
               <![CDATA[ And (end_time >= #{beginTime} And begin_time<= #{endTime} )]]>
