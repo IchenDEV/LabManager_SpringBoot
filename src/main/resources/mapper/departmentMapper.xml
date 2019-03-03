@@ -31,8 +31,8 @@
                      id                                      id,
                      name                                    name,
                      description                             description,
-                     DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
-                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime,
+                     DATE_FORMAT(create_time, '%Y/%m/%d %T') createTime,
+                     DATE_FORMAT(update_time, '%Y/%m/%d %T') updateTime,
                      status                                  status
                  FROM department
                  WHERE status != -1
@@ -61,8 +61,8 @@
                      ud.id                                      id,
                      ud.user                                    user,
                      ud.department                              department,
-                     DATE_FORMAT(ud.create_time, '%Y.%m.%d %T') createTime,
-                     DATE_FORMAT(ud.update_time, '%Y.%m.%d %T') updateTime,
+                     DATE_FORMAT(ud.create_time, '%Y/%m/%d %T') createTime,
+                     DATE_FORMAT(ud.update_time, '%Y/%m/%d %T') updateTime,
                      u.nickname                                 nickname,
                      dp.name                                    departmentName,
                      u.username                                 username,

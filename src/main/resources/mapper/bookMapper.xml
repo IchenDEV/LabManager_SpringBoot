@@ -15,7 +15,7 @@
     </select>
 
     <select id="countBookedTime" resultType="Integer">
-        SELECT SUM(end_time-begin_time)
+        SELECT SUM(TIMESTAMPDIFF(second,begin_time,end_time))
         FROM book_recode
         WHERE status != -1 <![CDATA[ And begin_time<= NOW() ]]>
                        <if test="id != null">And id= #{id}</if>
@@ -61,10 +61,10 @@
                      b.applicant                               applicant,
                      u.nickname                                applicantNickname,
                      b.status                                  status,
-                     DATE_FORMAT(b.begin_time, '%Y.%m.%d %T')  beginTime,
-                     DATE_FORMAT(b.end_time, '%Y.%m.%d %T')    endTime,
-                     DATE_FORMAT(b.create_time, '%Y.%m.%d %T') createTime,
-                     DATE_FORMAT(b.update_time, '%Y.%m.%d %T') updateTime
+                     DATE_FORMAT(b.begin_time, '%Y/%m/%d %T')  beginTime,
+                     DATE_FORMAT(b.end_time, '%Y/%m/%d %T')    endTime,
+                     DATE_FORMAT(b.create_time, '%Y/%m/%d %T') createTime,
+                     DATE_FORMAT(b.update_time, '%Y/%m/%d %T') updateTime
                  FROM book_recode b
                       LEFT JOIN project p ON p.id = b.project
                       LEFT JOIN sys_user u ON u.id = b.applicant

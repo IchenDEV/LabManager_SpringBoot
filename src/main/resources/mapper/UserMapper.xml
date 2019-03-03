@@ -52,8 +52,8 @@
                      address                                 address,
                      email                                   email,
                      status                                  status,
-                     DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
-                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
+                     DATE_FORMAT(create_time, '%Y/%m/%d %T') createTime,
+                     DATE_FORMAT(update_time, '%Y/%m/%d %T') updateTime
                  FROM sys_user
                  WHERE status = 1
         <if test="id !=null">
@@ -107,7 +107,7 @@
     </select>
     <select id="listUserProject" resultType="com.alibaba.fastjson.JSONObject">
                  SELECT
-                     gp.group                                  GrouId,
+                     gp.group                                  groupId,
                      p.id                                      projectId,
                      p.name                                    projectName,
                      p.status                                  status

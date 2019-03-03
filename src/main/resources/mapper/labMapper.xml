@@ -25,8 +25,8 @@
                      description                             description,
                      location                                location,
                      status                                  status,
-                     DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
-                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
+                     DATE_FORMAT(create_time, '%Y/%m/%d %T') createTime,
+                     DATE_FORMAT(update_time, '%Y/%m/%d %T') updateTime
                  FROM lab
                  WHERE status != -1
                         <if test="id != null">And id= #{id}</if>

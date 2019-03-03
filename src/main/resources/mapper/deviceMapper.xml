@@ -30,7 +30,7 @@
     </select>
 
     <select id="countDeviceTime" resultType="Integer">
-        SELECT SUM(NOW()-d.create_time)
+        SELECT SUM(TIMESTAMPDIFF(second,d.create_time,NOW()))
         FROM device d
          WHERE d.status != -1
         <if test="id != null">And d.id= #{id}</if>
@@ -82,8 +82,8 @@
                      d.band                                    bands,
                      d.model                                   model,
                      d.status                                  status,
-                     DATE_FORMAT(d.create_time, '%Y.%m.%d %T') createTime,
-                     DATE_FORMAT(d.update_time, '%Y.%m.%d %T') updateTime
+                     DATE_FORMAT(d.create_time, '%Y/%m/%d %T') createTime,
+                     DATE_FORMAT(d.update_time, '%Y/%m/%d %T') updateTime
                  FROM device d
                       LEFT JOIN lab l ON d.location = l.id
                  WHERE d.status != -1 And l.status != -1

@@ -30,11 +30,11 @@
                      id                                      id,
                      name                                    name,
                      description                             description,
-                     DATE_FORMAT(begin_time, '%Y.%m.%d %T')  beginTime,
-                     DATE_FORMAT(end_time, '%Y.%m.%d %T')    endTime,                  
+                     DATE_FORMAT(begin_time, '%Y/%m/%d %T')  beginTime,
+                     DATE_FORMAT(end_time, '%Y/%m/%d %T')    endTime,                  
                      status                                  status,
-                     DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
-                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
+                     DATE_FORMAT(create_time, '%Y/%m/%d %T') createTime,
+                     DATE_FORMAT(update_time, '%Y/%m/%d %T') updateTime
                  FROM project
                  WHERE status != -1
         <if test="id != null">And id= #{id}</if>

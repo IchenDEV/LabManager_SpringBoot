@@ -25,8 +25,8 @@
                      name                                    name,
                      description                             description,                  
                      status                                  status,
-                     DATE_FORMAT(create_time, '%Y.%m.%d %T') createTime,
-                     DATE_FORMAT(update_time, '%Y.%m.%d %T') updateTime
+                     DATE_FORMAT(create_time, '%Y/%m/%d %T') createTime,
+                     DATE_FORMAT(update_time, '%Y/%m/%d %T') updateTime
                  FROM `group`
                  WHERE status != -1
         <if test="id != null">And id= #{id}</if>
@@ -40,7 +40,9 @@
                       LEFT JOIN user_group ug ON ug.group = g.id
                       LEFT JOIN sys_user u ON u.id = ug.user
         WHERE g.status != -1 And u.status != -1  And ug.status != -1 
-        <if test="id != null">And g.id= #{id}</if>
+        <if test="group != null">And g.id= #{group}</if>
+        <if test="user != null">And u.id= #{user}</if>
+
     </select>
 
     <resultMap id="groupUserMap" type="com.alibaba.fastjson.JSONObject">
@@ -63,6 +65,7 @@
                       LEFT JOIN sys_user u ON u.id = ug.user
                  WHERE g.status != -1 And u.status != -1  And ug.status != -1 
         <if test="group != null">And g.id= #{group}</if>
+        <if test="user != null">And u.id= #{user}</if>
                  ORDER BY g.id
                  LIMIT #{offSet}, #{pageRow}
     </select>
@@ -74,7 +77,8 @@
                       LEFT JOIN group_project ug ON ug.group = g.id
                       LEFT JOIN project u ON u.id = ug.project
         WHERE g.status != -1 And u.status != -1 And ug.status != -1
-        <if test="id != null">And g.id= #{id}</if>
+        <if test="group != null">And g.id= #{group}</if>
+        <if test="project != null">And u.id= #{project}</if>
     </select>
 
     <resultMap id="groupProjectMap" type="com.alibaba.fastjson.JSONObject">
@@ -94,7 +98,8 @@
                       LEFT JOIN group_project ug ON ug.group = g.id
                       LEFT JOIN project u ON u.id = ug.project
                  WHERE g.status != -1 And u.status != -1 And ug.status != -1
-        <if test="id != null">And g.id= #{id}</if>
+        <if test="group != null">And g.id= #{group}</if>
+         <if test="project != null">And u.id= #{project}</if>
                  ORDER BY g.id
                  LIMIT #{offSet}, #{pageRow}
     </select>
