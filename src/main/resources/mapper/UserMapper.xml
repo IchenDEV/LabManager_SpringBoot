@@ -27,6 +27,7 @@
         <result column="address" property="address"/>
         <result column="email" property="email"/>
         <result column="sex" property="sex"/>
+        <result column="reputation" property="reputation"/>
         <result column="roleName" property="roleName"/>
         <result column="createTime" property="createTime"/>
         <result column="updateTime" property="updateTime"/>
@@ -51,6 +52,7 @@
                      phone                                   phone,
                      address                                 address,
                      email                                   email,
+                     reputation                              reputation,
                      status                                  status,
                      DATE_FORMAT(create_time, '%Y/%m/%d %T') createTime,
                      DATE_FORMAT(update_time, '%Y/%m/%d %T') updateTime
@@ -167,6 +169,9 @@
             </if>
             <if test="phone !=null">
                 ,phone = #{phone}
+            </if>
+            <if test="reputation !=null">
+                ,reputation = #{reputation}
             </if>
             <if test="address !=null">
                 ,address = #{address}

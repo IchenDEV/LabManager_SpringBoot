@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.idevlab.LabMgr.Dao.AnnouncementDao">
+
+    <select id="countAnnouncement" resultType="Integer">
+        SELECT count(0)
+         FROM announcement m
+                      LEFT JOIN sys_user u ON m.author = u.id
+                 WHERE m.status != -1
+        <if test="id != null">And m.id= #{id}</if>
+        <if test="author != null">And m.author = #{author}</if>
+    </select>
+
+    <resultMap id="announcementMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
+        <id column="id" property="id"/>
+        <result column="author" property="author"/>
+        <result column="authorUserName" property="authorUserName"/>
+        <result column="authorNickName" property="authorNickName"/>
+        <result column="msg" property="msg"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    <select id="listAnnouncement" resultMap="announcementMap">
+                 SELECT
+                     m.id                                      id,
+                     m.author                                  author,
+                     u.username                                authorUserName,
+                     u.nickname                                authorNickName,
+                     m.title                                   title,
+                     m.summary                                 summary,
+                     m.status                                  status,
+                     DATE_FORMAT(m.create_time, '%Y/%m/%d %T') createTime,
+                     DATE_FORMAT(m.update_time, '%Y/%m/%d %T') updateTime
+                 FROM announcement m
+                      LEFT JOIN sys_user u ON m.author = u.id
+                 WHERE m.status != -1
+        <if test="id != null">And m.id= #{id}</if>
+        <if test="author != null">And m.author = #{author}</if>
+                 ORDER BY id DESC
+                 LIMIT #{offSet}, #{pageRow}
+    </select>
+
+    <resultMap id="getAnnouncementMap" type="com.idevlab.LabMgr.Util.Model.One2Many">
+        <id column="id" property="id"/>
+        <result column="author" property="author"/>
+        <result column="authorUserName" property="authorUserName"/>
+        <result column="authorNickName" property="authorNickName"/>
+        <result column="msg" property="msg"/>
+        <result column="title" property="title"/>
+        <result column="summary" property="summary"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    <select id="getAnnouncement" resultMap="getAnnouncementMap">
+                 SELECT
+                     m.id                                      id,
+                     m.author                                  author,
+                     u.username                                authorUserName,
+                     u.nickname                                authorNickName,
+                     m.msg                                     msg,
+                     m.title                                   title,
+                     m.summary                                 summary,
+                     m.status                                  status,
+                     DATE_FORMAT(m.create_time, '%Y/%m/%d %T') createTime,
+                     DATE_FORMAT(m.update_time, '%Y/%m/%d %T') updateTime
+                 FROM announcement m
+                      LEFT JOIN sys_user u ON m.author = u.id
+                 WHERE m.status != -1
+        <if test="id != null">And m.id= #{id}</if>
+    </select>
+
+    <insert id="addAnnouncement" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO announcement
+        (author, msg,title,summary) VALUES
+            ( #{author}, #{msg},#{title},#{summary})
+    </insert>
+    <update id="updateAnnouncement">
+        UPDATE announcement
+        <set>
+            <if test="msg != null">msg = #{msg},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="summary != null">summary = #{summary},</if>
+            <if test="status != null">status=#{status}</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    <update id="deleteAnnouncement">
+        UPDATE announcement
+        SET status=-1
+        WHERE id = #{id}
+    </update>
+</mapper>

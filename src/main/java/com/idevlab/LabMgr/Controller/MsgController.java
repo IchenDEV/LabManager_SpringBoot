@@ -34,7 +34,7 @@ public class MsgController {
     }
     @RequiresPermissions("book:add")
     @PostMapping("/addMsg")
-    public JSONObject addLab(@RequestBody JSONObject requestJson) {
+    public JSONObject addMsg(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "author,receiver,msg");
         var result=msgService.addMsg(requestJson);
         logService.addLog("AddMsg","id:"+requestJson.getString("id")+" receiver:"+requestJson.getString("receiver"));

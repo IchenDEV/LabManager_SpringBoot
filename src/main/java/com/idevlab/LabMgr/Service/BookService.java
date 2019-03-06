@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
  */
 public interface BookService {
 	JSONObject listBook(JSONObject jsonObject);
+	JSONObject getHotBook(JSONObject jsonObject);
 	JSONObject addBook(JSONObject jsonObject);
     JSONObject updateBook(JSONObject jsonObject);
 	JSONObject deleteBook(JSONObject jsonObject);

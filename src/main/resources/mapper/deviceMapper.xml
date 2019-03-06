@@ -21,6 +21,12 @@
         <if test="model != null">
                        AND d.model like #{model}
         </if>
+        <if test="function != null">
+                       AND d.func like #{func}
+        </if>
+        <if test="requireReputation != null">
+                       AND d.require_reputation like #{requireReputation}
+        </if>
         <if test="bands != null">
                        AND d.band like #{bands}
         </if>
@@ -65,6 +71,8 @@
         <result column="locationName" property="locationName"/>
         <result column="locationDescription" property="locationDescription"/>
         <result column="locationAddress" property="locationAddress"/>
+        <result column="func" property="func"/>
+        <result column="requireReputation" property="requireReputation"/>
         <result column="createTime" property="createTime"/>
         <result column="updateTime" property="updateTime"/>
         <result column="status" property="status"/>
@@ -74,6 +82,8 @@
                      d.id                                      id,
                      d.No                                      No,
                      d.name                                    name,
+                     d.func                                    func,
+                     d.require_reputation                      requireReputation,
                      d.description                             description,
                      d.location                                location,
                      l.name                                    locationName,
@@ -103,6 +113,12 @@
         <if test="bands != null">
                        AND d.band like #{bands}
         </if>
+        <if test="func != null">
+                       AND d.func like #{func}
+        </if>
+        <if test="requireReputation != null">
+                       AND d.require_reputation like #{requireReputation}
+        </if>
         <if test="status != null and status !=-1">
                        AND d.status = #{status}
         </if>
@@ -112,8 +128,8 @@
 
     <insert id="addDevice" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO device
-        (No, name, description, model,band,location,status) VALUES
-            (#{No}, #{name}, #{description}, #{model},#{band},#{location},#{status})
+        (No, name, description, model,band,location,require_reputation,func,status) VALUES
+            (#{No}, #{name}, #{description}, #{model},#{band},#{location},#{requireReputation},#{func},#{status})
     </insert>
 
     <update id="updateDevice">
@@ -125,6 +141,8 @@
             <if test="model != null">model=#{model},</if>
             <if test="bands != null">`band`=#{bands},</if>
             <if test="location != null">location=#{location},</if>
+            <if test="func != null">func = #{func},</if>
+            <if test="requireReputation != null">require_reputation = #{requireReputation},</if>
             <if test="status != null">status=#{status}</if>
         </set>
         WHERE id = #{id}

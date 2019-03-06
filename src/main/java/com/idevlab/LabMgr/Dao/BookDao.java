@@ -10,7 +10,9 @@ import java.util.List;
  */
 public interface BookDao {
     int countBook(JSONObject jsonObject);
+    int countHotDevice(JSONObject jsonObject);
     int countBookedTime(JSONObject jsonObject);
+    List<JSONObject> getHotDevice(JSONObject jsonObject);
     int checkTimeFree(JSONObject jsonObject);
     List<JSONObject> listBook(JSONObject jsonObject);
     int addBook(JSONObject jsonObject);

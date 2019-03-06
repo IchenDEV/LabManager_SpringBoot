@@ -56,4 +56,11 @@ public class BookController {
         logService.addLog("DeleteBook",requestJson.getString("id"));
         return bookService.deleteBook(requestJson);
     }
+
+    @RequiresPermissions("device:list")
+    @PostMapping("/getHot")
+    public JSONObject getHot(@RequestBody JSONObject requestJson) {
+        logService.addLog("getHotDevice","Hot");
+        return bookService.getHotBook(requestJson);
+    }
 }

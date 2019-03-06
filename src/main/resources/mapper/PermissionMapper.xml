@@ -9,6 +9,7 @@
         <result column="phone" property="phone"/>
         <result column="sex" property="sex"/>
         <result column="address" property="address"/>
+        <result column="reputation" property="reputation"/>
         <result column="email" property="email"/>
         <result column="roleId" property="roleId"/>
         <result column="roleName" property="roleName"/>
@@ -27,6 +28,7 @@
             u.sex             sex,
             u.address         address,
             u.email           email,
+            u.reputation      reputation,
             u.role_id         roleId,
             r.role_name       roleName,
             p.menu_code       menuCode,

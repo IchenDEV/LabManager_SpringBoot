@@ -40,7 +40,7 @@ public class AnalyseServiceImpl implements AnalyseService {
 	private UserDao userDao;
 
 	public JSONObject getCount() {
-		JSONObject result = new JSONObject();
+		
 		JSONObject request = new JSONObject();
 		CommonUtil.fillPageParam(request);
 		int bookCount = bookDao.countBook(request);
@@ -51,7 +51,8 @@ public class AnalyseServiceImpl implements AnalyseService {
 		int labCount = labDao.countLab(request);
 		int projectCount = projectDao.countProject(request);
 		int userCount = userDao.countUser(request);
-
+		
+		JSONObject result = new JSONObject();
 		result.put("books", bookCount);
 		result.put("departments", departmentCount);
 		result.put("devices", deviceCount);
