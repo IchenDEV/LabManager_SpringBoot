@@ -1,6 +1,8 @@
 spring:
   profiles:
        active: dev
+  main:
+       allow-bean-definition-overriding: true
   datasource:
       # url: jdbc:mysql://cdb-iidyk803.gz.tencentcdb.com:10023/LabMgr?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true
       url: jdbc:mysql://134.175.45.72:3306/LabMgr?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&allowPublicKeyRetrieval=true

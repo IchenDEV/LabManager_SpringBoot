@@ -33,7 +33,7 @@ public class MsgController {
         return msgService.listMsg(requestJson);
     }
     @RequiresPermissions("book:add")
-    @PostMapping("/addMsg")
+    @PostMapping("/add")
     public JSONObject addMsg(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "author,receiver,msg");
         var result=msgService.addMsg(requestJson);
@@ -41,7 +41,7 @@ public class MsgController {
         return result;
     }
     @RequiresPermissions("book:delete")
-    @PostMapping("/deleteMsg")
+    @PostMapping("/delete")
     public JSONObject deleteMsg(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
         logService.addLog("DeleteMsg",requestJson.getString("id"));
@@ -49,7 +49,7 @@ public class MsgController {
     }
 
     @RequiresPermissions("book:update")
-    @PostMapping("/readMsg")
+    @PostMapping("/read")
     public JSONObject readMsg(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
         logService.addLog("readMsg",requestJson.getString("id"));

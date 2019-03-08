@@ -1,4 +1,7 @@
 package com.idevlab.LabMgr.Service;
+
+import java.util.List;
+
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -8,6 +11,7 @@ import com.alibaba.fastjson.JSONObject;
  */
 public interface BookService {
 	JSONObject listBook(JSONObject jsonObject);
+	List<JSONObject> exportBook(JSONObject jsonObject);
 	JSONObject getHotBook(JSONObject jsonObject);
 	JSONObject addBook(JSONObject jsonObject);
     JSONObject updateBook(JSONObject jsonObject);

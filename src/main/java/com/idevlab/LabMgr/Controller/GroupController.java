@@ -44,7 +44,7 @@ public class GroupController {
     }
 
     @RequiresPermissions("device:add")
-    @PostMapping("/addGroup")
+    @PostMapping("/add")
     public JSONObject addGroup(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "name,description,status");
         var x= groupService.addGroup(requestJson);
@@ -52,7 +52,7 @@ public class GroupController {
         return x;
     }
     @RequiresPermissions("device:add")
-    @PostMapping("/addGroupUser")
+    @PostMapping("/addUser")
     public JSONObject addGroupUser(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "user,group,status");
         var x= groupService.addUserToGroup(requestJson);
@@ -60,7 +60,7 @@ public class GroupController {
         return x;
     }
     @RequiresPermissions("device:add")
-    @PostMapping("/addGroupProject")
+    @PostMapping("/addProject")
     public JSONObject addGroupProject(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "project,group,status");
         var x=groupService.addProjectToGroup(requestJson);
@@ -69,7 +69,7 @@ public class GroupController {
     }
 
     @RequiresPermissions("device:update")
-    @PostMapping("/updateGroup")
+    @PostMapping("/update")
     public JSONObject updateGroup(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
         logService.addLog("UpdateGroup",requestJson.getString("id"));
@@ -77,7 +77,7 @@ public class GroupController {
     }
 
     @RequiresPermissions("device:delete")
-    @PostMapping("/deleteGroup")
+    @PostMapping("/delete")
     public JSONObject deleteGroup(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
         logService.addLog("DeleteGroup",requestJson.getString("id"));
@@ -85,7 +85,7 @@ public class GroupController {
     }
 
     @RequiresPermissions("device:delete")
-    @PostMapping("/deleteGroupUser")
+    @PostMapping("/deleteUser")
     public JSONObject deleteGroupUser(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
         logService.addLog("DeleteGroupUser",requestJson.getString("id"));
@@ -93,7 +93,7 @@ public class GroupController {
     }
 
     @RequiresPermissions("device:delete")
-    @PostMapping("/deleteGroupProject")
+    @PostMapping("/deleteProject")
     public JSONObject deleteGroupProject(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
         logService.addLog("DeleteGroupProject",requestJson.getString("id"));

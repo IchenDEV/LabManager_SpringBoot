@@ -34,7 +34,7 @@ public class ProjectController {
     }
 
     @RequiresPermissions("device:add")
-    @PostMapping("/addProject")
+    @PostMapping("/add")
     public JSONObject addProject(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "name,description,status");
         var result = projectService.addProject(requestJson);
@@ -43,7 +43,7 @@ public class ProjectController {
     }
 
     @RequiresPermissions("device:update")
-    @PostMapping("/updateProject")
+    @PostMapping("/update")
     public JSONObject updateProject(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
         logService.addLog("UpdateProject",requestJson.getString("id"));
@@ -51,7 +51,7 @@ public class ProjectController {
     }
 
     @RequiresPermissions("device:delete")
-    @PostMapping("/deleteProject")
+    @PostMapping("/delete")
     public JSONObject deleteProject(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
         logService.addLog("DeleteProject",requestJson.getString("id"));

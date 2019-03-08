@@ -36,6 +36,11 @@ public class BookServiceImpl implements BookService {
 		return CommonUtil.MsgSuccessPage(jsonObject, list, count, "totalBookedTime", totalBookedTime);
 	}
 	@Override
+	public List<JSONObject> exportBook(JSONObject jsonObject) {
+		List<JSONObject> list = bookDao.listBook(jsonObject);
+		return list;
+	}
+	@Override
 	public JSONObject getHotBook(JSONObject jsonObject) {
 		int count = bookDao.countHotDevice(jsonObject);
 		List<JSONObject> list = bookDao.getHotDevice(jsonObject);

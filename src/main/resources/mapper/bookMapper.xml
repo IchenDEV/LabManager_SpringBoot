@@ -103,6 +103,7 @@
                      d.Model                                   deviceModel,
                      d.description                             deviceDescription,
                      b.applicant                               applicant,
+                     u.username                                applicantUsername,
                      u.nickname                                applicantNickname,
                      b.status                                  status,
                      DATE_FORMAT(b.begin_time, '%Y/%m/%d %T')  beginTime,
@@ -121,7 +122,7 @@
         <if test="time != null"><![CDATA[ And b.begin_time<= #{time} And b.end_time>= #{time} ]]></if>
         <if test="beginTime != null and endTime != null"><![CDATA[ And b.begin_time >= #{beginTime} And b.end_time<= #{endTime} ]]></if>
                  ORDER BY b.begin_time DESC
-                 LIMIT #{offSet}, #{pageRow}
+        <if test="offSet !=null and pageRow != null">LIMIT #{offSet}, #{pageRow} </if>
     </select>
 
     <insert id="addBook" useGeneratedKeys="true" keyProperty="id">

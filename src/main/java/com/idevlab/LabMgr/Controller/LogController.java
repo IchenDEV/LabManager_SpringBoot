@@ -31,7 +31,7 @@ public class LogController {
     }
 
     @RequiresPermissions("device:update")
-    @PostMapping("/updateLog")
+    @PostMapping("/update")
     public JSONObject updateLog(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
         logService.addLog("UpdateLog",requestJson.getString("id"));
@@ -39,7 +39,7 @@ public class LogController {
     }
 
     @RequiresPermissions("device:delete")
-    @PostMapping("/deleteLog")
+    @PostMapping("/delete")
     public JSONObject deleteLog(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
         logService.addLog("DeleteLog",requestJson.getString("id"));

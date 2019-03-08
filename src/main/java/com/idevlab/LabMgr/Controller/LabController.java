@@ -34,7 +34,7 @@ public class LabController {
     }
 
     @RequiresPermissions("device:add")
-    @PostMapping("/addLab")
+    @PostMapping("/add")
     public JSONObject addLab(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "name,description,status,location");
         var result =labService.addLab(requestJson);
@@ -43,7 +43,7 @@ public class LabController {
     }
 
     @RequiresPermissions("device:update")
-    @PostMapping("/updateLab")
+    @PostMapping("/update")
     public JSONObject updateLab(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
         logService.addLog("UpdateLab",requestJson.getString("id"));
@@ -51,7 +51,7 @@ public class LabController {
     }
 
     @RequiresPermissions("device:delete")
-    @PostMapping("/deleteLab")
+    @PostMapping("/delete")
     public JSONObject deleteLab(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
         logService.addLog("DeleteLab",requestJson.getString("id"));

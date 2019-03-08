@@ -49,7 +49,7 @@ public class UserController {
 	}
 
 	@RequiresPermissions("user:add")
-	@PostMapping("/addUser")
+	@PostMapping("/add")
 	public JSONObject addUser(@RequestBody JSONObject requestJson) {
 		CommonUtil.hasAllRequired(requestJson, "username, password, nickname,roleId");
 		var x=userService.addUser(requestJson);
@@ -58,7 +58,7 @@ public class UserController {
 	}
 
 	@RequiresPermissions("user:update")
-	@PostMapping("/updateUser")
+	@PostMapping("/update")
 	public JSONObject updateUser(@RequestBody JSONObject requestJson) {
 		CommonUtil.hasAllRequired(requestJson, "id,adminId,adminSuperPassword");
 		if (userService.SuperAdminAuth(requestJson.getInteger("adminId"),
@@ -70,7 +70,7 @@ public class UserController {
 	}
 
 	@RequiresPermissions("user:delete")
-	@PostMapping("/delUser")
+	@PostMapping("/delete")
 	public JSONObject delUser(@RequestBody JSONObject requestJson) {
 		CommonUtil.hasAllRequired(requestJson, "id");
 		logService.addLog("delUser", requestJson.getString("id"));

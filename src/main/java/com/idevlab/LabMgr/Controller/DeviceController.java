@@ -34,7 +34,7 @@ public class DeviceController {
     }
 
     @RequiresPermissions("device:add")
-    @PostMapping("/addDevice")
+    @PostMapping("/add")
     public JSONObject addDevice(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "No,name,description,model,status,band,location,func");
         var result= deviceService.addDevice(requestJson);
@@ -43,7 +43,7 @@ public class DeviceController {
     }
 
     @RequiresPermissions("device:update")
-    @PostMapping("/updateDevice")
+    @PostMapping("/update")
     public JSONObject updateDevice(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
         logService.addLog("UpdateDevice",requestJson.getString("id"));
@@ -51,7 +51,7 @@ public class DeviceController {
     }
 
     @RequiresPermissions("device:delete")
-    @PostMapping("/deleteDevice")
+    @PostMapping("/delete")
     public JSONObject deleteDevice(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
         logService.addLog("DeleteDevice",requestJson.getString("id"));

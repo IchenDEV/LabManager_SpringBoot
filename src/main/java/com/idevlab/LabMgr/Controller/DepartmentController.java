@@ -40,7 +40,7 @@ public class DepartmentController {
     }
 
     @RequiresPermissions("device:add")
-    @PostMapping("/addDepartment")
+    @PostMapping("/add")
     public JSONObject addDepartment(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "name,description,status");
         var result=departmentService.addDepartment(requestJson);
@@ -49,7 +49,7 @@ public class DepartmentController {
     }
 
     @RequiresPermissions("device:add")
-    @PostMapping("/addDepartmentUser")
+    @PostMapping("/addUser")
     public JSONObject addDepartmentUser(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "user,department,status");
         var x =departmentService.addUserToDepartment(requestJson);
@@ -59,7 +59,7 @@ public class DepartmentController {
  
 
     @RequiresPermissions("device:update")
-    @PostMapping("/updateDepartment")
+    @PostMapping("/update")
     public JSONObject updateDepartment(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
         logService.addLog("UpdateDepartment",requestJson.getString("id"));
@@ -67,7 +67,7 @@ public class DepartmentController {
     }
 
     @RequiresPermissions("device:delete")
-    @PostMapping("/deleteDepartment")
+    @PostMapping("/delete")
     public JSONObject deleteDepartment(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
         logService.addLog("DeleteDepartment",requestJson.getString("id"));
@@ -75,7 +75,7 @@ public class DepartmentController {
     }
 
     @RequiresPermissions("device:delete")
-    @PostMapping("/deleteDepartmentUser")
+    @PostMapping("/deleteUser")
     public JSONObject deleteDepartmentUser(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
         logService.addLog("DeleteDepartmentUser",requestJson.getString("id"));
