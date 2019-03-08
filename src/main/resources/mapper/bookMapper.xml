@@ -59,14 +59,14 @@
     </select>
 
     <select id="countBookedTime" resultType="Integer">
-        SELECT SUM(TIMESTAMPDIFF(second,begin_time,end_time))
+        SELECT IFNULL(SUM(TIMESTAMPDIFF(second,begin_time,end_time)),0)
         FROM book_recode
         WHERE status != -1         <![CDATA[ And begin_time<= NOW() ]]>
         <if test="id != null">And id= #{id}</if>
         <if test="project != null">And project = #{project}</if>
         <if test="device != null">And device = #{device}</if>
         <if test="applicant != null">And applicant = #{applicant}</if>
-
+        <if test="beginTime != null and endTime != null"><![CDATA[ And begin_time >= #{beginTime} And end_time<= #{endTime} ]]></if>
     </select>
 
     <select id="checkTimeFree" resultType="Integer">

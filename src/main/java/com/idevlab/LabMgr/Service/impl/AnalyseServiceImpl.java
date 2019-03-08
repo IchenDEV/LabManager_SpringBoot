@@ -64,12 +64,11 @@ public class AnalyseServiceImpl implements AnalyseService {
 		return result;
 	}
 
-	public JSONObject getTotalUseRate() {
+	public JSONObject getTotalUseRate(JSONObject requestJson) {
 		JSONObject result = new JSONObject();
-		JSONObject request = new JSONObject();
-		CommonUtil.fillPageParam(request);
-		int deviceCount = deviceDao.countDeviceTime(request);
-		int totalBookedTime = bookDao.countBookedTime(request);
+		CommonUtil.fillPageParam(requestJson);
+		int deviceCount = deviceDao.countDeviceTime(requestJson);
+		int totalBookedTime = bookDao.countBookedTime(requestJson);
 		if (deviceCount != 0) {
 			result.put("TotalUseRate", totalBookedTime * 1.0 / deviceCount);
 		}else{

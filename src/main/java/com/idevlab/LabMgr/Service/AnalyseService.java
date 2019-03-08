@@ -8,5 +8,5 @@ import com.alibaba.fastjson.JSONObject;
  */
 public interface AnalyseService {
 	JSONObject getCount();
-	JSONObject getTotalUseRate();
+	JSONObject getTotalUseRate(JSONObject requestJson);
 }

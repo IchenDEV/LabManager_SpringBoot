@@ -36,7 +36,9 @@
     </select>
 
     <select id="countDeviceTime" resultType="Integer">
-        SELECT SUM(TIMESTAMPDIFF(second,d.create_time,NOW()))
+        SELECT 
+        <if test="beginTime == null or endTime == null">SUM(TIMESTAMPDIFF(second,d.create_time,NOW()))</if>
+        <if test="beginTime != null and endTime != null">greatest(SUM(TIMESTAMPDIFF(second,greatest(d.create_time,#{beginTime}),LEAST(NOW(),#{endTime} ))),0)</if>          
         FROM device d
          WHERE d.status != -1
         <if test="id != null">And d.id= #{id}</if>

@@ -9,6 +9,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,8 +32,8 @@ public class AnalyseController {
 
    @PostMapping("/totalUseRate")
    @RequiresPermissions("device:delete")
-   public JSONObject useRate() {
-      var x=  analyseService.getTotalUseRate();
+   public JSONObject useRate(@RequestBody JSONObject requestJson) {
+      var x=  analyseService.getTotalUseRate(requestJson);
       return CommonUtil.successJson(x);
    }
 }
