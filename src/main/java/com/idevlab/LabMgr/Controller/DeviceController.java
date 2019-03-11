@@ -1,9 +1,17 @@
 package com.idevlab.LabMgr.Controller;
 
+import java.nio.file.NoSuchFileException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
 import com.alibaba.fastjson.JSONObject;
+import com.idevlab.LabMgr.Enity.Device;
 import com.idevlab.LabMgr.Service.DeviceService;
 import com.idevlab.LabMgr.Service.LogService;
 import com.idevlab.LabMgr.Util.CommonUtil;
+import com.idevlab.LabMgr.Util.Excel;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +39,24 @@ public class DeviceController {
     @PostMapping("/list")
     public JSONObject listDevice(@RequestBody JSONObject requestJson) {
         return deviceService.listDevice(requestJson);
+    }
+
+    @RequiresPermissions("device:update")
+    @PostMapping("/listUseRate")
+    public JSONObject listUseRate(@RequestBody JSONObject requestJson) {
+        return deviceService.listDeviceUseRate(requestJson);
+    }
+    
+    @RequiresPermissions("book:list")
+    @PostMapping("/export")
+    public void exportBook(HttpServletResponse response) throws NoSuchFileException {
+        JSONObject ex=new JSONObject();
+        List<JSONObject> lst= deviceService.export(ex);
+        List<Device> list =new ArrayList<Device>();
+        for (JSONObject var : lst) {
+            list.add(new Device(var));
+        }
+        Excel.exportExcel(list,"export","export", Device.class, "export.xlsx", response);
     }
 
     @RequiresPermissions("device:add")

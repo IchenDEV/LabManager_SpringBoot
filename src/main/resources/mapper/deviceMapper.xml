@@ -35,6 +35,23 @@
         </if>
     </select>
 
+    <resultMap id="deviceUseRateMap" type="com.alibaba.fastjson.JSONObject">
+        <id column="id" property="id"/>
+        <result column="rate" property="rate"/>
+    </resultMap>
+    <select id="listDeviceUseRate" resultMap="deviceUseRateMap">
+        SELECT b.device id,d.name name, IFNULL(SUM(TIMESTAMPDIFF(SECOND,b.begin_time,b.end_time)),0)*100/
+ 		<if test="beginTime == null or endTime == null">SUM(TIMESTAMPDIFF(second,d.create_time,NOW()))</if>
+        <if test="beginTime != null and endTime != null">greatest(SUM(TIMESTAMPDIFF(second,greatest(d.create_time,#{beginTime}),LEAST(NOW(),#{endTime}))),0.001)</if>
+             AS rate
+        FROM book_recode b
+        		RIGHT JOIN device d ON d.id=b.device
+        WHERE b.status != -1   <![CDATA[ And begin_time<= NOW() ]]> 
+        group BY b.device
+        ORDER BY rate DESC
+        <if test="offSet != null and pageRow != null">LIMIT #{offSet}, #{pageRow}</if>
+    </select>
+
     <select id="countDeviceTime" resultType="Integer">
         SELECT 
         <if test="beginTime == null or endTime == null">SUM(TIMESTAMPDIFF(second,d.create_time,NOW()))</if>

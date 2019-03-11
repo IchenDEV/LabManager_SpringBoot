@@ -12,6 +12,7 @@ public interface DeviceDao {
     int countDevice(JSONObject jsonObject);
     int countDeviceTime(JSONObject jsonObject);
     List<JSONObject> listDevice(JSONObject jsonObject);
+    List<JSONObject> listDeviceUseRate(JSONObject jsonObject);
     int addDevice(JSONObject jsonObject);
     int updateDevice(JSONObject jsonObject);
     int deleteDevice(JSONObject jsonObject);

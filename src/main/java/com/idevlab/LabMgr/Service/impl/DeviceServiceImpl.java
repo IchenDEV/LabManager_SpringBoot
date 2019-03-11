@@ -29,6 +29,20 @@ public class DeviceServiceImpl implements DeviceService {
 	}
 
 	@Override
+	public JSONObject listDeviceUseRate(JSONObject jsonObject) {
+		CommonUtil.fillPageParam(jsonObject);
+		int count = deviceDao.countDevice(jsonObject);
+		List<JSONObject> list = deviceDao.listDeviceUseRate(jsonObject);
+		return CommonUtil.successPage(jsonObject, list, count);
+	}
+
+	@Override
+	public List<JSONObject> export(JSONObject jsonObject) {
+		List<JSONObject> list = deviceDao.listDeviceUseRate(jsonObject);
+		return list;
+	}
+
+	@Override
 	public JSONObject addDevice(JSONObject jsonObject) {
 		deviceDao.addDevice(jsonObject);
 		return CommonUtil.successJson();

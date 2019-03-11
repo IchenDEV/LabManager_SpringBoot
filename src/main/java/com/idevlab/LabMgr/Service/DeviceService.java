@@ -1,4 +1,7 @@
 package com.idevlab.LabMgr.Service;
+
+import java.util.List;
+
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -8,6 +11,8 @@ import com.alibaba.fastjson.JSONObject;
  */
 public interface DeviceService {
 	JSONObject listDevice(JSONObject jsonObject);
+	JSONObject listDeviceUseRate(JSONObject jsonObject);
+	List<JSONObject> export(JSONObject jsonObject);
 	JSONObject addDevice(JSONObject jsonObject);
     JSONObject updateDevice(JSONObject jsonObject);
 	JSONObject deleteDevice(JSONObject jsonObject);

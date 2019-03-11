@@ -92,9 +92,11 @@
     <update id="deleteDepartmentUser">
         UPDATE user_department
         SET status=-1
-        WHERE 
+        <where>
         <if test="user!= null">user = #{user}</if>
+        <if test="id!= null">And id = #{id}</if>
         <if test="department != null">And department= #{department}</if>
+        </where>
     </update>
 
     <update id="updateDepartment">

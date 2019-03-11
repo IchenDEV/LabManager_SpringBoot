@@ -15,3 +15,7 @@ server:
     enabled: true
     mime-types: application/json,application/xml,text/html,text/xml,text/plain
     min-response-size: 512
+  ssl:
+    key-store: classpath:api.idevlab.cn.jks
+    key-store-password: api.idevlab.cn
+    keyStoreType: JKS
