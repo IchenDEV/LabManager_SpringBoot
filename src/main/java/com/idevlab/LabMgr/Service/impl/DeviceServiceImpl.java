@@ -28,6 +28,13 @@ public class DeviceServiceImpl implements DeviceService {
 		return CommonUtil.successPage(jsonObject, list, count);
 	}
 
+	public JSONObject recommendDevice(JSONObject jsonObject) {
+		CommonUtil.fillPageParam(jsonObject);
+		int count = deviceDao.countDevice(jsonObject);
+		List<JSONObject> list = deviceDao.listRecomendDevice(jsonObject);
+		return CommonUtil.successPage(jsonObject, list, count);
+	}
+
 	@Override
 	public JSONObject listDeviceUseRate(JSONObject jsonObject) {
 		CommonUtil.fillPageParam(jsonObject);

@@ -2,6 +2,7 @@ package com.idevlab.LabMgr.Controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.idevlab.LabMgr.Service.AnalyseService;
+import com.idevlab.LabMgr.Service.BookService;
 import com.idevlab.LabMgr.Service.LogService;
 import com.idevlab.LabMgr.Util.CommonUtil;
 
@@ -22,6 +23,8 @@ public class AnalyseController {
    LogService logService;
    @Autowired
    AnalyseService analyseService;
+   @Autowired
+   private BookService bookService;
 
    @PostMapping("/count")
    @RequiresPermissions("device:delete")
@@ -29,6 +32,12 @@ public class AnalyseController {
       var x=  analyseService.getCount();
       return CommonUtil.successJson(x);
    }
+   @RequiresPermissions("book:list")
+    @PostMapping("/listMonthCount")
+    public JSONObject listMonthCountBook(@RequestBody JSONObject requestJson) {
+         CommonUtil.hasAllRequired(requestJson, "year");
+        return bookService.listMonthBookCount(requestJson);
+    }
 
    @PostMapping("/totalUseRate")
    @RequiresPermissions("device:delete")

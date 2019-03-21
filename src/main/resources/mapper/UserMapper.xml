@@ -83,7 +83,7 @@
          FROM sys_user u
                       LEFT JOIN user_group ug ON ug.user = u.id
                       LEFT JOIN `group` g ON g.id = ug.`group`
-         WHERE u.status !=-1 And u.id=#{id}
+         WHERE u.status !=-1 And ug.status !=-1 And g.status !=-1 And u.id=#{id}
     </select>
     <select id="listUserGroup" resultType="com.alibaba.fastjson.JSONObject">
                  SELECT
@@ -96,7 +96,7 @@
                  FROM sys_user u
                       LEFT JOIN user_group ug ON ug.user = u.id
                       LEFT JOIN `group` g ON g.id = ug.`group`
-                 WHERE u.status !=-1 And u.id=#{id}
+                 WHERE u.status !=-1 And ug.status !=-1 And g.status !=-1 And u.id=#{id}
                  LIMIT #{offSet}, #{pageRow}
     </select>
 
@@ -138,7 +138,7 @@
                  FROM sys_user u
                       LEFT JOIN user_department ug ON ug.user = u.id
                       LEFT JOIN department g ON g.id = ug.department
-                 WHERE u.status !=-1 And u.id=#{id}
+                 WHERE u.status !=-1 And ug.status !=-1 And g.status !=-1 And u.id=#{id}
                  LIMIT #{offSet}, #{pageRow}
     </select>
 

@@ -40,6 +40,11 @@ public class DeviceController {
     public JSONObject listDevice(@RequestBody JSONObject requestJson) {
         return deviceService.listDevice(requestJson);
     }
+    @RequiresPermissions("device:list")
+    @PostMapping("/listRecommend")
+    public JSONObject listRecomend(@RequestBody JSONObject requestJson) {
+        return deviceService.recommendDevice(requestJson);
+    }
 
     @RequiresPermissions("device:update")
     @PostMapping("/listUseRate")

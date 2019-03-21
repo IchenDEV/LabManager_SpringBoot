@@ -42,6 +42,8 @@ public class BookController {
         return bookService.listBook(requestJson);
     }
 
+    
+
     @RequiresPermissions("book:list")
     @PostMapping("/export")
     public void exportBook(HttpServletResponse response) throws NoSuchFileException {

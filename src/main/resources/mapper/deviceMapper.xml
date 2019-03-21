@@ -41,12 +41,12 @@
     </resultMap>
     <select id="listDeviceUseRate" resultMap="deviceUseRateMap">
         SELECT b.device id,d.name name, IFNULL(SUM(TIMESTAMPDIFF(SECOND,b.begin_time,b.end_time)),0)*100/
- 		<if test="beginTime == null or endTime == null">SUM(TIMESTAMPDIFF(second,d.create_time,NOW()))</if>
+        <if test="beginTime == null or endTime == null">SUM(TIMESTAMPDIFF(second,d.create_time,NOW()))</if>
         <if test="beginTime != null and endTime != null">greatest(SUM(TIMESTAMPDIFF(second,greatest(d.create_time,#{beginTime}),LEAST(NOW(),#{endTime}))),0.001)</if>
              AS rate
         FROM book_recode b
         		RIGHT JOIN device d ON d.id=b.device
-        WHERE b.status != -1   <![CDATA[ And begin_time<= NOW() ]]> 
+        WHERE b.status != -1           <![CDATA[ And begin_time<= NOW() ]]> 
         group BY b.device
         ORDER BY rate DESC
         <if test="offSet != null and pageRow != null">LIMIT #{offSet}, #{pageRow}</if>
@@ -143,6 +143,38 @@
         </if>
                  ORDER BY d.id
                  LIMIT #{offSet}, #{pageRow}
+    </select>
+    <select id="listRecomendDevice" resultMap="deviceMap">
+    SELECT *
+    FROM device d
+        JOIN ((
+                SELECT 
+                    b.device id, 
+                    IFNULL(SUM(TIMESTAMPDIFF(SECOND,b.begin_time,b.end_time)),0)*100/ SUM(TIMESTAMPDIFF(SECOND,d.create_time, NOW())) AS rate
+                FROM book_recode b
+                    RIGHT JOIN device d ON d.id=b.device
+                WHERE b.STATUS != -1
+                GROUP BY b.device) UNION
+            (
+                SELECT 
+                    d.id, 
+                    0 AS rate
+                FROM device d
+                WHERE d.id NOT IN (
+                SELECT device
+                FROM book_recode
+                WHERE STATUS !=-1)
+            )) x ON x.id = d.id
+    WHERE d.id NOT IN (
+                    SELECT d.id
+                    FROM device d
+                    JOIN book_recode b ON d.id=b.device
+        <where>
+            <if test="beginTime != null and endTime != null"><![CDATA[ (b.begin_time<= #{endTime} And b.end_time>= #{beginTime} )Or #{beginTime} < b.create_time]]></if>
+        </where>
+                        )
+    ORDER BY rate,require_reputation
+    LIMIT #{offSet}, #{pageRow}
     </select>
 
     <insert id="addDevice" useGeneratedKeys="true" keyProperty="id">

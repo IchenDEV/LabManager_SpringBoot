@@ -27,12 +27,12 @@ public class AnnouncementController {
     @Autowired
     private LogService logService;
  
-    @RequiresPermissions("book:list")
+    
     @PostMapping("/list")
     public JSONObject listAnnouncement(@RequestBody JSONObject requestJson) {
         return msgService.listAnnouncement(requestJson);
     }
-    @RequiresPermissions("book:list")
+    
     @PostMapping("/get")
     public JSONObject getAnnouncement(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");

@@ -36,6 +36,13 @@ public class BookServiceImpl implements BookService {
 		return CommonUtil.MsgSuccessPage(jsonObject, list, count, "totalBookedTime", totalBookedTime);
 	}
 	@Override
+	public JSONObject listMonthBookCount(JSONObject jsonObject){
+		CommonUtil.fillPageParam(jsonObject);
+		int count = bookDao.countBook(jsonObject);
+		List<JSONObject> list = bookDao.selectMonthCount(jsonObject);
+		return CommonUtil.successPage(jsonObject, list, count);
+	}
+	@Override
 	public List<JSONObject> exportBook(JSONObject jsonObject) {
 		List<JSONObject> list = bookDao.listBook(jsonObject);
 		return list;
@@ -50,10 +57,11 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public JSONObject addBook(JSONObject jsonObject) {
 		if (bookDao.checkTimeFree(jsonObject) == 0) {
-			var reputation = login.getInfo().getJSONObject("userPermission").getInteger("reputation");
+			var reputation = login.getInfo().getJSONObject("info").getJSONObject("userPermission").getInteger("reputation");
 			JSONObject search = new JSONObject();
 			search.put("id", jsonObject.getString("device"));
-			var requireReputation = device.listDevice(search).getInteger("RequireReputation");
+			//火车
+			var requireReputation = device.listDevice(search).getJSONObject("info").getJSONArray("list").getJSONObject(0).getInteger("requireReputation");
 			if (requireReputation <= reputation) {
 				bookDao.addBook(jsonObject);
 				return CommonUtil.successJson();

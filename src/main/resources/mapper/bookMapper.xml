@@ -5,13 +5,38 @@
 
     <select id="countBook" resultType="Integer">
         SELECT count(0)
-        FROM book_recode
-        WHERE status != -1
-        <if test="id != null">And id= #{id}</if>
-        <if test="project != null">And project = #{project}</if>
-        <if test="device != null">And device = #{device}</if>
-        <if test="applicant != null">And applicant = #{applicant}</if>
-        <if test="time != null"><![CDATA[ And begin_time<= #{time} And end_time>= #{time} ]]></if>
+        FROM book_recode b
+                      LEFT JOIN project p ON p.id = b.project
+                      LEFT JOIN sys_user u ON u.id = b.applicant
+                      LEFT JOIN device d ON d.id = b.device
+        WHERE b.status != -1
+        <if test="id != null">And b.id= #{id}</if>
+        <if test="project != null">And b.project = #{project}</if>
+        <if test="device != null">And b.device = #{device}</if>
+        <if test="applicant != null">And b.applicant = #{applicant}</if>
+        <if test="year != null">And YEAR (b.begin_time) = #{year}</if>
+        <if test="time != null"><![CDATA[ And b.begin_time<= #{time} And b.end_time>= #{time} ]]></if>
+        <if test="No != null">
+                       AND d.No like #{No}
+        </if>
+        <if test="name != null">
+                       AND d.name like #{name}
+        </if>
+        <if test="location != null">
+                       AND d.location = #{location}
+        </if>
+        <if test="model != null">
+                       AND d.model like #{model}
+        </if>
+        <if test="bands != null">
+                       AND d.band like #{bands}
+        </if>
+        <if test="func != null">
+                       AND d.func like #{func}
+        </if>
+        <if test="requireReputation != null">
+                       AND d.require_reputation like #{requireReputation}
+        </if>
     </select>
 
     <select id="countHotDevice" resultType="Integer">
@@ -61,7 +86,7 @@
     <select id="countBookedTime" resultType="Integer">
         SELECT IFNULL(SUM(TIMESTAMPDIFF(second,begin_time,end_time)),0)
         FROM book_recode
-        WHERE status != -1                 <![CDATA[ And begin_time<= NOW() ]]>
+        WHERE status != -1                                 <![CDATA[ And begin_time<= NOW() ]]>
         <if test="id != null">And id= #{id}</if>
         <if test="project != null">And project = #{project}</if>
         <if test="device != null">And device = #{device}</if>
@@ -70,8 +95,44 @@
     </select>
 
 
-    
-<select id="checkTimeFree" resultType="Integer">
+
+    <select id="countSelectMonthCount" resultType="Integer">
+        SELECT
+            MONTH (begin_time),
+            COUNT(*)
+        FROM
+            book_recode
+        WHERE
+            YEAR (begin_time) = #{year}  
+        GROUP BY
+            MONTH (begin_time)
+        WHERE status != -1
+        <if test="id != null">And id= #{id}</if>
+        <if test="project != null">And project = #{project}</if>
+        <if test="device != null">And device = #{device}</if>
+        <if test="applicant != null">And applicant = #{applicant}</if>
+        <if test="beginTime != null and endTime != null"><![CDATA[ And begin_time >= #{beginTime} And end_time<= #{endTime} ]]></if>
+    </select>
+
+    <select id="selectMonthCount" resultType="com.alibaba.fastjson.JSONObject">
+    SELECT 
+        MONTH(begin_time) month,
+        COUNT(*) count,
+        <![CDATA[ IFNULL(SUM(TIMESTAMPDIFF(SECOND,if(begin_time<DATE_FORMAT(begin_time ,'%Y-%m-01 00:00:00'),DATE_FORMAT(begin_time ,'%Y-%m-01 00:00:00'),begin_time),if(end_time>DATE_FORMAT(LAST_DAY(begin_time),'%Y-%m-%d 23:59:59'),DATE_FORMAT(LAST_DAY(begin_time),'%Y-%m-%d 23:59:59'),end_time))),0)*100/(sum(mt)/COUNT(mt)) rate ]]>
+    FROM(
+
+        SELECT
+           *,(day(LAST_DAY(begin_time))*24*3600) mt
+        FROM
+            book_recode
+        WHERE
+            YEAR (begin_time) = #{year}
+            And status != -1
+        ) x
+    group BY MONTH(begin_time)
+    Order by month
+    </select>
+    <select id="checkTimeFree" resultType="Integer">
         SELECT count(0)
         FROM book_recode
         WHERE status != -1
@@ -122,7 +183,28 @@
         <if test="device != null">And b.device = #{device}</if>
         <if test="applicant != null">And b.applicant = #{applicant}</if>
         <if test="time != null"><![CDATA[ And b.begin_time<= #{time} And b.end_time>= #{time} ]]></if>
-        <if test="beginTime != null and endTime != null"><![CDATA[ And b.begin_time >= #{beginTime} And b.end_time<= #{endTime} ]]></if>
+        <if test="beginTime != null and endTime != null"><![CDATA[ And b.begin_time <= #{endTime} And b.end_time >= #{beginTime} ]]></if>
+        <if test="No != null">
+                       AND d.No like #{No}
+        </if>
+        <if test="name != null">
+                       AND d.name like #{name}
+        </if>
+        <if test="location != null">
+                       AND d.location = #{location}
+        </if>
+        <if test="model != null">
+                       AND d.model like #{model}
+        </if>
+        <if test="bands != null">
+                       AND d.band like #{bands}
+        </if>
+        <if test="func != null">
+                       AND d.func like #{func}
+        </if>
+        <if test="requireReputation != null">
+                       AND d.require_reputation like #{requireReputation}
+        </if>
                  ORDER BY b.begin_time DESC
         <if test="offSet !=null and pageRow != null">LIMIT #{offSet}, #{pageRow} </if>
     </select>

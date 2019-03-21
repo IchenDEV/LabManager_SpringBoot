@@ -13,6 +13,7 @@ public interface BookDao {
     int countHotDevice(JSONObject jsonObject);
     int countBookedTime(JSONObject jsonObject);
     List<JSONObject> getHotDevice(JSONObject jsonObject);
+    List<JSONObject> selectMonthCount(JSONObject jsonObject);
     int checkTimeFree(JSONObject jsonObject);
     List<JSONObject> listBook(JSONObject jsonObject);
     int addBook(JSONObject jsonObject);
