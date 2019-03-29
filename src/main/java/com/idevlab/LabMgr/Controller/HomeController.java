@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.idevlab.LabMgr.Service.LoginService;
 import com.idevlab.LabMgr.Service.UserService;
 import com.idevlab.LabMgr.Util.CommonUtil;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,11 +18,10 @@ public class HomeController {
    UserService userService;
    @Autowired
    LoginService loginService;
-   
 
    @RequestMapping("/")
    public String index() {
-      return "Welcome  to  LabMgr  System  0.8";
+      return "Welcome  to  LabMgr backend System  0.95";
    }
 
    @PostMapping("/singUp")

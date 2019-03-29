@@ -47,27 +47,31 @@
             FROM book_recode 
             group BY device
             ORDER BY TIME DESC 
-            LIMIT 0,10
+            LIMIT 0,4
             ) p
         LEFT JOIN device d ON d.id = p.device
         LEFT JOIN lab l ON d.location = l.id
         where d.status !=-1 And l.status !=-1
     </select>
+
     <resultMap id="hotMap" type="com.alibaba.fastjson.JSONObject">
         <id column="id" property="id"/>
         <result column="NO" property="NO"/>
         <result column="name" property="name"/>
         <result column="func" property="func"/>
+        <result column="requireReputation" property="requireReputation"/>
         <result column="status" property="status"/>
         <result column="labName" property="labName"/>
         <result column="TIME" property="TIME"/>
     </resultMap>
+
     <select id="getHotDevice" resultMap="hotMap">
         SELECT
             d.id,
             d.NO,
             d.name,
             d.func,
+            d.require_reputation                      requireReputation,
             d.status,
             l.NAME	labName,
             p.TIME
@@ -76,7 +80,7 @@
             FROM book_recode 
             group BY device
             ORDER BY TIME DESC 
-            LIMIT 0,10
+            LIMIT 0,4
             ) p
         LEFT JOIN device d ON d.id = p.device
         LEFT JOIN lab l ON d.location = l.id
@@ -86,7 +90,7 @@
     <select id="countBookedTime" resultType="Integer">
         SELECT IFNULL(SUM(TIMESTAMPDIFF(second,begin_time,end_time)),0)
         FROM book_recode
-        WHERE status != -1                                 <![CDATA[ And begin_time<= NOW() ]]>
+        WHERE status != -1                                         <![CDATA[ And begin_time<= NOW() ]]>
         <if test="id != null">And id= #{id}</if>
         <if test="project != null">And project = #{project}</if>
         <if test="device != null">And device = #{device}</if>
@@ -115,23 +119,27 @@
     </select>
 
     <select id="selectMonthCount" resultType="com.alibaba.fastjson.JSONObject">
-    SELECT 
-        MONTH(begin_time) month,
-        COUNT(*) count,
-        <![CDATA[ IFNULL(SUM(TIMESTAMPDIFF(SECOND,if(begin_time<DATE_FORMAT(begin_time ,'%Y-%m-01 00:00:00'),DATE_FORMAT(begin_time ,'%Y-%m-01 00:00:00'),begin_time),if(end_time>DATE_FORMAT(LAST_DAY(begin_time),'%Y-%m-%d 23:59:59'),DATE_FORMAT(LAST_DAY(begin_time),'%Y-%m-%d 23:59:59'),end_time))),0)*100/(sum(mt)/COUNT(mt)) rate ]]>
-    FROM(
-
-        SELECT
-           *,(day(LAST_DAY(begin_time))*24*3600) mt
-        FROM
-            book_recode
-        WHERE
-            YEAR (begin_time) = #{year}
-            And status != -1
+        SELECT 
+            MONTH(begin_time) month,
+            COUNT(*) count,
+            <![CDATA[ IFNULL(SUM(TIMESTAMPDIFF(SECOND,if(begin_time<DATE_FORMAT(begin_time ,'%Y-%m-01 00:00:00'),DATE_FORMAT(begin_time ,'%Y-%m-01 00:00:00'),begin_time),if(end_time>DATE_FORMAT(LAST_DAY(begin_time),'%Y-%m-%d 23:59:59'),DATE_FORMAT(LAST_DAY(begin_time),'%Y-%m-%d 23:59:59'),end_time))),0)*100/(sum(mt)/COUNT(mt)) rate ]]>
+        FROM(
+            SELECT
+                *,(day(LAST_DAY(begin_time))*24*3600) mt
+            FROM
+                book_recode
+             WHERE
+                YEAR (begin_time) = #{year}
+                <if test="id != null">And id= #{id}</if>
+                <if test="project != null">And project = #{project}</if>
+                <if test="device != null">And device = #{device}</if>
+                <if test="applicant != null">And applicant = #{applicant}</if>
+                                        And status != -1
         ) x
-    group BY MONTH(begin_time)
-    Order by month
+    Group BY MONTH(begin_time)
+    Order By month
     </select>
+
     <select id="checkTimeFree" resultType="Integer">
         SELECT count(0)
         FROM book_recode
@@ -153,6 +161,7 @@
         <result column="updateTime" property="updateTime"/>
         <result column="status" property="status"/>
     </resultMap>
+
     <select id="listBook" resultMap="bookMap">
                  SELECT
                      b.id                                      id,
@@ -233,4 +242,22 @@
         SET status=-1
         WHERE id = #{id}
     </update>
+
+    <update id="useDevice">
+        UPDATE book_recode
+        <set>
+            act_begin_time=Now(),
+            <if test="status != null">status=1</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    <update id="finishUseDevice">
+        UPDATE book_recode
+        <set>
+            act_end_time=Now(),
+            <if test="status != null">status=4</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
 </mapper>

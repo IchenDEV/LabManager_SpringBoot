@@ -11,10 +11,20 @@ import com.alibaba.fastjson.JSONObject;
  */
 public interface BookService {
 	JSONObject listBook(JSONObject jsonObject);
+
 	JSONObject listMonthBookCount(JSONObject jsonObject);
+
 	List<JSONObject> exportBook(JSONObject jsonObject);
+
 	JSONObject getHotBook(JSONObject jsonObject);
+
 	JSONObject addBook(JSONObject jsonObject);
-    JSONObject updateBook(JSONObject jsonObject);
+
+	JSONObject updateBook(JSONObject jsonObject);
+
+	JSONObject finishUseDevice(JSONObject jsonObject);
+
+	JSONObject useDevice(JSONObject jsonObject);
+
 	JSONObject deleteBook(JSONObject jsonObject);
 }

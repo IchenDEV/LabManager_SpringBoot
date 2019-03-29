@@ -22,6 +22,7 @@
         <result column="updateTime" property="updateTime"/>
         <result column="status" property="status"/>
     </resultMap>
+
     <select id="listAnnouncement" resultMap="announcementMap">
                  SELECT
                      m.id                                      id,
@@ -54,6 +55,7 @@
         <result column="updateTime" property="updateTime"/>
         <result column="status" property="status"/>
     </resultMap>
+
     <select id="getAnnouncement" resultMap="getAnnouncementMap">
                  SELECT
                      m.id                                      id,
@@ -77,6 +79,7 @@
         (author, msg,title,summary) VALUES
             ( #{author}, #{msg},#{title},#{summary})
     </insert>
+
     <update id="updateAnnouncement">
         UPDATE announcement
         <set>
@@ -87,6 +90,7 @@
         </set>
         WHERE id = #{id}
     </update>
+    
     <update id="deleteAnnouncement">
         UPDATE announcement
         SET status=-1

@@ -10,14 +10,27 @@ import java.util.List;
  */
 public interface BookDao {
     int countBook(JSONObject jsonObject);
+
     int countHotDevice(JSONObject jsonObject);
+
     int countBookedTime(JSONObject jsonObject);
+
     List<JSONObject> getHotDevice(JSONObject jsonObject);
+
     List<JSONObject> selectMonthCount(JSONObject jsonObject);
+
     int checkTimeFree(JSONObject jsonObject);
+
     List<JSONObject> listBook(JSONObject jsonObject);
+
     int addBook(JSONObject jsonObject);
+
     int updateBook(JSONObject jsonObject);
+
+    int finishUseDevice(JSONObject jsonObject);
+
+    int useDevice(JSONObject jsonObject);
+
     int deleteBook(JSONObject jsonObject);
 
 }

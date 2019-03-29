@@ -42,26 +42,26 @@ public class BookController {
         return bookService.listBook(requestJson);
     }
 
-    
-
     @RequiresPermissions("book:list")
     @PostMapping("/export")
     public void exportBook(HttpServletResponse response) throws NoSuchFileException {
-        JSONObject ex=new JSONObject();
-        List<JSONObject> lst= bookService.exportBook(ex);
-        List<Book> list =new ArrayList<Book>();
+        JSONObject ex = new JSONObject();
+        List<JSONObject> lst = bookService.exportBook(ex);
+        List<Book> list = new ArrayList<Book>();
         for (JSONObject var : lst) {
             list.add(new Book(var));
         }
-        Excel.exportExcel(list,"export","export", Book.class, Long.toString((new Date()).getTime())+".xlsx", response);
+        Excel.exportExcel(list, "export", "export", Book.class, Long.toString((new Date()).getTime()) + ".xlsx",
+                response);
     }
 
     @RequiresPermissions("book:add")
     @PostMapping("/add")
     public JSONObject addBook(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "project,device,beginTime,endTime,applicant,status");
-        var result=bookService.addBook(requestJson);
-        logService.addLog("AddBook","id:"+ requestJson.getString("id")+";project:"+requestJson.getString("project")+";device:"+requestJson.getString("device"));
+        var result = bookService.addBook(requestJson);
+        logService.addLog("AddBook", "id:" + requestJson.getString("id") + ";project:"
+                + requestJson.getString("project") + ";device:" + requestJson.getString("device"));
         return result;
     }
 
@@ -73,18 +73,34 @@ public class BookController {
         return bookService.updateBook(requestJson);
     }
 
+    @RequiresPermissions("book:add")
+    @PostMapping("/use")
+    public JSONObject use(@RequestBody JSONObject requestJson) {
+        CommonUtil.hasAllRequired(requestJson, "id");
+        logService.addLog("use", requestJson.getString("id"));
+        return bookService.useDevice(requestJson);
+    }
+
+    @RequiresPermissions("book:add")
+    @PostMapping("/finish")
+    public JSONObject finish(@RequestBody JSONObject requestJson) {
+        CommonUtil.hasAllRequired(requestJson, "id");
+        logService.addLog("finish", requestJson.getString("id"));
+        return bookService.finishUseDevice(requestJson);
+    }
+
     @RequiresPermissions("device:delete")
     @PostMapping("/delete")
     public JSONObject deleteBook(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
-        logService.addLog("DeleteBook",requestJson.getString("id"));
+        logService.addLog("DeleteBook", requestJson.getString("id"));
         return bookService.deleteBook(requestJson);
     }
 
     @RequiresPermissions("device:list")
     @PostMapping("/getHot")
     public JSONObject getHot(@RequestBody JSONObject requestJson) {
-        logService.addLog("getHotDevice","Hot");
+        logService.addLog("getHotDevice", "Hot");
         return bookService.getHotBook(requestJson);
     }
 }

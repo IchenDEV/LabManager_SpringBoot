@@ -26,31 +26,32 @@ public class AnnouncementController {
     private AnnouncementService msgService;
     @Autowired
     private LogService logService;
- 
-    
+
     @PostMapping("/list")
     public JSONObject listAnnouncement(@RequestBody JSONObject requestJson) {
         return msgService.listAnnouncement(requestJson);
     }
-    
+
     @PostMapping("/get")
     public JSONObject getAnnouncement(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
         return msgService.getAnnouncement(requestJson);
     }
+
     @RequiresPermissions("book:add")
     @PostMapping("/add")
     public JSONObject addLab(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "author,title,summary,msg");
-        var result=msgService.addAnnouncement(requestJson);
-        logService.addLog("AddAnnouncement","id:"+requestJson.getString("id"));
+        var result = msgService.addAnnouncement(requestJson);
+        logService.addLog("AddAnnouncement", "id:" + requestJson.getString("id"));
         return result;
     }
+
     @RequiresPermissions("book:delete")
     @PostMapping("/delete")
     public JSONObject deleteAnnouncement(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
-        logService.addLog("DeleteAnnouncement",requestJson.getString("id"));
+        logService.addLog("DeleteAnnouncement", requestJson.getString("id"));
         return msgService.deleteAnnouncement(requestJson);
     }
 
@@ -58,7 +59,7 @@ public class AnnouncementController {
     @PostMapping("/update")
     public JSONObject updateAnnouncement(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
-        logService.addLog("updateAnnouncement",requestJson.getString("id"));
+        logService.addLog("updateAnnouncement", requestJson.getString("id"));
         return msgService.updateAnnouncement(requestJson);
     }
 }

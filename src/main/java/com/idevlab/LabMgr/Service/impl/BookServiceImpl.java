@@ -35,33 +35,38 @@ public class BookServiceImpl implements BookService {
 		List<JSONObject> list = bookDao.listBook(jsonObject);
 		return CommonUtil.MsgSuccessPage(jsonObject, list, count, "totalBookedTime", totalBookedTime);
 	}
+
 	@Override
-	public JSONObject listMonthBookCount(JSONObject jsonObject){
+	public JSONObject listMonthBookCount(JSONObject jsonObject) {
 		CommonUtil.fillPageParam(jsonObject);
 		int count = bookDao.countBook(jsonObject);
 		List<JSONObject> list = bookDao.selectMonthCount(jsonObject);
 		return CommonUtil.successPage(jsonObject, list, count);
 	}
+
 	@Override
 	public List<JSONObject> exportBook(JSONObject jsonObject) {
 		List<JSONObject> list = bookDao.listBook(jsonObject);
 		return list;
 	}
+
 	@Override
 	public JSONObject getHotBook(JSONObject jsonObject) {
 		int count = bookDao.countHotDevice(jsonObject);
 		List<JSONObject> list = bookDao.getHotDevice(jsonObject);
-		return CommonUtil.successPage( list, count);
+		return CommonUtil.successPage(list, count);
 	}
 
 	@Override
 	public JSONObject addBook(JSONObject jsonObject) {
 		if (bookDao.checkTimeFree(jsonObject) == 0) {
-			var reputation = login.getInfo().getJSONObject("info").getJSONObject("userPermission").getInteger("reputation");
+			var reputation = login.getInfo().getJSONObject("info").getJSONObject("userPermission")
+					.getInteger("reputation");
 			JSONObject search = new JSONObject();
 			search.put("id", jsonObject.getString("device"));
-			//火车
-			var requireReputation = device.listDevice(search).getJSONObject("info").getJSONArray("list").getJSONObject(0).getInteger("requireReputation");
+			// 火车
+			var requireReputation = device.listDevice(search).getJSONObject("info").getJSONArray("list")
+					.getJSONObject(0).getInteger("requireReputation");
 			if (requireReputation <= reputation) {
 				bookDao.addBook(jsonObject);
 				return CommonUtil.successJson();
@@ -73,6 +78,18 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public JSONObject updateBook(JSONObject jsonObject) {
 		bookDao.updateBook(jsonObject);
+		return CommonUtil.successJson();
+	}
+
+	@Override
+	public JSONObject finishUseDevice(JSONObject jsonObject) {
+		bookDao.finishUseDevice(jsonObject);
+		return CommonUtil.successJson();
+	}
+
+	@Override
+	public JSONObject useDevice(JSONObject jsonObject) {
+		bookDao.useDevice(jsonObject);
 		return CommonUtil.successJson();
 	}
 
