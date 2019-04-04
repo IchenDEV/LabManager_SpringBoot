@@ -59,7 +59,9 @@
                  SELECT
                      u.id                                      id,
                      u.name                                    name,
-                     g.name                                    groupName,                 
+                     g.id                                      groupId,   
+                     g.name                                    groupName,
+                     g.description                             description,                 
                      u.status                                  status
                      FROM project u
                           LEFT JOIN group_project ug ON ug.project = u.id

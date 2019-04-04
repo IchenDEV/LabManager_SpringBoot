@@ -26,11 +26,17 @@ public class ProjectController {
     private ProjectService projectService;
     @Autowired
     private LogService logService;
- 
+
     @RequiresPermissions("device:list")
     @PostMapping("/list")
     public JSONObject listProject(@RequestBody JSONObject requestJson) {
         return projectService.listProject(requestJson);
+    }
+
+    @RequiresPermissions("device:list")
+    @PostMapping("/group")
+    public JSONObject listProjectGroup(@RequestBody JSONObject requestJson) {
+        return projectService.listProjectGroup(requestJson);
     }
 
     @RequiresPermissions("device:add")
@@ -38,7 +44,7 @@ public class ProjectController {
     public JSONObject addProject(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "name,description,status");
         var result = projectService.addProject(requestJson);
-        logService.addLog("AddProject","id:"+requestJson.getString("id")+" name:"+requestJson.getString("name"));
+        logService.addLog("AddProject", "id:" + requestJson.getString("id") + " name:" + requestJson.getString("name"));
         return result;
     }
 
@@ -46,7 +52,7 @@ public class ProjectController {
     @PostMapping("/update")
     public JSONObject updateProject(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
-        logService.addLog("UpdateProject",requestJson.getString("id"));
+        logService.addLog("UpdateProject", requestJson.getString("id"));
         return projectService.updateProject(requestJson);
     }
 
@@ -54,7 +60,7 @@ public class ProjectController {
     @PostMapping("/delete")
     public JSONObject deleteProject(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
-        logService.addLog("DeleteProject",requestJson.getString("id"));
+        logService.addLog("DeleteProject", requestJson.getString("id"));
         return projectService.deleteProject(requestJson);
     }
 }

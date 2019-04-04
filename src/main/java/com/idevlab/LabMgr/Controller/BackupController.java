@@ -42,9 +42,9 @@ public class BackupController {
    @RequiresPermissions("device:delete")
    @PostMapping("/getSchedule")
    public JSONObject setSchedule() {
-     JSONObject js=new JSONObject();
-     js.put("cron",dynamicScheduledTask.getCron());
-     js.put("lastBackupTime", dynamicScheduledTask.getLastBackTime());
-     return CommonUtil.successJson(js);
+      JSONObject js = new JSONObject();
+      js.put("cron", dynamicScheduledTask.getCron());
+      js.put("lastBackupTime", dynamicScheduledTask.getLastBackTime());
+      return CommonUtil.successJson(js);
    }
 }

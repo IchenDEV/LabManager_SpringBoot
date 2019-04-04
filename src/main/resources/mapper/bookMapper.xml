@@ -57,6 +57,8 @@
     <resultMap id="hotMap" type="com.alibaba.fastjson.JSONObject">
         <id column="id" property="id"/>
         <result column="NO" property="NO"/>
+        <result column="description" property="description"/>
+        <result column="model" property="model"/>
         <result column="name" property="name"/>
         <result column="func" property="func"/>
         <result column="requireReputation" property="requireReputation"/>
@@ -72,6 +74,8 @@
             d.name,
             d.func,
             d.require_reputation                      requireReputation,
+            d.description                             description,
+            d.model                                   model,
             d.status,
             l.NAME	labName,
             p.TIME
@@ -122,7 +126,7 @@
         SELECT 
             MONTH(begin_time) month,
             COUNT(*) count,
-            <![CDATA[ IFNULL(SUM(TIMESTAMPDIFF(SECOND,if(begin_time<DATE_FORMAT(begin_time ,'%Y-%m-01 00:00:00'),DATE_FORMAT(begin_time ,'%Y-%m-01 00:00:00'),begin_time),if(end_time>DATE_FORMAT(LAST_DAY(begin_time),'%Y-%m-%d 23:59:59'),DATE_FORMAT(LAST_DAY(begin_time),'%Y-%m-%d 23:59:59'),end_time))),0)*100/(sum(mt)/COUNT(mt)) rate ]]>
+            <![CDATA[ IFNULL(SUM(TIMESTAMPDIFF(SECOND,if(begin_time<DATE_FORMAT(begin_time ,'%Y-%m-01 00:00:00'),DATE_FORMAT(begin_time ,'%Y-%m-01 00:00:00'),begin_time),if(end_time>DATE_FORMAT(LAST_DAY(begin_time),'%Y-%m-%d 23:59:59'),DATE_FORMAT(LAST_DAY(begin_time),'%Y-%m-%d 23:59:59'),end_time))),0)*100/(sum(mt)/COUNT(mt)) rate ]]>            
         FROM(
             SELECT
                 *,(day(LAST_DAY(begin_time))*24*3600) mt
@@ -139,6 +143,7 @@
     Group BY MONTH(begin_time)
     Order By month
     </select>
+    
 
     <select id="checkTimeFree" resultType="Integer">
         SELECT count(0)

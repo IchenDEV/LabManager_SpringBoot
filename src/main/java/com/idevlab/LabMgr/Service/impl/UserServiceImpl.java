@@ -121,11 +121,15 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public JSONObject delUser(JSONObject jsonObject) {
-		JSONObject json = new JSONObject ();
+		JSONObject json = new JSONObject();
 		json.put("group", jsonObject.getString("id"));
 		json.put("department", jsonObject.getString("id"));
-		departmentDao.deleteDepartmentUser(json);
-		groupDao.deleteGroup(json);
+		try {
+			departmentDao.deleteDepartmentUser(json);
+			groupDao.deleteGroup(json);
+		} catch (NullPointerException nu) {
+
+		}
 		userDao.delUser(jsonObject);
 		return CommonUtil.successJson();
 	}

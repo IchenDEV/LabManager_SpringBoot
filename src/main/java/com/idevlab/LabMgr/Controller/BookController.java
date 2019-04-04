@@ -2,7 +2,6 @@ package com.idevlab.LabMgr.Controller;
 
 import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -51,8 +50,8 @@ public class BookController {
         for (JSONObject var : lst) {
             list.add(new Book(var));
         }
-        Excel.exportExcel(list, "export", "export", Book.class, Long.toString((new Date()).getTime()) + ".xlsx",
-                response);
+        System.out.print(list);
+        Excel.exportExcel(list, "export", "export", Book.class, "ex.xlsx", response);
     }
 
     @RequiresPermissions("book:add")

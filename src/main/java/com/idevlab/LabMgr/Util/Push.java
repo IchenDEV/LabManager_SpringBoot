@@ -29,7 +29,7 @@ public class Push {
         pushService.setSubject("https://lab.idevlab.cn");
         Notification notification = new Notification(endpoint, userPublicKey, userAuth, payload);
         System.out.print("try");
-        var xp = pushService.send(notification);
+        var xp = pushService.sendAsync(notification);
         System.out.print(xp);
     }
 

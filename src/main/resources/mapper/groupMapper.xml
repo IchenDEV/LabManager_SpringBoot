@@ -86,12 +86,16 @@
         <result column="name" property="name"/>
         <result column="userId" property="userId"/>
         <result column="username" property="username"/>
+        <result column="description" property="description"/>
+        <result column="createTime" property="createTime"/>
         <result column="status" property="status"/>
     </resultMap>
     <select id="listGroupProject" resultMap="groupUserMap">
                  SELECT
                      ug.id                                     id,
+                     ug.create_time                            createTime,
                      u.name                                    name,
+                     u.description                             description,
                      u.id                                      projectId,
                      ug.status                                 status
                  FROM `group` g

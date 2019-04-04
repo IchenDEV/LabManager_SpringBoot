@@ -27,30 +27,31 @@ public class LoginController {
 
 	@Autowired
 	private LoginService loginService;
-    @Autowired
-    private LogService logService;
+	@Autowired
+	private LogService logService;
+
 	/**
 	 * 登录
 	 */
+
 	@PostMapping("/auth")
 	public JSONObject authLogin(@RequestBody JSONObject requestJson) {
 		CommonUtil.hasAllRequired(requestJson, "username,password");
-		JSONObject x= loginService.authLogin(requestJson);
-		if(x.getJSONObject("info").getInteger("loginCode")==0){
+		JSONObject x = loginService.authLogin(requestJson);
+		if (x.getJSONObject("info").getInteger("loginCode") == 0) {
 			loginService.getInfo();
-			Session session = SecurityUtils.getSubject().getSession();//获得session
+			Session session = SecurityUtils.getSubject().getSession();// 获得session
 			JSONObject userInfo = (JSONObject) session.getAttribute(Constants.SESSION_USER_INFO);
 			String username = userInfo.getString("username");
-			logService.addLog("login",username);
+			logService.addLog("login", username);
 		}
 		return x;
 	}
 
-	
 	/**
 	 * 查询当前登录用户的信息
 	 */
-	
+
 	@PostMapping("/getInfo")
 	public JSONObject getInfo() {
 		return loginService.getInfo();
@@ -58,7 +59,7 @@ public class LoginController {
 
 	@PostMapping("/updateInfo")
 	public JSONObject updateInfo(@RequestBody JSONObject requestJson) {
-		Session session = SecurityUtils.getSubject().getSession();//获得session
+		Session session = SecurityUtils.getSubject().getSession();// 获得session
 		JSONObject userInfo = (JSONObject) session.getAttribute(Constants.SESSION_USER_INFO);
 		String username = userInfo.getString("username");
 		logService.addLog("updateInfo", username);
@@ -67,11 +68,11 @@ public class LoginController {
 
 	@PostMapping("/updatePassword")
 	public JSONObject updatePassword(@RequestBody JSONObject requestJson) {
-		Session session = SecurityUtils.getSubject().getSession();//获得session
+		Session session = SecurityUtils.getSubject().getSession();// 获得session
 		JSONObject userInfo = (JSONObject) session.getAttribute(Constants.SESSION_USER_INFO);
 		String username = userInfo.getString("username");
 		logService.addLog("updatePassword", username);
-		return loginService.updateCurrentPassword(username,requestJson.getString("password"));
+		return loginService.updateCurrentPassword(username, requestJson.getString("password"));
 	}
 
 	@PostMapping("/logout")
