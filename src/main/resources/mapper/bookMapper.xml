@@ -17,25 +17,25 @@
         <if test="year != null">And YEAR (b.begin_time) = #{year}</if>
         <if test="time != null"><![CDATA[ And b.begin_time<= #{time} And b.end_time>= #{time} ]]></if>
         <if test="No != null">
-                       AND d.No like #{No}
+                       AND d.No like CONCAT('%','${No}','%')
         </if>
         <if test="name != null">
-                       AND d.name like #{name}
+                       AND d.name like CONCAT('%','${name}','%')
         </if>
         <if test="location != null">
                        AND d.location = #{location}
         </if>
         <if test="model != null">
-                       AND d.model like #{model}
+                       AND d.model like CONCAT('%','${model}','%')
         </if>
         <if test="bands != null">
-                       AND d.band like #{bands}
+                       AND d.band like CONCAT('%','${bands}','%')
         </if>
         <if test="func != null">
-                       AND d.func like #{func}
+                       AND d.func like CONCAT('%','${func}','%')
         </if>
         <if test="requireReputation != null">
-                       AND d.require_reputation like #{requireReputation}
+                       AND d.require_reputation like CONCAT('%','${requireReputation}','%')
         </if>
     </select>
 
@@ -199,22 +199,22 @@
         <if test="time != null"><![CDATA[ And b.begin_time<= #{time} And b.end_time>= #{time} ]]></if>
         <if test="beginTime != null and endTime != null"><![CDATA[ And b.begin_time <= #{endTime} And b.end_time >= #{beginTime} ]]></if>
         <if test="No != null">
-                       AND d.No like #{No}
+                       AND d.No like CONCAT('%','${No}','%')
         </if>
         <if test="name != null">
-                       AND d.name like #{name}
+                       AND d.name like CONCAT('%','${name}','%')
         </if>
         <if test="location != null">
                        AND d.location = #{location}
         </if>
         <if test="model != null">
-                       AND d.model like #{model}
+                       AND d.model like CONCAT('%','${model}','%')
         </if>
         <if test="bands != null">
-                       AND d.band like #{bands}
+                       AND d.band like CONCAT('%','${bands}','%')
         </if>
         <if test="func != null">
-                       AND d.func like #{func}
+                       AND d.func like CONCAT('%','${func}','%')
         </if>
         <if test="requireReputation != null">
                        AND d.require_reputation like #{requireReputation}

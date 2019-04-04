@@ -10,25 +10,25 @@
         WHERE d.status != -1
         <if test="id != null">And d.id= #{id}</if>
         <if test="No != null">
-                       AND d.No like #{No}
+                       AND d.No like CONCAT('%','${No}','%')
         </if>
         <if test="name != null">
-                       AND d.name like #{name}
+                       AND d.name like CONCAT('%','${name}','%')
         </if>
         <if test="location != null">
                        AND d.location = #{location}
         </if>
         <if test="model != null">
-                       AND d.model like #{model}
+                       AND d.model like CONCAT('%','${model}','%')
         </if>
         <if test="function != null">
-                       AND d.func like #{func}
+                       AND d.func like CONCAT('%','${func}','%')
         </if>
         <if test="requireReputation != null">
                        AND d.require_reputation like #{requireReputation}
         </if>
         <if test="bands != null">
-                       AND d.band like #{bands}
+                       AND d.band like CONCAT('%','${bands}','%')
         </if>
         <if test="status != null and status !=-1">
                        AND d.status = #{status}
@@ -60,19 +60,19 @@
          WHERE d.status != -1
         <if test="id != null">And d.id= #{id}</if>
         <if test="No != null">
-                       AND d.No like #{No}
+                       AND d.No like CONCAT('%','${No}','%')
         </if>
         <if test="name != null">
-                       AND d.name like #{name}
+                       AND d.name like CONCAT('%','${name}','%')
         </if>
         <if test="location != null">
                        AND d.location = #{location}
         </if>
         <if test="model != null">
-                       AND d.model like #{model}
+                       AND d.model like CONCAT('%','${model}','%')
         </if>
         <if test="bands != null">
-                       AND d.band like #{bands}
+                       AND d.band like CONCAT('%','${bands}','%')
         </if>
         <if test="status != null and status !=-1">
                        AND d.status = #{status}
@@ -118,25 +118,25 @@
                  WHERE d.status != -1 And l.status != -1
         <if test="id != null">And d.id= #{id}</if>
         <if test="No != null">
-                       AND d.No like #{No}
+                       AND d.No like CONCAT('%','${No}','%')
         </if>
         <if test="name != null">
-                       AND d.name like #{name}
+                       AND d.name like CONCAT('%','${name}','%')
         </if>
         <if test="location != null">
                        AND d.location = #{location}
         </if>
         <if test="model != null">
-                       AND d.model like #{model}
+                       AND d.model like CONCAT('%','${model}','%')
         </if>
-        <if test="bands != null">
-                       AND d.band like #{bands}
-        </if>
-        <if test="func != null">
-                       AND d.func like #{func}
+        <if test="function != null">
+                       AND d.func like CONCAT('%','${func}','%')
         </if>
         <if test="requireReputation != null">
                        AND d.require_reputation like #{requireReputation}
+        </if>
+        <if test="bands != null">
+                       AND d.band like CONCAT('%','${bands}','%')
         </if>
         <if test="status != null and status !=-1">
                        AND d.status = #{status}

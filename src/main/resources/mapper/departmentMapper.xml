@@ -37,7 +37,7 @@
                  FROM department
                  WHERE status != -1
                  <if test="id != null">And id = #{id}</if>
-                 <if test="name != null">And name like #{name}</if>
+                 <if test="name != null">And name like CONCAT('%','${name}','%')</if>
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
     </select>

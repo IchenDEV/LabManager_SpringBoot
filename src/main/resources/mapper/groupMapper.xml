@@ -8,7 +8,7 @@
         FROM `group` b
         WHERE b.status !=-1
         <if test="id != null">And b.id= #{id}</if>
-        <if test="name != null">And b.name like #{name}</if>
+        <if test="name != null">And b.name like CONCAT('%','${name}','%')</if>
     </select>
 
     <resultMap id="groupMap" type="com.alibaba.fastjson.JSONObject">
@@ -30,7 +30,7 @@
                  FROM `group`
                  WHERE status != -1
         <if test="id != null">And id= #{id}</if>
-        <if test="name != null">And name like #{name}</if>
+        <if test="name != null">And name like CONCAT('%','${name}','%')</if>
                  ORDER BY id
                  LIMIT #{offSet}, #{pageRow}
     </select>

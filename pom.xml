@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.idevlab</groupId>
 	<artifactId>LabMgr</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>1.0.0.RELEASE</version>
 	<name>LabMgr</name>
 	<description>LabMgr</description>
 	<properties>
