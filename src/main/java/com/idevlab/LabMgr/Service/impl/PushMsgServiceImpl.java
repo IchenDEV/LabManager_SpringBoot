@@ -34,9 +34,27 @@ public class PushMsgServiceImpl implements PushMsgService {
 		return list;
 	}
 
+	public List<JSONObject> listPush() {
+		JSONObject json = new JSONObject();
+		List<JSONObject> list = pushDao.listPush(json);
+		return list;
+	}
+
 	public void pushToUser(int user, String payload) {
-		System.out.print(user);
 		var list = listPush(user);
+		Push p = new Push();
+		for (var item : list) {
+			try {
+				p.pushMsg(item.getString("endpoint"), item.getString("userPublicKey"), item.getString("auth"), payload);
+			} catch (GeneralSecurityException | IOException | JoseException | ExecutionException
+					| InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void pushToAll(String payload) {
+		var list = listPush();
 		Push p = new Push();
 		for (var item : list) {
 			try {

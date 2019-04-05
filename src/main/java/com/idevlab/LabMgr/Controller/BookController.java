@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.idevlab.LabMgr.Enity.Book;
 import com.idevlab.LabMgr.Service.BookService;
 import com.idevlab.LabMgr.Service.LogService;
+import com.idevlab.LabMgr.Service.MsgService;
 import com.idevlab.LabMgr.Util.CommonUtil;
 import com.idevlab.LabMgr.Util.Excel;
 
@@ -34,6 +35,8 @@ public class BookController {
     private BookService bookService;
     @Autowired
     private LogService logService;
+    @Autowired
+    private MsgService msgService;
 
     @RequiresPermissions("book:list")
     @PostMapping("/list")
@@ -92,6 +95,9 @@ public class BookController {
     @PostMapping("/delete")
     public JSONObject deleteBook(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "id");
+        JSONObject js = bookService.listBook(requestJson).getJSONObject("info").getJSONArray("list").getJSONObject(0);
+        msgService.sendMsg(0, js.getIntValue("applicant"),
+                "your" + js.getString("deviceName") + "'s reserve has been deleted");
         logService.addLog("DeleteBook", requestJson.getString("id"));
         return bookService.deleteBook(requestJson);
     }
@@ -99,7 +105,6 @@ public class BookController {
     @RequiresPermissions("device:list")
     @PostMapping("/getHot")
     public JSONObject getHot(@RequestBody JSONObject requestJson) {
-        logService.addLog("getHotDevice", "Hot");
         return bookService.getHotBook(requestJson);
     }
 }

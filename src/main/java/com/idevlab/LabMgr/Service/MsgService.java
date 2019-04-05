@@ -9,7 +9,12 @@ import com.alibaba.fastjson.JSONObject;
  */
 public interface MsgService {
 	JSONObject listMsg(JSONObject jsonObject);
+
+	JSONObject sendMsg(int author, int receiver, String msg);
+
 	JSONObject addMsg(JSONObject jsonObject);
+
 	JSONObject readMsg(JSONObject jsonObject);
+
 	JSONObject deleteMsg(JSONObject jsonObject);
 }

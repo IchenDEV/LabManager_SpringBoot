@@ -47,8 +47,6 @@ public class MsgController {
             throws GeneralSecurityException, IOException, JoseException, ExecutionException, InterruptedException {
         CommonUtil.hasAllRequired(requestJson, "author,receiver,msg");
         var result = msgService.addMsg(requestJson);
-
-        System.out.print(requestJson.getIntValue("receiver"));
         pushService.pushToUser(requestJson.getIntValue("receiver"), requestJson.getString("msg"));
         logService.addLog("AddMsg",
                 "id:" + requestJson.getString("id") + " receiver:" + requestJson.getString("receiver"));

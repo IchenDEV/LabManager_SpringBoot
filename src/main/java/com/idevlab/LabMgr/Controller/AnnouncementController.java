@@ -2,6 +2,7 @@ package com.idevlab.LabMgr.Controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.idevlab.LabMgr.Service.LogService;
+import com.idevlab.LabMgr.Service.PushMsgService;
 import com.idevlab.LabMgr.Service.AnnouncementService;
 import com.idevlab.LabMgr.Util.CommonUtil;
 
@@ -26,6 +27,8 @@ public class AnnouncementController {
     private AnnouncementService msgService;
     @Autowired
     private LogService logService;
+    @Autowired
+    private PushMsgService pushService;
 
     @PostMapping("/list")
     public JSONObject listAnnouncement(@RequestBody JSONObject requestJson) {
@@ -43,6 +46,7 @@ public class AnnouncementController {
     public JSONObject addLab(@RequestBody JSONObject requestJson) {
         CommonUtil.hasAllRequired(requestJson, "author,title,summary,msg");
         var result = msgService.addAnnouncement(requestJson);
+        pushService.pushToAll(requestJson.getString("title"));
         logService.addLog("AddAnnouncement", "id:" + requestJson.getString("id"));
         return result;
     }

@@ -15,9 +15,13 @@ public interface PushMsgService {
 
 	List<JSONObject> listPush(int user);
 
+	List<JSONObject> listPush();
+
 	void pushToUser(int user, String payload);
 
 	JSONObject addPush(int user, String endpoint, String userPublicKey, String auth);
+
+	void pushToAll(String payload);
 
 	JSONObject deletePush(JSONObject jsonObject);
 }
